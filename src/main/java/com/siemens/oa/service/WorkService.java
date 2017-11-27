@@ -10,4 +10,6 @@ public interface WorkService {
     List<Work> selectWorkByUW(Integer weekid);
 
     void insertWork(Work work);
+
+    List<Work> selectWorkByScope(Integer userid, String start, String end);
 }

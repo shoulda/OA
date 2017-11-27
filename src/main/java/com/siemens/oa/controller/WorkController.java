@@ -28,11 +28,11 @@ public class WorkController {
     /**
      * 根据weekid和userid查询work记录
      *
-     * @param weekid
+     * @param workid
      */
     @GetMapping("/selectWorkByUW")
-    public List<Work> selectWorkByUW(Integer weekid) {
-        return workService.selectWorkByUW(weekid);
+    public List<Work> selectWorkByUW(Integer workid) {
+        return workService.selectWorkByUW(workid);
     }
 
     /**

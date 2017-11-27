@@ -14,16 +14,16 @@ public class Work {
     private Integer PROJECTID;
     private Integer TASKID;
     private Integer WEEKID;
-    private Integer DAY;
+    private String STAMP;
     private Integer HOUR;
     private Integer M_STATUS;
 
-    public Integer getDAY() {
-        return DAY;
+    public String getDAY() {
+        return STAMP;
     }
 
-    public void setDAY(Integer DAY) {
-        this.DAY = DAY;
+    public void setDAY(String DAY) {
+        this.STAMP = STAMP;
     }
 
     public Integer getHOUR() {

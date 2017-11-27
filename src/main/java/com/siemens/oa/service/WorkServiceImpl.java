@@ -26,12 +26,17 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Work> selectWorkByUW(Integer weekid) {
-        return workMapper.selectWorkByUW(weekid);
+    public List<Work> selectWorkByUW(Integer workid) {
+        return workMapper.selectWorkByUW(workid);
     }
 
     @Override
     public void insertWork(Work work) {
         workMapper.insertWork(work);
+    }
+
+    @Override
+    public List<Work> selectWorkByScope(Integer userid, String start, String end) {
+        return workMapper.selectWorkByScope(userid, start, end);
     }
 }

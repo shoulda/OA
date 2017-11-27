@@ -2,6 +2,7 @@ package com.siemens.oa.dao;
 
 import com.siemens.oa.entity.Work;
 import org.apache.ibatis.annotations.*;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,16 +17,27 @@ public interface WorkDao {
      * @param weekid
      * @return
      */
-    @Select("select WORKID from Work where WEEKID=#{WEEKID} and USERID=#{USERID}")
+    @Select("select WORKID from WORK where WEEKID=#{WEEKID} and USERID=#{USERID}")
     public List<Work> selectWorkByUW(Integer weekid);
+
+    /**
+     * 根据useID、start、end时间来查找条目
+     *
+     * @param userid
+     * @param start
+     * @param end
+     * @return
+     */
+    @Select("select * from WORK where USERID=#{USERID} and DAY>=#{start} and DAY<=#{end}")
+    public List<Work> selectWorkByScope(Integer userid, String start, String end);
 
     /**
      * 插入一条新work记录
      *
      * @param work
      */
-    @Insert("insert into Work(USERID,PROJECTID,TASKID,WEEKID,DAY,HOUR,M_STATUS) " +
-            "values(#{USERID},#{PROJECTID},#{TASKID},#{WEEKID},#{DAY},#{HOUR},#{M_STATUS})")
+    @Insert("insert into WORK(USERID,PROJECTID,TASKID,STAMP,HOUR,M_STATUS) " +
+            "values(#{USERID},#{PROJECTID},#{TASKID},#{STAMP},#{HOUR},#{M_STATUS})")
     public void insertWork(Work work);
 
     /**
@@ -33,7 +45,7 @@ public interface WorkDao {
      *
      * @param work
      */
-    @Update("update Work set " +
+    @Update("update WORK set " +
             "USERID=#{USERID},PROJECTID=#{PROJECTID}," +
             "TASKID=#{TASKID},WEEKID=#{WEEKID}, DAY=#{DAY}," +
             "HOUR=#{HOUR},M_STATUS=#{M_STATUS}" +
@@ -47,4 +59,8 @@ public interface WorkDao {
      */
     @Delete("delete from Work where WORKID = #{WORKID}")
     public void deleteWork(Integer WORKID);
+
+    public boolean saveToDB(JSONObject object);
+
+    public JSONObject getFromDB(String userid, String start, String end);
 }
