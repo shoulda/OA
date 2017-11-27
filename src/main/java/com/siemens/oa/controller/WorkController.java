@@ -3,13 +3,14 @@ package com.siemens.oa.controller;
 
 import com.siemens.oa.entity.Work;
 import com.siemens.oa.service.WorkService;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.ibatis.annotations.Param;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * \* Created with IntelliJ IDEA.
@@ -25,23 +26,23 @@ public class WorkController {
     @Autowired
     private WorkService workService;
 
-    /**
-     * 根据weekid和userid查询work记录
-     *
-     * @param workid
-     */
-    @GetMapping("/selectWorkByUW")
-    public List<Work> selectWorkByUW(Integer workid) {
-        return workService.selectWorkByUW(workid);
-    }
 
     /**
      * 新建work
      *
-     * @param work
+     * @param
      */
+
     @PostMapping("/insertWork")
-    public void insertWork(Work work) {
+    public void insertWork(@RequestBody Work work) {
         workService.insertWork(work);
     }
+
+    @GetMapping("/selectWorkByScope")
+    public List<Work> selectWorkByScope(Integer USERID, String start, String end) {
+        List<Work> works = workService.selectWorkByScope(USERID, start, end);
+        System.out.println(works);
+        return works;
+    }
+
 }

@@ -13,16 +13,15 @@ public class Work {
     private Integer USERID;
     private Integer PROJECTID;
     private Integer TASKID;
-    private Integer WEEKID;
     private String STAMP;
     private Integer HOUR;
     private Integer M_STATUS;
 
-    public String getDAY() {
+    public String getSTAMP() {
         return STAMP;
     }
 
-    public void setDAY(String DAY) {
+    public void setSTAMP(String STAMP) {
         this.STAMP = STAMP;
     }
 
@@ -74,11 +73,16 @@ public class Work {
         this.TASKID = TASKID;
     }
 
-    public Integer getWEEKID() {
-        return WEEKID;
-    }
-
-    public void setWEEKID(Integer WEEKID) {
-        this.WEEKID = WEEKID;
+    @Override
+    public String toString() {
+        return "Work{" +
+                "WORKID=" + WORKID +
+                ", USERID=" + USERID +
+                ", PROJECTID=" + PROJECTID +
+                ", TASKID=" + TASKID +
+                ", STAMP='" + STAMP + '\'' +
+                ", HOUR=" + HOUR +
+                ", M_STATUS=" + M_STATUS +
+                '}';
     }
 }
