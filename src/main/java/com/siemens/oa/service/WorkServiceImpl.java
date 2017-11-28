@@ -25,14 +25,44 @@ public class WorkServiceImpl implements WorkService {
         this.workMapper = workMapper;
     }
 
+
+    /**
+     * 插入一条工作条目
+     *
+     * @param work
+     */
     @Override
     public void insertWork(Work work) {
         workMapper.insertWork(work);
     }
 
+
+    /**
+     * 根据userid和旗帜时间查询work条目
+     *
+     * @param USERID
+     * @param start
+     * @param end
+     * @return
+     */
     @Override
     public List<Work> selectWorkByScope(Integer USERID, String start, String end) {
         return workMapper.selectWorkByScope(USERID, start, end);
+    }
+
+    @Override
+    public List<Work> selectWork() {
+        return workMapper.selectWork();
+    }
+
+    @Override
+    public void updateWork(Work work) {
+        workMapper.updateWork(work);
+    }
+
+    @Override
+    public Work selectWorkFrom(Work work) {
+        return workMapper.selectWorkFrom(work);
     }
 
 //    @Override

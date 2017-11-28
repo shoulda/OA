@@ -11,7 +11,15 @@ import java.util.List;
 public interface WorkDao {
 
     /**
-     * 根据useID、start、end时间来查找条目
+     * 查询所有work记录
+     *
+     * @return
+     */
+    @Select("select * from WORK")
+    public List<Work> selectWork();
+
+    /**
+     * 根据useID和起止时间来查找条目
      *
      * @param USERID
      * @param start
@@ -39,7 +47,7 @@ public interface WorkDao {
      */
     @Update("update WORK set " +
             "USERID=#{USERID},PROJECTID=#{PROJECTID}," +
-            "TASKID=#{TASKID},WEEKID=#{WEEKID}, DAY=#{DAY}," +
+            "TASKID=#{TASKID},STAMP=#{STAMP}" +
             "HOUR=#{HOUR},M_STATUS=#{M_STATUS}" +
             "where WORKID=#{WORKID}")
     public void updateWork(Work work);
@@ -51,6 +59,14 @@ public interface WorkDao {
      */
     @Delete("delete from Work where WORKID = #{WORKID}")
     public void deleteWork(Integer WORKID);
+
+    /**
+     * 根据条件获取work记录
+     *
+     * @return
+     */
+    @Select("select * from WORK where USERID=#{USERID} and PROJECTID=#{PROJECTID} and TASKID=#{TASKID} and STAMP=#{STAMP}")
+    public Work selectWorkFrom(Work work);
 
 
 }

@@ -38,11 +38,28 @@ public class WorkController {
         workService.insertWork(work);
     }
 
-    @GetMapping("/selectWorkByScope")
+    @RequestMapping("/selectWorkByScope")
     public List<Work> selectWorkByScope(Integer USERID, String start, String end) {
         List<Work> works = workService.selectWorkByScope(USERID, start, end);
         System.out.println(works);
         return works;
     }
+
+    @GetMapping("/selectWork")
+    public List<Work> selectWork() {
+        return workService.selectWork();
+    }
+
+    @RequestMapping("/update")
+    public Work updateWork(@RequestBody Work work) {
+        Work work1 = workService.selectWorkFrom(work);
+        if (work1.getM_STATUS() == 1) {
+
+        } else {
+
+        }
+        return work1;
+    }
+
 
 }
