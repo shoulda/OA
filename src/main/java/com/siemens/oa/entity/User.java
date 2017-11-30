@@ -11,50 +11,60 @@ package com.siemens.oa.entity;
  */
 
 public class User {
-    private Integer USERID;
-    private String USERNAME;
-    private String PASSWORD;
-    private String DISPLAYNAME;
+    private Integer userid;
+    private String username;
+    private String password;
+    private String displayname;
+    private String status;
 
-    public String getDISPLAYNAME() {
-        return DISPLAYNAME;
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setDISPLAYNAME(String DISPLAYNAME) {
-        this.DISPLAYNAME = DISPLAYNAME;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
-    private String STATUS;
-
-    public Integer getUSERID() {
-        return USERID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUSERID(Integer USERID) {
-        this.USERID = USERID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUSERNAME() {
-        return USERNAME;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUSERNAME(String USERNAME) {
-        this.USERNAME = USERNAME;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPASSWORD() {
-        return PASSWORD;
+    public String getDisplayname() {
+        return displayname;
     }
 
-    public void setPASSWORD(String PASSWORD) {
-        this.PASSWORD = PASSWORD;
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
 
-    public String getSTATUS() {
-        return STATUS;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSTATUS(String STATUS) {
-        this.STATUS = STATUS;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", displayname='" + displayname + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

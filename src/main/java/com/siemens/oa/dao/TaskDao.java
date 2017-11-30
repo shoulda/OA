@@ -10,36 +10,35 @@ import org.springframework.stereotype.Repository;
 public interface TaskDao {
 
     /**
-     * 根据taskID查询task
+     * 插入一条新任务记录
      *
-     * @param TASKID
+     * @param task
+     */
+    @Insert("insert into Task(taskid,taskname) values(#{taskid},#{taskname})")
+    void insertTask(Task task);
+
+    /**
+     * 根据任务名删除任务
+     *
+     * @param TASKNAME
+     */
+    @Delete("delete from Task where taskname = #{taskname}")
+    void deleteTask(String TASKNAME);
+
+    /**
+     * 根据任务ID更新任务
+     *
+     * @param task
+     */
+    @Update("update Task set taskname=#{taskname} where taskid=#{taskid}")
+    void updateTask(Task task);
+
+    /**
+     * 根据任务名查询任务
+     *
+     * @param taskname
      * @return
      */
-    @Select("select * from Task where TASKID = #{TASKID}")
-    public Task selectTaskByTaskID(Integer TASKID);
-
-
-    /**
-     * 插入一条新task
-     *
-     * @param task
-     */
-    @Insert("insert into Task(TASKID,TASKNAME) values(#{TASKID},#{TASKNAME})")
-    public void insertTask(Task task);
-
-    /**
-     * 更新指定ID的task
-     *
-     * @param task
-     */
-    @Update("update Task set TASKNAME=#{TASKNAME} where TASKID=#{TASKID}")
-    public void updateTask(Task task);
-
-    /**
-     * 删除指定ID的task
-     *
-     * @param TASKID
-     */
-    @Delete("delete from Task where TASKID = #{TASKID}")
-    public void deleteTask(Integer TASKID);
+    @Select("select * from Task where taskname = #{taskname}")
+    Task selectTaskByTaskName(String taskname);
 }

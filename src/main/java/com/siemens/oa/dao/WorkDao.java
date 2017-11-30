@@ -11,62 +11,62 @@ import java.util.List;
 public interface WorkDao {
 
     /**
-     * 查询所有work记录
+     * 插入一条新工作记录
+     *
+     * @param work
+     */
+    @Insert("insert into Work(workid,userid,projectid,taskid,stamp,hour,m_STATUS) " +
+            "values(#{workid},#{userid},#{projectid},#{taskid},#{stamp},#{hour},#{m_STATUS})")
+    void insertWork(Work work);
+
+    /**
+     * 删除工作记录
+     *
+     * @param work
+     */
+    @Delete("delete from Work where userid=#{userid} and projectid=#{projectid} and taskid=#{taskid} and stamp=#{stamp}")
+    void deleteWork(Work work);
+
+    /**
+     * 根据工作ID更新工作信息
+     *
+     * @param work
+     */
+    @Update("update Work set userid=#{userid}," +
+            "projectid=#{projectid},taskid=#{taskid}," +
+            "stamp=#{stamp} ,hour=#{hour},m_STATUS=#{m_STATUS} " +
+            "where workid=#{workid}")
+    void updateWork(Work work);
+
+    /**
+     * 查找所有工作记录
      *
      * @return
      */
-    @Select("select * from WORK")
-    public List<Work> selectWork();
+    @Select("select * from Work")
+    List<Work> selectWork();
+
 
     /**
-     * 根据useID和起止时间来查找条目
+     * 根据UTPS查找用户工作信息
      *
-     * @param USERID
+     * @param work
+     * @return
+     */
+    @Select("select * from Work where userid=#{userid} and projectid=#{projectid} and taskid=#{taskid} and stamp=#{stamp}")
+    Work selectWorkByUTPS(Work work);
+
+    /**
+     * 根据用户ID和查找指定范围工作记录
+     *
+     * @param userid
      * @param start
      * @param end
      * @return
      */
-    @Select("select * from WORK where USERID=#{USERID} and STAMP between #{start} and #{end}")
-    public List<Work> selectWorkByScope(@Param("USERID") Integer USERID,
-                                        @Param("start") String start,
-                                        @Param("end") String end);
-
-    /**
-     * 插入一条新work记录
-     *
-     * @param work
-     */
-    @Insert("insert into WORK(WORKID,USERID,PROJECTID,TASKID,STAMP,HOUR,M_STATUS) " +
-            "values(#{WORKID},#{USERID},#{PROJECTID},#{TASKID},#{STAMP},#{HOUR},#{M_STATUS})")
-    public void insertWork(Work work);
-
-    /**
-     * 更新指定workID的记录
-     *
-     * @param work
-     */
-    @Update("update WORK set " +
-            "USERID=#{USERID},PROJECTID=#{PROJECTID}," +
-            "TASKID=#{TASKID},STAMP=#{STAMP}" +
-            "HOUR=#{HOUR},M_STATUS=#{M_STATUS}" +
-            "where WORKID=#{WORKID}")
-    public void updateWork(Work work);
-
-    /**
-     * 删除指定workID的记录
-     *
-     * @param WORKID
-     */
-    @Delete("delete from Work where WORKID = #{WORKID}")
-    public void deleteWork(Integer WORKID);
-
-    /**
-     * 根据条件获取work记录
-     *
-     * @return
-     */
-    @Select("select * from WORK where USERID=#{USERID} and PROJECTID=#{PROJECTID} and TASKID=#{TASKID} and STAMP=#{STAMP}")
-    public Work selectWorkFrom(Work work);
-
+    @Select("select * from Work where userid=#{userid} and stamp between #{start} and #{end}")
+    List<Work> selectWorkByScope(@Param("userid") Integer userid,
+                                 @Param("start") String start,
+                                 @Param("end") String end);
 
 }

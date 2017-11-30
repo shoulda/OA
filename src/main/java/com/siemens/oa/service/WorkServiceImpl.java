@@ -18,82 +18,74 @@ import java.util.List;
 @Service
 public class WorkServiceImpl implements WorkService {
 
-    private final WorkDao workMapper;
+    private final WorkDao workDao;
 
     @Autowired
-    public WorkServiceImpl(WorkDao workMapper) {
-        this.workMapper = workMapper;
+    public WorkServiceImpl(WorkDao workDao) {
+        this.workDao = workDao;
     }
 
-
     /**
-     * 插入一条工作条目
+     * 插入一条新工作记录
      *
      * @param work
      */
     @Override
     public void insertWork(Work work) {
-        workMapper.insertWork(work);
+        workDao.insertWork(work);
     }
 
+    /**
+     * 删除工作记录
+     *
+     * @param work
+     */
+    @Override
+    public void deleteWork(Work work) {
+        workDao.deleteWork(work);
+    }
 
     /**
-     * 根据userid和旗帜时间查询work条目
+     * 根据工作ID更新工作信息
      *
-     * @param USERID
+     * @param work
+     */
+    @Override
+    public void updateWork(Work work) {
+        workDao.updateWork(work);
+    }
+
+    /**
+     * 查找所有工作记录
+     *
+     * @return
+     */
+    @Override
+    public List<Work> selectWork() {
+        return workDao.selectWork();
+    }
+
+    /**
+     * 根据UTPS查找用户工作信息
+     *
+     * @param work
+     * @return
+     */
+    @Override
+    public Work selectWorkByUTPS(Work work) {
+        return workDao.selectWorkByUTPS(work);
+    }
+
+    /**
+     * 根据用户ID和查找指定范围工作记录
+     *
+     * @param userid
      * @param start
      * @param end
      * @return
      */
     @Override
-    public List<Work> selectWorkByScope(Integer USERID, String start, String end) {
-        return workMapper.selectWorkByScope(USERID, start, end);
+    public List<Work> selectWorkByScope(Integer userid, String start, String end) {
+        return workDao.selectWorkByScope(userid, start, end);
     }
-
-    @Override
-    public List<Work> selectWork() {
-        return workMapper.selectWork();
-    }
-
-    @Override
-    public void updateWork(Work work) {
-        workMapper.updateWork(work);
-    }
-
-    @Override
-    public Work selectWorkFrom(Work work) {
-        return workMapper.selectWorkFrom(work);
-    }
-
-//    @Override
-//    public List<Work> selectWorkByID(Integer USERID, String start, String end) {
-//        return workMapper.selectWorkByID(USERID, start, end);
-//    }
-
-//    @Override
-//    public JSONObject getFromDB(String userid, String start, String end) {
-//        JSONObject object = new JSONObject();
-//        List<Work> workList = workMapper.selectWorkByScope(Integer.getInteger(userid), start, end);
-//        for (int i = 0; i < workList.size(); ++i) {
-//            object.put(i, workTojson(workList.get(i)));
-//        }
-//        return object;
-//    }
-
-//    /**
-//     * work对象映射为json对象
-//     *
-//     * @param work
-//     * @return
-//     */
-//    public JSONObject workTojson(Work work) {
-//        JSONObject object = new JSONObject();
-//        object.put("USERID", work.getUSERID().toString());
-//        object.put("PROJECTID", work.getPROJECTID().toString());
-//        object.put("TASKID", work.getTASKID().toString());
-//        object.put("STAMP", work.getSTAMP());
-//        object.put("HOUR", work.getHOUR().toString());
-//        object.put("M_STATUS", work.getM_STATUS().toString());
-//        return object;
-//    }
 }

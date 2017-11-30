@@ -9,23 +9,30 @@ package com.siemens.oa.entity;
  * \
  */
 public class Project {
-    private Integer PROJECTID;
-    private String PROJECTNAME;
+    private Integer projectid;
+    private String projectname;
 
-    public Integer getPROJECTID() {
-        return PROJECTID;
+    public Integer getProjectid() {
+        return projectid;
     }
 
-    public void setPROJECTID(Integer PROJECTID) {
-        this.PROJECTID = PROJECTID;
+    public void setProjectid(Integer projectid) {
+        this.projectid = projectid;
     }
 
-    public String getPROJECTNAME() {
-        return PROJECTNAME;
+    public String getProjectname() {
+        return projectname;
     }
 
-    public void setPROJECTNAME(String PROJECTNAME) {
-        this.PROJECTNAME = PROJECTNAME;
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
     }
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectid=" + projectid +
+                ", projectname='" + projectname + '\'' +
+                '}';
+    }
 }

@@ -22,7 +22,7 @@ function login(userName, password) {
         success: function (e) {
             console.log(e);
             if (e.code == 200) {
-                window.location.href = 'index.html';
+                window.location.href = 'index';
             } else if (e.message) {
                 $("#myModal").modal('show');
                 $(".modal-body").html(e.message);

@@ -9,22 +9,30 @@ package com.siemens.oa.entity;
  * \
  */
 public class Task {
-    private Integer TASKID;
-    private String TASKNAME;
+    private Integer taskid;
+    private String taskname;
 
-    public Integer getTASKID() {
-        return TASKID;
+    public Integer getTaskid() {
+        return taskid;
     }
 
-    public void setTASKID(Integer TASKID) {
-        this.TASKID = TASKID;
+    public void setTaskid(Integer taskid) {
+        this.taskid = taskid;
     }
 
-    public String getTASKNAME() {
-        return TASKNAME;
+    public String getTaskname() {
+        return taskname;
     }
 
-    public void setTASKNAME(String TASKNAME) {
-        this.TASKNAME = TASKNAME;
+    public void setTaskname(String taskname) {
+        this.taskname = taskname;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskid=" + taskid +
+                ", taskname='" + taskname + '\'' +
+                '}';
     }
 }

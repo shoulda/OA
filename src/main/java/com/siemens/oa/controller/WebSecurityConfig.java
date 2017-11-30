@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     /**
      * 登录session key
      */
-    public final static String SESSION_KEY = "user";
+    public static String SESSION_KEY = "user";
 
     @Bean
     public SecurityInterceptor getSecurityInterceptor() {
@@ -41,16 +41,17 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     private class SecurityInterceptor extends HandlerInterceptorAdapter {
 
         @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-                throws Exception {
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
             HttpSession session = request.getSession();
+            System.out.println(session.getAttribute(SESSION_KEY) + "webSecurity");
             if (session.getAttribute(SESSION_KEY) != null)
                 return true;
 
-            // 跳转登录
-            String url = "/login";
-            response.sendRedirect(url);
+//             跳转登录
+            String url = "/login?next=";
+            response.sendRedirect(url.concat(request.getRequestURI()));
             return false;
+
         }
     }
 }

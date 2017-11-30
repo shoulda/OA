@@ -9,52 +9,36 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     /**
-     * 查找指定userID的user记录
+     * 插入一条新用户记录
      *
-     * @param id
-     * @return
+     * @param user
      */
-    @Select("select * from User where USERID = #{USERID}")
-    public User selectUserById(Integer id);
+    @Insert("insert into User(username,password,displayname,status) values(#{username},#{password},#{displayname},#{status})")
+    void insertUser(User user);
 
     /**
-     * 查找指定username的user记录
+     * 根据用户名删除用户
+     *
+     * @param username
+     */
+    @Delete("delete from User where username = #{username}")
+    void deleteUser(String username);
+
+    /**
+     * 根据用户ID更新用户
+     *
+     * @param user
+     */
+    @Update("update User set username=#{username},password=#{password},displayname=#{displayname},status=#{status} where userid=#{userid}")
+    void updateUser(User user);
+
+    /**
+     * 根据用户名查询用户
      *
      * @param username
      * @return
      */
-    @Select("select * from User where USERNAME = #{USERNAME}")
-    public User selectUserByName(String username);
-
-    /**
-     * 增加一条新user记录
-     *
-     * @param user
-     */
-    @Insert("insert into User(USERNAME,PASSWORD,sex,address) values(#{USERNAME},#{PASSWORD},#{sex},#{address})")
-    public void addUser(User user);
-
-    /**
-     * 更新指定userID的user记录
-     *
-     * @param user
-     */
-    @Update("update User set USERNAME=#{USERNAME},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id}")
-    public void updateUser(User user);
-
-    /**
-     * 删除指定userID的user记录
-     *
-     * @param id
-     */
-    @Delete("delete from User where USERID = #{USERID}")
-    public void deleteUser(Integer id);
-
-    /**
-     * 删除user表所有记录
-     */
-    @Delete("delete from User")
-    public void deleteAll();
-
+    @Select("select * from User where username = #{username}")
+    User selectUserByName(String username);
 
 }

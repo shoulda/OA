@@ -8,37 +8,39 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface ProjectDao {
+
     /**
-     * 根据projectid查询project
+     * 插入一条新工程记录
      *
-     * @param PROJECTID
+     * @param project
+     */
+    @Insert("insert into Project(projectid,projectname) values(#{projectid},#{projectname})")
+    void insertProject(Project project);
+
+    /**
+     * 根据工程名删除工程
+     *
+     * @param projectname
+     */
+    @Delete("delete from Project where projectname = #{projectname}")
+    void deleteProject(String projectname);
+
+    /**
+     * 根据工程ID更新工程
+     *
+     * @param project
+     */
+    @Update("update Project set projectname=#{projectname} where projectid=#{projectid}")
+    void updateProject(Project project);
+
+    /**
+     * 根据工程名查询工程
+     *
+     * @param projectname
      * @return
      */
-    @Select("select * from Project where PROJECTID = #{PROJECTID}")
-    public Project selectProjectByProjectID(Integer PROJECTID);
+    @Select("select * from Project where projectname = #{projectname}")
+    Project selectProjectByProjectName(String projectname);
 
 
-    /**
-     * 插入一条新project
-     *
-     * @param project
-     */
-    @Insert("insert into Project(PROJECTID,PROJECTNAME) values(#{PROJECTID},#{PROJECTNAME})")
-    public void insertProject(Project project);
-
-    /**
-     * 修改project
-     *
-     * @param project
-     */
-    @Update("update Project set PROJECTNAME=#{PROJECTNAME} where PROJECTID=#{PROJECTID}")
-    public void updateProject(Project project);
-
-    /**
-     * 根据projectID删除project
-     *
-     * @param PROJECTID
-     */
-    @Delete("delete from Project where PROJECTID = #{PROJECTID}")
-    public void deleteProject(Integer PROJECTID);
 }
