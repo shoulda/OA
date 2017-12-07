@@ -1,115 +1,124 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>TimeSheetSystem</title>
-    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
-    <style>
-        body{
-            background-color:#ccc
-        }
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="googlebot" content="noindex, nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="/js/jquery-3.2.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <title>Bootstrap Table by sooglejay</title>
+    <style type="text/css">
+        body{background-color: #ccc;}
         tr, td, th, .full-width {
-            width: 100%;
             text-align: center;
         }
 
         td {
             min-width: 50px;
         }
+
+        .day {
+            width: 80px;
+        }
+
+        .projectName {
+            width: 100%;
+        }
+
+        .taskName {
+            width: 90%;
+            align-content: center
+        }
+
+        .removeTask {
+            width: 1%;
+            margin-top: 10px;
+            margin-left: 5px;
+            cursor: hand;
+            text-align: center
+        }
+        .taskColumn{
+            min-width: 150px
+        }
+        .projectColumn{
+            min-width: 150px
+        }
     </style>
 </head>
 <body>
-<!--/*@thymesVar id="name" type="String"*/-->
-<button class="btn-success" th:text="${name}">thy</button>
 <div class="container">
-    <table class="table table-responsive table-bordered">
-        <caption class="caption">
-            <div align="center" style="margin-top: 20px">
-                <button style="width: 20%" id="btnPreWeek" class="btn-default col-sm-2">
-                    <label style="margin-right: 10px" class="glyphicon glyphicon-backward"></label>
+    <table id="workTable" class="table table-responsive table-bordered">
+        <caption>
+            <div style="margin-bottom: 12px;margin-top: 12px" align="center">
+                <button id="btnPreWeek" class="btn-default pull-left">
+                    <label class="glyphicon glyphicon-backward"></label>
                     Previous Week
                 </button>
-                <label id="timeRanger" style="width:60%;text-align: center"
-                       class="col-sm-4">11/13/2017-11/17/2017</label>
-                <button style="width: 20%" id="btnNextWeek" class="btn-default col-sm-2 ">
+                <label id="timeRanger">11/13/2017-11/17/2017</label>
+                <button id="btnNextWeek" class="btn-default pull-right">
                     Next Week
-                    <label style="margin-left: 10px" class="glyphicon glyphicon-forward"></label>
+                    <label class="glyphicon glyphicon-forward"></label>
                 </button>
             </div>
         </caption>
         <thead>
         <tr>
-            <th><label class="full-width"></label></th>
-            <th style="min-width:300px"><label class="full-width"></label></th>
-
-            <th><label  class="full-width">Monday</label></th>
-            <th><label class="full-width">Tuesday</label></th>
-            <th><label class="full-width">Wednesday</label></th>
-            <th><label  class="full-width">Thursday</label></th>
-            <th><label class="full-width">Friday</label></th>
-            <th colspan="2"><label class="full-width"></label></th>
-        </tr>
-        <tr>
             <th><label class="full-width">Project</label></th>
-            <th style="min-width:300px"><label class="full-width">Task</label></th>
+            <th><label class="full-width">Task</label></th>
 
-            <th><label id="label_day_1" class="full-width">11/13</label></th>
-            <th><label id="label_day_2" class="full-width">11/14</label></th>
-            <th><label id="label_day_3" class="full-width">11/15</label></th>
-            <th><label id="label_day_4" class="full-width">11/16</label></th>
-            <th><label id="label_day_5" class="full-width">11/17</label></th>
+            <th class="day">Monday<br/><label id="label_day_1" class="full-width">11/13</label></th>
+            <th class="day">Tuesday<br/><label id="label_day_2" class="full-width">11/14</label></th>
+            <th class="day">Wednesday<br/><label id="label_day_3" class="full-width">11/15</label></th>
+            <th class="day">Thursday<br/><label id="label_day_4" class="full-width">11/16</label></th>
+            <th class="day">Friday<br/><label id="label_day_5" class="full-width">11/17</label></th>
             <th colspan="2"><label class="full-width">Action</label></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                <select id="projectSelector" title="Choose Project" style="min-width: 80%">
-                    <option>Schaeffer</option>
-                    <option>Schaeffer</option>
-                    <option>Schaeffer</option>
-                </select>
-            </td>
-            <td>
-                <select id="taskSelector" title="Choose Task" style="min-width: 80%">
-                    <option>Development</option>
-                    <option>Development</option>
-                    <option>Development</option>
-                </select>
-            </td>
-            <td>
-                <select id="sel_day_1" title="Choose Project"></select>
-            </td>
-            <td>
-                <select id="sel_day_2" title="Choose Project"></select>
-            </td>
-            <td>
-                <select id="sel_day_3" title="Choose Project"></select>
-            </td>
-            <td>
-                <select id="sel_day_4" title="Choose Project"></select>
-            </td>
-            <td>
-                <select id="sel_day_5" title="Choose Project"></select>
-            </td>
-            <td colspan="2" style="min-width: 120px">
-                <button id="btnEdit" class="btn-default pull-left">Edit</button>
-                <button id="btnDelete" class="btn-danger pull-right">Delete</button>
-            </td>
 
+        <!--  项目 -->
+        <tr id="row_1_1">
+            <td class="projectColumn" id="td_project_1" rowspan="2">
+                <select class="projectName" id="input_project_1"></select>
+            </td>
+            <td class="taskColumn">
+                <div class="input-group">
+                    <select class="taskName" id="input_task_1_1"></select>
+                    <span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle"></span>
+                </div>
+            </td>
+            <td><input class="day form-control" id="input_day_1_1_1" type="text" placeholder="hours"></td>
+            <td><input class="day form-control" id="input_day_2_1_1" type="text" placeholder="hours"></td>
+            <td><input class="day form-control" id="input_day_3_1_1" type="text" placeholder="hours"></td>
+            <td><input class="day form-control" id="input_day_4_1_1" type="text" placeholder="hours"></td>
+            <td><input class="day form-control" id="input_day_5_1_1" type="text" placeholder="hours"></td>
+            <td id="action_1" colspan="2" rowspan="2" style="min-width: 120px">
+                <button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button>
+                <button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-right">Delete</button>
+            </td>
+        </tr>
+        <!--添加任务 -->
+        <tr id="row_addTask_1">
+            <td><span id="addTask_1" onclick="addTask(this)" class="addTask glyphicon glyphicon-play-circle glyphicon-plus-sign"
+                      style="margin-top: 5%;cursor: hand"></span></td>
+            <td colspan="5"></td>
+        </tr>
+        <tr id="row_0">
+            <td id="btnAdd">
+                <button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Project</button>
+            </td>
+            <td colspan="8"></td>
         </tr>
         </tbody>
     </table>
-
-    <div class="pull-right">
+    <div class="btn-group pull-right">
         <button id="btnSave" class="btn-primary">Save</button>
         <button id="btnSubmit" class="btn-success">Submit</button>
     </div>
 </div>
-<script th:src="@{js/jquery-3.2.0.min.js}"></script>
-<script th:src="@{js/bootstrap.min.js}"></script>
-<script th:src="@{js/DayApp.js}"></script>
-<script th:src="@{js/AjaxWrapper.js}"></script>
-<script th:src="@{js/index.js}"></script>
+
+<script type="text/javascript" src="/js/DayApp.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>
