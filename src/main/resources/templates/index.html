@@ -4,12 +4,15 @@
     <meta name="robots" content="noindex, nofollow"/>
     <meta name="googlebot" content="noindex, nofollow"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="/js/jquery-3.2.0.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script th:src="@{js/jquery-3.2.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <title>Bootstrap Table by sooglejay</title>
     <style type="text/css">
-        body{background-color: #ccc;}
+        body {
+            background-color: #ccc;
+        }
+
         tr, td, th, .full-width {
             text-align: center;
         }
@@ -38,10 +41,12 @@
             cursor: hand;
             text-align: center
         }
-        .taskColumn{
+
+        .taskColumn {
             min-width: 150px
         }
-        .projectColumn{
+
+        .projectColumn {
             min-width: 150px
         }
     </style>
@@ -88,11 +93,11 @@
                     <span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle"></span>
                 </div>
             </td>
-            <td><input class="day form-control" id="input_day_1_1_1" type="text" placeholder="hours"></td>
-            <td><input class="day form-control" id="input_day_2_1_1" type="text" placeholder="hours"></td>
-            <td><input class="day form-control" id="input_day_3_1_1" type="text" placeholder="hours"></td>
-            <td><input class="day form-control" id="input_day_4_1_1" type="text" placeholder="hours"></td>
-            <td><input class="day form-control" id="input_day_5_1_1" type="text" placeholder="hours"></td>
+            <td><input class="day form-control" id="input_day_1_1_1" type="text" placeholder="hours"/></td>
+            <td><input class="day form-control" id="input_day_2_1_1" type="text" placeholder="hours"/></td>
+            <td><input class="day form-control" id="input_day_3_1_1" type="text" placeholder="hours"/></td>
+            <td><input class="day form-control" id="input_day_4_1_1" type="text" placeholder="hours"/></td>
+            <td><input class="day form-control" id="input_day_5_1_1" type="text" placeholder="hours"/></td>
             <td id="action_1" colspan="2" rowspan="2" style="min-width: 120px">
                 <button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button>
                 <button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-right">Delete</button>
@@ -100,7 +105,8 @@
         </tr>
         <!--添加任务 -->
         <tr id="row_addTask_1">
-            <td><span id="addTask_1" onclick="addTask(this)" class="addTask glyphicon glyphicon-play-circle glyphicon-plus-sign"
+            <td><span id="addTask_1" onclick="addTask(this)"
+                      class="addTask glyphicon glyphicon-play-circle glyphicon-plus-sign"
                       style="margin-top: 5%;cursor: hand"></span></td>
             <td colspan="5"></td>
         </tr>
@@ -118,7 +124,10 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/js/DayApp.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+<!--<script th:src="@{js/jquery-3.2.0.min.js}"></script>-->
+<!--<script th:src="@{js/bootstrap.min.js}"></script>-->
+<script th:src="@{js/DayApp.js}"></script>
+<script th:src="@{js/AjaxWrapper.js}"></script>
+<script th:src="@{js/index.js}"></script>
 </body>
 </html>
