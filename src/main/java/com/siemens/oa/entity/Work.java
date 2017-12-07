@@ -14,6 +14,7 @@ public class Work {
     private Integer projectid;
     private Integer taskid;
     private String stamp;
+    private String weekid;
     private Integer hour;
     private Integer m_STATUS;
 
@@ -57,6 +58,14 @@ public class Work {
         this.stamp = stamp;
     }
 
+    public String getWeekid() {
+        return weekid;
+    }
+
+    public void setWeekid(String weekid) {
+        this.weekid = weekid;
+    }
+
     public Integer getHour() {
         return hour;
     }
@@ -81,6 +90,7 @@ public class Work {
                 ", projectid=" + projectid +
                 ", taskid=" + taskid +
                 ", stamp='" + stamp + '\'' +
+                ", weekid='" + weekid + '\'' +
                 ", hour=" + hour +
                 ", m_STATUS=" + m_STATUS +
                 '}';

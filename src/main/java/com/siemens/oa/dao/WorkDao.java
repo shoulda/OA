@@ -15,8 +15,8 @@ public interface WorkDao {
      *
      * @param work
      */
-    @Insert("insert into Work(workid,userid,projectid,taskid,stamp,hour,m_STATUS) " +
-            "values(#{workid},#{userid},#{projectid},#{taskid},#{stamp},#{hour},#{m_STATUS})")
+    @Insert("insert into Work(workid,userid,projectid,taskid,weekid,stamp,hour,m_STATUS) " +
+            "values(#{workid},#{userid},#{projectid},#{taskid},#{weekid},#{stamp},#{hour},#{m_STATUS})")
     void insertWork(Work work);
 
     /**

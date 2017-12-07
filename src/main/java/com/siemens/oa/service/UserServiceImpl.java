@@ -64,4 +64,15 @@ public class UserServiceImpl implements UserService {
     public User selectUserByName(String username) {
         return userDao.selectUserByName(username);
     }
+
+    /**
+     * 根据用户名查询用户Id
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public Integer selectUserIdByName(String username) {
+        return userDao.selectUserIdByName(username);
+    }
 }

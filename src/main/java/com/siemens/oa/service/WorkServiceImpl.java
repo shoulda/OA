@@ -1,10 +1,13 @@
 package com.siemens.oa.service;
 
+import com.google.gson.Gson;
 import com.siemens.oa.dao.WorkDao;
+import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,5 +90,30 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> selectWorkByScope(Integer userid, String start, String end) {
         return workDao.selectWorkByScope(userid, start, end);
+    }
+
+    /**
+     * Json转化为workList
+     *
+     * @param JsonStr
+     * @return
+     */
+    @Override
+    public List<Work> JsonToWork(String JsonStr) {
+        JsonListToWork jsonwork = new Gson().fromJson(JsonStr, JsonListToWork.class);
+        ArrayList<Work> works = new ArrayList<Work>();
+        List<JsonListToWork.WorkEntity> work = jsonwork.getWork();
+        for (JsonListToWork.WorkEntity workEntity : work) {
+            Work work1 = new Work();
+            work1.setWeekid(String.valueOf(jsonwork.getWeekId()));
+            work1.setProjectid(workEntity.getProjectId());
+            for (JsonListToWork.WorkEntity.TasksEntity entity : workEntity.getTasks()) {
+                work1.setTaskid(entity.getTaskId());
+                work1.setHour(entity.getHour());
+                work1.setStamp(String.valueOf(entity.getStamp()));
+            }
+            works.add(work1);
+        }
+        return works;
     }
 }

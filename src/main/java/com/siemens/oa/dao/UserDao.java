@@ -41,4 +41,13 @@ public interface UserDao {
     @Select("select * from User where username = #{username}")
     User selectUserByName(String username);
 
+    /**
+     * 根据用户名查询用户Id
+     *
+     * @param username
+     * @return
+     */
+    @Select("select userid from User where username = #{username}")
+    Integer selectUserIdByName(String username);
+
 }

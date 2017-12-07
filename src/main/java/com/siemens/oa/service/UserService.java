@@ -10,4 +10,6 @@ public interface UserService {
     void updateUser(User user);
 
     User selectUserByName(String username);
+
+    Integer selectUserIdByName(String username);
 }

@@ -4,6 +4,7 @@ import com.siemens.oa.entity.Work;
 import org.apache.ibatis.annotations.Param;
 
 
+import java.awt.*;
 import java.util.List;
 
 public interface WorkService {
@@ -20,6 +21,6 @@ public interface WorkService {
 
     List<Work> selectWorkByScope(Integer userid, String start, String end);
 
-
+    List<Work> JsonToWork(String JsonStr);
 
 }
