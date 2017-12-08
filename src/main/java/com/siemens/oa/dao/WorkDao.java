@@ -34,7 +34,7 @@ public interface WorkDao {
      */
     @Update("update Work set userid=#{userid}," +
             "projectid=#{projectid},taskid=#{taskid}," +
-            "stamp=#{stamp} ,hour=#{hour},m_STATUS=#{m_STATUS} " +
+            "weekid=#{weekid},stamp=#{stamp} ,hour=#{hour},m_STATUS=#{m_STATUS} " +
             "where workid=#{workid}")
     void updateWork(Work work);
 

@@ -101,18 +101,21 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> JsonToWork(String JsonStr) {
         JsonListToWork jsonwork = new Gson().fromJson(JsonStr, JsonListToWork.class);
+        System.out.println(jsonwork.getWork().size());
         ArrayList<Work> works = new ArrayList<Work>();
         List<JsonListToWork.WorkEntity> work = jsonwork.getWork();
         for (JsonListToWork.WorkEntity workEntity : work) {
-            Work work1 = new Work();
-            work1.setWeekid(String.valueOf(jsonwork.getWeekId()));
-            work1.setProjectid(workEntity.getProjectId());
+            String weekid = String.valueOf(jsonwork.getWeekId());
+            Integer projectid = workEntity.getProjectId();
             for (JsonListToWork.WorkEntity.TasksEntity entity : workEntity.getTasks()) {
+                Work work1 = new Work();
+                work1.setWeekid(weekid);
+                work1.setProjectid(projectid);
                 work1.setTaskid(entity.getTaskId());
                 work1.setHour(entity.getHour());
                 work1.setStamp(String.valueOf(entity.getStamp()));
+                works.add(work1);
             }
-            works.add(work1);
         }
         return works;
     }

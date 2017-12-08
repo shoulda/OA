@@ -49,17 +49,19 @@ public class WorkController {
     @PostMapping("/save")
     public void modifyWork(@RequestBody String object, HttpSession session) {
         List<Work> work = workService.JsonToWork(object);
-//        System.out.println(work);
         for (Work work1 : work) {
             work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
-//            System.out.println(work1);
-//            System.out.println(workService.selectWorkByUTPS(work1));
-            if (workService.selectWorkByUTPS(work1) != null && work1.getM_STATUS() == 1) {
-                work1.setWorkid(workService.selectWorkByUTPS(work1).getWorkid());
-//                System.out.println(work1);
-                workService.updateWork(work1);
-            } else if (workService.selectWorkByUTPS(work1) == null) {
+            System.out.println(work1);
+            Work workTran = workService.selectWorkByUTPS(work1);
+            System.out.println(workTran);
+            if (workTran != null && workTran.getM_STATUS().equals(1)) {
+                work1.setWorkid(workTran.getWorkid());
                 work1.setM_STATUS(1);
+                System.out.println(work1);
+                workService.updateWork(work1);
+            } else if (workTran == null) {
+                work1.setM_STATUS(1);
+                System.out.println(work1);
                 workService.insertWork(work1);
             } else ;
         }
@@ -70,12 +72,15 @@ public class WorkController {
         List<Work> work = workService.JsonToWork(object);
         for (Work work1 : work) {
             work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
-            if (workService.selectWorkByUTPS(work1) != null && work1.getM_STATUS() == 1) {
+            Work workTran = workService.selectWorkByUTPS(work1);
+            if (workTran != null && workTran.getM_STATUS().equals(1)) {
                 work1.setM_STATUS(0);
-                work1.setWorkid(workService.selectWorkByUTPS(work1).getWorkid());
+                System.out.println(work1);
+                work1.setWorkid(workTran.getWorkid());
                 workService.updateWork(work1);
-            } else if (workService.selectWorkByUTPS(work1) == null) {
+            } else if (workTran == null) {
                 work1.setM_STATUS(0);
+                System.out.println(work1);
                 workService.insertWork(work1);
             } else ;
         }

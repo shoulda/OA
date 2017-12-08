@@ -26,12 +26,16 @@
         }
 
         .projectName {
-            width: 100%;
+            width: auto;
+            align-content: center;
+            padding: 5px 5px 10px 5px;
+
         }
 
         .taskName {
-            width: 90%;
-            align-content: center
+            width: auto;
+            align-content: center;
+            padding: 5px 5px 10px 5px;
         }
 
         .removeTask {
@@ -85,7 +89,9 @@
         <!--  项目 -->
         <tr id="row_1_1">
             <td class="projectColumn" id="td_project_1" rowspan="2">
-                <select class="projectName" id="input_project_1"></select>
+                <select class="projectName" id="input_project_1">
+                    <!--<option th:align="middle">xujin</option>-->
+                </select>
             </td>
             <td class="taskColumn">
                 <div class="input-group">
