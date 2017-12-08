@@ -16,10 +16,10 @@ public class JsonListToWork {
      * weekId : 1511712000000
      * work : [{"projectName":"这是项目一","projectId":1,"tasks":[{"hour":1,"stamp":1511764230000,"taskName":"这是项目一的任务1","taskId":1},{"hour":2,"stamp":1511836200000,"taskName":"这是项目一的任务2","taskId":2}]},{"projectName":"这是项目二","projectId":2,"tasks":[{"hour":5,"stamp":1511940600000,"taskName":"这是项目二的任务，任务Id是3","taskId":3},{"hour":1,"stamp":1512023400000,"taskName":"这是项目二的任务，任务Id是4","taskId":4}]},{"projectName":"这是项目三","projectId":3,"tasks":[{"hour":8,"stamp":1511764230000,"taskName":"这是属于项目三的任务，任务id是5","taskId":5},{"hour":4,"stamp":1511836200000,"taskName":"这是属于项目三的任务，任务id是6","taskId":6}]},{"projectName":"这是项目四","projectId":4,"tasks":[{"hour":7,"stamp":1511940600000,"taskName":"这是属于项目四的任务，任务Id是7","taskId":7},{"hour":3,"stamp":1512023400000,"taskName":"这是属于项目四的任务，任务Id是8","taskId":8}]}]
      */
-    private long weekId;
+    private String weekId;
     private List<WorkEntity> work;
 
-    public void setWeekId(long weekId) {
+    public void setWeekId(String weekId) {
         this.weekId = weekId;
     }
 
@@ -27,7 +27,7 @@ public class JsonListToWork {
         this.work = work;
     }
 
-    public long getWeekId() {
+    public String getWeekId() {
         return weekId;
     }
 
@@ -69,6 +69,8 @@ public class JsonListToWork {
             return tasks;
         }
 
+
+
         public class TasksEntity {
             /**
              * hour : 1
@@ -77,7 +79,7 @@ public class JsonListToWork {
              * taskId : 1
              */
             private int hour;
-            private long stamp;
+            private String stamp;
             private String taskName;
             private int taskId;
 
@@ -85,7 +87,7 @@ public class JsonListToWork {
                 this.hour = hour;
             }
 
-            public void setStamp(long stamp) {
+            public void setStamp(String stamp) {
                 this.stamp = stamp;
             }
 
@@ -101,7 +103,7 @@ public class JsonListToWork {
                 return hour;
             }
 
-            public long getStamp() {
+            public String getStamp() {
                 return stamp;
             }
 

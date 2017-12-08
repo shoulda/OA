@@ -41,4 +41,7 @@ public interface TaskDao {
      */
     @Select("select * from Task where taskname = #{taskname}")
     Task selectTaskByTaskName(String taskname);
+
+    @Select("select * from Task where taskid = #{taskid}")
+    Task selectTaskById(int taskid);
 }

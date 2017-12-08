@@ -64,9 +64,8 @@ public interface WorkDao {
      * @param end
      * @return
      */
-    @Select("select * from Work where userid=#{userid} and stamp between #{start} and #{end}")
-    List<Work> selectWorkByScope(@Param("userid") Integer userid,
-                                 @Param("start") String start,
-                                 @Param("end") String end);
+    @Select("select * from Work where userid=#{userid} and weekid=#{weekid}")
+    List<Work> selectWorkByWeekId(@Param("userid") Integer userid,
+                                 @Param("weekid") String weekid);
 
 }

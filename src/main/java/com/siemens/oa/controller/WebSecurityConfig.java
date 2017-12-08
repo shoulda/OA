@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
             HttpSession session = request.getSession();
-            System.out.println(session.getAttribute(SESSION_KEY) + "webSecurity");
+           // System.out.println(session.getAttribute(SESSION_KEY) + "webSecurity");
             if (session.getAttribute(SESSION_KEY) != null)
                 return true;
 

@@ -42,5 +42,8 @@ public interface ProjectDao {
     @Select("select * from Project where projectname = #{projectname}")
     Project selectProjectByProjectName(String projectname);
 
+    @Select("select * from Project where projectid = #{projectid}")
+    Project selectProjectById(int projectid);
+
 
 }

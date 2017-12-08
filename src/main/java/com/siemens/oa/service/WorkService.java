@@ -1,5 +1,6 @@
 package com.siemens.oa.service;
 
+import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.Work;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,8 +20,10 @@ public interface WorkService {
 
     Work selectWorkByUTPS(Work work);
 
-    List<Work> selectWorkByScope(Integer userid, String start, String end);
+    List<Work> selectWorkByWeekId(Integer userid, String weekid);
 
     List<Work> JsonToWork(String JsonStr);
+
+    JsonListToWork WorkToJson(List<Work> works, String weekid);
 
 }
