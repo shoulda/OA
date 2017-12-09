@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public interface WorkService {
 
@@ -28,4 +29,5 @@ public interface WorkService {
 
     JsonListToWork WorkToJson2(List<Work> works, String weekid);
 
+    Map<String, Object> SubStatus(boolean success, Integer code, String message);
 }

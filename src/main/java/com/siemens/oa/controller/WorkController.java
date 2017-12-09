@@ -1,7 +1,6 @@
 package com.siemens.oa.controller;
 
 
-import com.google.gson.Gson;
 import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.Work;
 import com.siemens.oa.service.UserService;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * \* Created with IntelliJ IDEA.
@@ -53,43 +53,50 @@ public class WorkController {
 
 
     @PostMapping("/save")
-    public void modifyWork(@RequestBody String object, HttpSession session) {
+    public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
+        System.out.println(object);
         List<Work> work = workService.JsonToWork(object);
         for (Work work1 : work) {
             work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
-            System.out.println(work1);
+//            System.out.println(work1);
             Work workTran = workService.selectWorkByUTPS(work1);
-            System.out.println(workTran);
+//            System.out.println(workTran);
             if (workTran != null && workTran.getM_STATUS().equals(1)) {
                 work1.setWorkid(workTran.getWorkid());
                 work1.setM_STATUS(1);
-                System.out.println(work1);
+//                System.out.println(work1);
                 workService.updateWork(work1);
             } else if (workTran == null) {
                 work1.setM_STATUS(1);
-                System.out.println(work1);
+//                System.out.println(work1);
                 workService.insertWork(work1);
             } else ;
         }
+        return workService.SubStatus(true, 200, "Save Success!");
+
     }
 
     @PostMapping("/submit")
-    public void subWork(@RequestBody String object, HttpSession session) {
+    public Map<String, Object> subWork(@RequestBody String object, HttpSession session) {
         List<Work> work = workService.JsonToWork(object);
+        System.out.println("----------收到" + work.size() + "前端work记录---------");
         for (Work work1 : work) {
+            System.out.println(work1);
             work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
             Work workTran = workService.selectWorkByUTPS(work1);
+            System.out.println("对比数据库结果：" + workTran);
             if (workTran != null && workTran.getM_STATUS().equals(1)) {
                 work1.setM_STATUS(0);
-                System.out.println(work1);
+//                System.out.println(work1);
                 work1.setWorkid(workTran.getWorkid());
                 workService.updateWork(work1);
             } else if (workTran == null) {
                 work1.setM_STATUS(0);
-                System.out.println(work1);
+//                System.out.println(work1);
                 workService.insertWork(work1);
             } else ;
         }
+        return workService.SubStatus(true, 200, "Submit Success!");
     }
 
 }

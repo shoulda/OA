@@ -63,7 +63,7 @@ function initHoursSelector() {
  *
  */
 function getWeekId(daysList) {
-    var weekId = new Date(daysList[0].setHours(0, 0, 0, 0)).getTime();
+    var weekId = (new Date(daysList[0].setHours(0, 0, 0, 0))).getTime();
     return weekId;
 }
 
@@ -79,20 +79,6 @@ function setUpTable(data) {
     }
 }
 
-function cleanData() {
-    var projectNum = getProjectsCount();
-    console.log("------");
-    console.log(projectNum);
-    for (var i = 1; i <= projectNum; i++) {
-        removeProjectByProjectNum(i);
-    }
-    var newProjectTr = getProjectTr(1);
-    var addTaskTr = getAddTaskTr(1);
-    $('#row_0').before(newProjectTr);
-    $('#row_0').before(addTaskTr);
-    // addProject();
-    // removeProjectByProjectNum(1);
-}
 
 function setUpRowWithData(rowIndex, projectData) {
 
@@ -427,18 +413,140 @@ function editRow(obj) {
  * @param isSave
  */
 function submit(isSave) {
-    $("#jsonform").submit();
     $('select').attr('disabled', 'disabled');
-    // $('select').attr('option', 'disabled');
+    // $('.addTask,.removeTask').hide();
+    var jsonobj = getInfoToJson();
+    console.log(jsonobj);
+    if (isSave) {
+        $.ajax({
+            method: 'POST',
+            url: '/work/submit',
+            contentType: "application/json",
+            data: JSON.stringify(jsonobj),
+            success: function (e) {
+                console.log(e);
+                if (e.code == 200) {
+                    alert("Submit Success!");
+                } else if (e.message) {
+                    alert("Submit Failed!");
+                }
+            },
+            error: function () {
+                alert("Submit Failed!");
+            }
+        });
+    } else {
+        $.ajax({
+            method: 'POST',
+            url: '/work/save',
+            contentType: "application/json",
+            data: JSON.stringify(jsonobj),
+            success: function (e) {
+                console.log(e);
+                if (e.code == 200) {
+                    alert("Submit Success!");
+                } else if (e.message) {
+                    alert("Submit Failed!");
+                }
+            },
+            error: function () {
+                alert("Submit Failed!");
+            }
+        });
+    }
 
-    $('.addTask,.removeTask').hide();
+}
 
-    // 提交到服务器
-    var tableData = $('#workTable').html();//test
-    // var tableData = $('#row_1_1').html();//test
-    // console.log(tableData.getElementsByClassName("projectName"));
-    // 循环获取表格数据，提交
-    console.log(tableData);
+/**
+ * 获取表单数据转换成json
+ * @returns {{}}
+ */
+function getInfoToJson() {
+    var dayApp = new DayApp();
+    var projectNum = getProjectsCount();
+    var WeekDaysList = dayApp.getWorkDaysList(new Date());
+    var weekId = getWeekId(WeekDaysList);
+    var json = {};
+    var work = [];
+    var pid = "input_project_";
+    var tid = "input_task_";
+    var did = "#input_day_";
+    for (var i = 1; i <= projectNum; ++i) {
+        var projtext = {};
+        projtext["projectName"] = getTextById(pid + i);
+        projtext["projectId"] = getIndexById(pid + i);
+        var tasktext = [];
+        for (var j = 1; j <= getTaskNumFromProjectNum(i); j++) {
+            var index = getIndexById(tid + j + '_' + i);
+            var text = getTextById(tid + j + '_' + i);
+            for (var m = 1; m <= 5; m++) {
+                if ($(did + m + '_' + j + '_' + i).val() != "") {
+                    var tk = {};
+                    tk["taskId"] = index;
+                    tk["taskName"] = text;
+                    tk["stamp"] = getDayId(WeekDaysList, m);
+                    tk["hour"] = $(did + m + '_' + j + '_' + i).val();
+                    tasktext.push(tk);
+                }
+            }
+        }
+        projtext["tasks"] = tasktext;
+        work.push(projtext);
+    }
+
+    json["weekId"] = weekId;
+    json["work"] = work;
+    return json;
+}
+
+/**
+ * 根据id查询select索引
+ * @param id
+ * @returns {*|number}
+ */
+function getIndexById(id) {
+    var obj = document.getElementById(id);
+    var index = obj.selectedIndex;
+    return index;
+}
+
+/**
+ * 根据id查询select文本
+ * @param id
+ */
+function getTextById(id) {
+    var obj = document.getElementById(id);
+    var text = obj.options[obj.selectedIndex].text;
+    return text;
+}
+
+/**
+ * 获取指定周 i 的时间戳
+ * @param daysList
+ * @param i
+ * @returns {number}
+ */
+function getDayId(daysList, i) {
+    var dayId = (new Date(daysList[i - 1].setHours(0, 0, 0, 0))).getTime();
+    return dayId;
+}
+
+/**
+ * 清空表格数据
+ */
+function cleanData() {
+    var projectNum = getProjectsCount();
+    console.log("------");
+    console.log(projectNum);
+    for (var i = 1; i <= projectNum; i++) {
+        removeProjectByProjectNum(i);
+    }
+    var newProjectTr = getProjectTr(1);
+    var addTaskTr = getAddTaskTr(1);
+    $('#row_0').before(newProjectTr);
+    $('#row_0').before(addTaskTr);
+    // addProject();
+    // removeProjectByProjectNum(1);
 }
 
 $(function () {
@@ -462,9 +570,9 @@ $(function () {
     });
 
     $('#btnSave').click(function () {
-        submit(true);
+        submit(false);
     });
     $('#btnSubmit').click(function () {
-        submit(false);
+        submit(true);
     });
 });

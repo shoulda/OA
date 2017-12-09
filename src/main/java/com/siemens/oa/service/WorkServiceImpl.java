@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * \* Created with IntelliJ IDEA.
@@ -213,9 +215,10 @@ public class WorkServiceImpl implements WorkService {
             }
         }
         listToWork.setWork(workEntityList);
-        System.out.println(workEntityList);
+//        System.out.println(workEntityList);
         return listToWork;
     }
+
 
     public boolean ProjectIfin(Work work, List<JsonListToWork.WorkEntity> workEntityList) {
         boolean flag = false;
@@ -236,4 +239,20 @@ public class WorkServiceImpl implements WorkService {
         return flag;
     }
 
+    /**
+     * 提交状态函数
+     *
+     * @param success
+     * @param code
+     * @param message
+     * @return
+     */
+    @Override
+    public Map<String, Object> SubStatus(boolean success, Integer code, String message) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", success);
+        map.put("message", message);
+        map.put("code", code);
+        return map;
+    }
 }
