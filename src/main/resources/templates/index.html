@@ -57,77 +57,79 @@
 </head>
 <body>
 <div class="container">
-    <table id="workTable" class="table table-responsive table-bordered">
-        <caption>
-            <div style="margin-bottom: 12px;margin-top: 12px" align="center">
-                <button id="btnPreWeek" class="btn-default pull-left">
-                    <label class="glyphicon glyphicon-backward"></label>
-                    Previous Week
-                </button>
-                <label id="timeRanger">11/13/2017-11/17/2017</label>
-                <button id="btnNextWeek" class="btn-default pull-right">
-                    Next Week
-                    <label class="glyphicon glyphicon-forward"></label>
-                </button>
-            </div>
-        </caption>
-        <thead>
-        <tr>
-            <th><label class="full-width">Project</label></th>
-            <th><label class="full-width">Task</label></th>
-
-            <th class="day">Monday<br/><label id="label_day_1" class="full-width">11/13</label></th>
-            <th class="day">Tuesday<br/><label id="label_day_2" class="full-width">11/14</label></th>
-            <th class="day">Wednesday<br/><label id="label_day_3" class="full-width">11/15</label></th>
-            <th class="day">Thursday<br/><label id="label_day_4" class="full-width">11/16</label></th>
-            <th class="day">Friday<br/><label id="label_day_5" class="full-width">11/17</label></th>
-            <th colspan="2"><label class="full-width">Action</label></th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <!--  项目 -->
-        <tr id="row_1_1">
-            <td class="projectColumn" id="td_project_1" rowspan="2">
-                <select class="projectName" id="input_project_1">
-                    <!--<option th:align="middle">xujin</option>-->
-                </select>
-            </td>
-            <td class="taskColumn">
-                <div class="input-group">
-                    <select class="taskName" id="input_task_1_1"></select>
-                    <span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle"></span>
+    <form id="jsonform" method="post" action="/work/save">
+        <table id="workTable" class="table table-responsive table-bordered">
+            <caption>
+                <div style="margin-bottom: 12px;margin-top: 12px" align="center">
+                    <button id="btnPreWeek" class="btn-default pull-left">
+                        <label class="glyphicon glyphicon-backward"></label>
+                        Previous Week
+                    </button>
+                    <label id="timeRanger">11/13/2017-11/17/2017</label>
+                    <button id="btnNextWeek" class="btn-default pull-right">
+                        Next Week
+                        <label class="glyphicon glyphicon-forward"></label>
+                    </button>
                 </div>
-            </td>
-            <td><input class="day form-control" id="input_day_1_1_1" type="text" placeholder="hours"/></td>
-            <td><input class="day form-control" id="input_day_2_1_1" type="text" placeholder="hours"/></td>
-            <td><input class="day form-control" id="input_day_3_1_1" type="text" placeholder="hours"/></td>
-            <td><input class="day form-control" id="input_day_4_1_1" type="text" placeholder="hours"/></td>
-            <td><input class="day form-control" id="input_day_5_1_1" type="text" placeholder="hours"/></td>
-            <td id="action_1" colspan="2" rowspan="2" style="min-width: 120px">
-                <button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button>
-                <button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-right">Delete</button>
-            </td>
-        </tr>
-        <!--添加任务 -->
-        <tr id="row_addTask_1">
-            <td><span id="addTask_1" onclick="addTask(this)"
-                      class="addTask glyphicon glyphicon-play-circle glyphicon-plus-sign"
-                      style="margin-top: 5%;cursor: hand"></span></td>
-            <td colspan="5"></td>
-        </tr>
-        <tr id="row_0">
-            <td id="btnAdd">
-                <button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Project</button>
-            </td>
-            <td colspan="8"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="btn-group pull-right">
-        <button id="btnSave" class="btn-primary">Save</button>
-        <button id="btnSubmit" class="btn-success">Submit</button>
-    </div>
+            </caption>
+            <thead>
+            <tr>
+                <th><label class="full-width">Project</label></th>
+                <th><label class="full-width">Task</label></th>
+
+                <th class="day">Monday<br/><label id="label_day_1" class="full-width">11/13</label></th>
+                <th class="day">Tuesday<br/><label id="label_day_2" class="full-width">11/14</label></th>
+                <th class="day">Wednesday<br/><label id="label_day_3" class="full-width">11/15</label></th>
+                <th class="day">Thursday<br/><label id="label_day_4" class="full-width">11/16</label></th>
+                <th class="day">Friday<br/><label id="label_day_5" class="full-width">11/17</label></th>
+                <th colspan="2"><label class="full-width">Action</label></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!--  项目 -->
+            <tr id="row_1_1">
+                <td class="projectColumn" id="td_project_1" rowspan="2">
+                    <select class="projectName" id="input_project_1">
+                        <!--<option th:align="middle">xujin</option>-->
+                    </select>
+                </td>
+                <td class="taskColumn">
+                    <div class="input-group">
+                        <select class="taskName" id="input_task_1_1"></select>
+                        <span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                </td>
+                <td><input class="day form-control" id="input_day_1_1_1" type="text" placeholder="hours"/></td>
+                <td><input class="day form-control" id="input_day_2_1_1" type="text" placeholder="hours"/></td>
+                <td><input class="day form-control" id="input_day_3_1_1" type="text" placeholder="hours"/></td>
+                <td><input class="day form-control" id="input_day_4_1_1" type="text" placeholder="hours"/></td>
+                <td><input class="day form-control" id="input_day_5_1_1" type="text" placeholder="hours"/></td>
+                <td id="action_1" colspan="2" rowspan="2" style="min-width: 120px">
+                    <button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button>
+                    <button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-right">Delete</button>
+                </td>
+            </tr>
+            <!--添加任务 -->
+            <tr id="row_addTask_1">
+                <td><span id="addTask_1" onclick="addTask(this)"
+                          class="addTask glyphicon glyphicon-play-circle glyphicon-plus-sign"
+                          style="margin-top: 5%;cursor: hand"></span></td>
+                <td colspan="5"></td>
+            </tr>
+            <tr id="row_0">
+                <td id="btnAdd">
+                    <button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Project</button>
+                </td>
+                <td colspan="8"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="btn-group pull-right">
+            <button id="btnSave" class="btn-primary">Save</button>
+            <button id="btnSubmit" class="btn-success">Submit</button>
+        </div>
+    </form>
 </div>
 
 <!--<script th:src="@{js/jquery-3.2.0.min.js}"></script>-->

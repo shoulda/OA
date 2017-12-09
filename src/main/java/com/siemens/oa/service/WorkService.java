@@ -26,4 +26,6 @@ public interface WorkService {
 
     JsonListToWork WorkToJson(List<Work> works, String weekid);
 
+    JsonListToWork WorkToJson2(List<Work> works, String weekid);
+
 }

@@ -60,12 +60,10 @@ public interface WorkDao {
      * 根据用户ID和查找指定范围工作记录
      *
      * @param userid
-     * @param start
-     * @param end
      * @return
      */
     @Select("select * from Work where userid=#{userid} and weekid=#{weekid}")
     List<Work> selectWorkByWeekId(@Param("userid") Integer userid,
-                                 @Param("weekid") String weekid);
+                                  @Param("weekid") String weekid);
 
 }

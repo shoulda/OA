@@ -4,7 +4,7 @@
  */
 
 //测试数据
-//var JsonData = '{"weekId": 1511712000000,"work":[{"projectName": "这是项目一","projectId": 1,"tasks": [{"taskId": 1,"taskName": "这是项目一的任务1","stamp": 1511764230000,"hour": 0.30},{"taskId": 2,"taskName": "这是项目一的任务2","stamp": 1511836200000,"hour": 0.30}]},{"projectName": "这是项目二","projectId": 2,"tasks": [{"taskId": 3,"taskName": "这是项目二的任务，任务Id是3","stamp": 1511940600000,"hour": 0.30},{"taskId": 4,"taskName": "这是项目二的任务，任务Id是4","stamp": 1512023400000,"hour": 1.30}]},{"projectName": "这是项目三","projectId": 3,"tasks": [{"taskId": 5,"stamp": 1511764230000,"taskName": "这是属于项目三的任务，任务id是5","hour": 1.30},{"taskId": 6,"taskName": "这是属于项目三的任务，任务id是6","stamp": 1511836200000,"hour": 1.30}]},{"projectName": "这是项目四","projectId": 4,"tasks": [{"taskId": 7,"stamp": 1511940600000,"taskName": "这是属于项目四的任务，任务Id是7","hour": 2.30},{"taskId": 8,"stamp": 1512023400000,"taskName": "这是属于项目四的任务，任务Id是8","hour": 2.30}]}]}';
+// var JsonData = '{"weekId": 1511712000000,"work":[{"projectName": "这是xujin","projectId": 1,"tasks": [{"taskId": 1,"taskName": "这是项目一的任务1","stamp": 1511764230000,"hour": 0.30},{"taskId": 2,"taskName": "这是项目一的任务2","stamp": 1511836200000,"hour": 0.30}]},{"projectName": "这是项目二","projectId": 2,"tasks": [{"taskId": 3,"taskName": "这是项目二的任务，任务Id是3","stamp": 1511940600000,"hour": 0.30},{"taskId": 4,"taskName": "这是项目二的任务，任务Id是4","stamp": 1512023400000,"hour": 1.30}]},{"projectName": "这是项目三","projectId": 3,"tasks": [{"taskId": 5,"stamp": 1511764230000,"taskName": "这是属于项目三的任务，任务id是5","hour": 1.30},{"taskId": 6,"taskName": "这是属于项目三的任务，任务id是6","stamp": 1511836200000,"hour": 1.30}]},{"projectName": "这是项目四","projectId": 4,"tasks": [{"taskId": 7,"stamp": 1511940600000,"taskName": "这是属于项目四的任务，任务Id是7","hour": 2.30},{"taskId": 8,"stamp": 1512023400000,"taskName": "这是属于项目四的任务，任务Id是8","hour": 2.30}]}]}';
 
 /**
  * 初始化表格上面的文字内容
@@ -79,6 +79,21 @@ function setUpTable(data) {
     }
 }
 
+function cleanData() {
+    var projectNum = getProjectsCount();
+    console.log("------");
+    console.log(projectNum);
+    for (var i = 1; i <= projectNum; i++) {
+        removeProjectByProjectNum(i);
+    }
+    var newProjectTr = getProjectTr(1);
+    var addTaskTr = getAddTaskTr(1);
+    $('#row_0').before(newProjectTr);
+    $('#row_0').before(addTaskTr);
+    // addProject();
+    // removeProjectByProjectNum(1);
+}
+
 function setUpRowWithData(rowIndex, projectData) {
 
     var projectName = projectData['projectName'];
@@ -92,10 +107,11 @@ function setUpRowWithData(rowIndex, projectData) {
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
         $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
-        var dateObj = new Date(tasks[t - 1]['stamp']);
+        var dateObj = new Date(parseInt(tasks[t - 1]['stamp']));
         var day = dateObj.getDay();
         var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
         var hours = tasks[t - 1]['hour'];
+        console.log(hours);
         $(dayId).val(hours);
     }
 }
@@ -106,7 +122,8 @@ function setUpRowWithData(rowIndex, projectData) {
  */
 function initDaysFromWebData(weekId) {
     $.getJSON('/work/selectWorkByScope', {weekId: weekId}, function (data) {
-        setUpTable(JSON.parse(data));
+        console.log(data);
+        setUpTable(data);
     });
     // setUpTable(JSON.parse(JsonData));
 }
@@ -125,8 +142,8 @@ function testDaysSelector() {
 
 function init(daysList) {
     initTitle(daysList);
-
     var weekId = getWeekId(daysList);
+    console.log(weekId);
     initDaysFromWebData(weekId);
 }
 
@@ -211,6 +228,7 @@ function getNewTaskTr(newTaskNum, projectNum) {
 
     return taskTr;
 }
+
 /***
  * 添加新项目时，需要构造一个 添加任务行，taskNum等于0，因为它是添加按钮
  * @param newProjectIndex
@@ -403,16 +421,22 @@ function editRow(obj) {
     $('select').removeAttr('disabled');
     $('.addTask,.removeTask').show();
 }
+
 /**
  * 提交数据 一周的数据，目前，不管如何改动，都会把这一周的数据全部提交
  * @param isSave
  */
 function submit(isSave) {
+    $("#jsonform").submit();
     $('select').attr('disabled', 'disabled');
+    // $('select').attr('option', 'disabled');
+
     $('.addTask,.removeTask').hide();
 
     // 提交到服务器
     var tableData = $('#workTable').html();//test
+    // var tableData = $('#row_1_1').html();//test
+    // console.log(tableData.getElementsByClassName("projectName"));
     // 循环获取表格数据，提交
     console.log(tableData);
 }
@@ -424,11 +448,13 @@ $(function () {
 
     $("#btnPreWeek").click(function () {
         var preWeekDaysList = dayApp.getPreWorkDaysList();
+        cleanData();
         init(preWeekDaysList);
     });
 
     $("#btnNextWeek").click(function () {
         var nextWeekDaysList = dayApp.getNextWorkDaysList();
+        cleanData();
         init(nextWeekDaysList);
     });
     $('#btnAdd').click(function () {

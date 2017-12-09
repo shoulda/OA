@@ -1,10 +1,10 @@
 package com.siemens.oa.service;
 
+import com.siemens.oa.entity.JsonListToWork;
 import com.google.gson.Gson;
 import com.siemens.oa.dao.ProjectDao;
 import com.siemens.oa.dao.TaskDao;
 import com.siemens.oa.dao.WorkDao;
-import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.List;
 public class WorkServiceImpl implements WorkService {
 
     private final WorkDao workDao;
-    private final ProjectDao projectDao ;
+    private final ProjectDao projectDao;
     private final TaskDao taskDao;
 
     @Autowired
@@ -108,7 +108,7 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> JsonToWork(String JsonStr) {
         JsonListToWork jsonwork = new Gson().fromJson(JsonStr, JsonListToWork.class);
         System.out.println(jsonwork.getWork().size());
-        ArrayList<Work> works = new ArrayList<Work>();
+        ArrayList<Work> works = new ArrayList<>();
         List<JsonListToWork.WorkEntity> work = jsonwork.getWork();
         for (JsonListToWork.WorkEntity workEntity : work) {
             String weekid = String.valueOf(jsonwork.getWeekId());
@@ -126,106 +126,114 @@ public class WorkServiceImpl implements WorkService {
         return works;
     }
 
+    /**
+     * liyuhui : WorkToJson
+     *
+     * @param works
+     * @param weekid
+     * @return
+     */
     @Override
-    public JsonListToWork WorkToJson(List<Work> works,String weekid) {
+    public JsonListToWork WorkToJson(List<Work> works, String weekid) {
         JsonListToWork json = new JsonListToWork();
-        List<JsonListToWork.WorkEntity> workList = new ArrayList<JsonListToWork.WorkEntity>() ;
+        List<JsonListToWork.WorkEntity> workList = new ArrayList<JsonListToWork.WorkEntity>();
         json.setWeekId(weekid);
-
-
         for (Work temp_work : works) {
-            System.out.println(temp_work);
-            if (existPro(workList,temp_work.getProjectid()) == 0){
-                System.out.println(temp_work);
+            if (existPro(workList, temp_work.getProjectid()) == 0) {
                 JsonListToWork.WorkEntity work = json.new WorkEntity();
                 List<JsonListToWork.WorkEntity.TasksEntity> taskList = new ArrayList<JsonListToWork.WorkEntity.TasksEntity>();
                 JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
-
                 work.setProjectId(temp_work.getProjectid());
-                System.out.println(work.getProjectId());
                 work.setProjectName(projectDao.selectProjectById(temp_work.getProjectid()).getProjectname());
-                //System.out.println(work.getProjectName());
                 task.setHour(temp_work.getHour());
                 task.setStamp(temp_work.getStamp());
                 task.setTaskId(temp_work.getTaskid());
-                System.out.println(taskDao.selectTaskById(temp_work.getTaskid()).getTaskname());
                 task.setTaskName(taskDao.selectTaskById(temp_work.getTaskid()).getTaskname());
-                System.out.println(task.getTaskId());
                 task.setHour(temp_work.getHour());
-
                 taskList.add(task);
                 work.setTasks(taskList);
-
                 workList.add(work);
-            }
-            else {
-                JsonListToWork.WorkEntity work = workList.get(existPro(workList,temp_work.getProjectid()));
+            } else {
+                JsonListToWork.WorkEntity work = workList.get(existPro(workList, temp_work.getProjectid()));
                 JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
-
                 task.setHour(temp_work.getHour());
                 task.setStamp(temp_work.getStamp());
                 task.setTaskId(temp_work.getTaskid());
                 task.setTaskName(taskDao.selectTaskById(task.getTaskId()).getTaskname());
                 task.setHour(temp_work.getHour());
                 work.getTasks().add(task);
-
             }
-
-//            for (JsonListToWork.WorkEntity jsonWork : workList) {
-//
-//
-//            }
-//                if (jsonWork.getProjectId() != temp_work.getProjectid()) {
-//                    JsonListToWork.WorkEntity work = json.new WorkEntity();
-//                    List<JsonListToWork.WorkEntity.TasksEntity> taskList = jsonWork.getTasks();
-//                    JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
-//                    work.setProjectId(temp_work.getProjectid());
-//                    work.setProjectName(projectDao.selectProjectById(work.getProjectId()).getProjectname());
-//                    task.setHour(temp_work.getHour());
-//                    task.setStamp(Integer.valueOf(temp_work.getStamp()));
-//                    task.setTaskId(temp_work.getTaskid());
-//                    task.setTaskName(taskDao.selectTaskById(task.getTaskId()).getTaskname());
-//                    task.setHour(temp_work.getHour());
-//                    taskList.add(task);
-//                    work.setTasks(taskList);
-//                    workList.add(work);
-//                }
-//                else {
-//                    JsonListToWork.WorkEntity work = json.new WorkEntity();
-//                    JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
-//
-//                    work.setProjectId(temp_work.getProjectid());
-//                    work.setProjectName(projectDao.selectProjectById(work.getProjectId()).getProjectname());
-//                    task.setHour(temp_work.getHour());
-//                    task.setStamp(Integer.valueOf(temp_work.getStamp()));
-//                    task.setTaskId(temp_work.getTaskid());
-//                    task.setTaskName(taskDao.selectTaskById(task.getTaskId()).getTaskname());
-//                    task.setHour(temp_work.getHour());
-//
-//                    work.getTasks().add(task);
-//                    workList.add(work);
-//
-//                }
-//            }
         }
-        System.out.println(workList);
+//        System.out.println(workList.size());
         json.setWork(workList);
-
+//        System.out.println(json.getWork().get(0).getTasks().get(0).getTaskName());
         return json;
     }
 
-
-    private int existPro(List<JsonListToWork.WorkEntity> workList,int projectid){
-        JsonListToWork.WorkEntity workEntity  ;
+    private int existPro(List<JsonListToWork.WorkEntity> workList, int projectid) {
+        JsonListToWork.WorkEntity workEntity;
         if (workList == null) return 0;
         else {
-            for (int i = 0;i < workList.size();i++){
+            for (int i = 0; i < workList.size(); i++) {
                 workEntity = workList.get(i);
                 if (workEntity.getProjectId() == projectid) return i;
             }
             return 0;
         }
+    }
 
+
+    /**
+     * xujin : WorkToJson2
+     *
+     * @param works
+     * @param weekid
+     * @return
+     */
+    @Override
+    public JsonListToWork WorkToJson2(List<Work> works, String weekid) {
+        JsonListToWork listToWork = new JsonListToWork();
+        List<JsonListToWork.WorkEntity> workEntityList = new ArrayList<>();
+        listToWork.setWeekId(weekid);
+        for (Work work : works) {
+            if (!ProjectIfin(work, workEntityList)) {
+                JsonListToWork.WorkEntity workEntity = listToWork.new WorkEntity();
+                workEntity.setProjectId(work.getProjectid());
+                workEntity.setProjectId(work.getProjectid());
+                workEntity.setProjectName(projectDao.selectProjectById(work.getProjectid()).getProjectname());
+                List<JsonListToWork.WorkEntity.TasksEntity> tasksEntityList = new ArrayList<>();
+                JsonListToWork.WorkEntity.TasksEntity tasksEntity = workEntity.new TasksEntity();
+                tasksEntity.setHour(work.getHour());
+                tasksEntity.setStamp(work.getStamp());
+                tasksEntity.setTaskId(work.getTaskid());
+                tasksEntity.setTaskName(taskDao.selectTaskById(work.getTaskid()).getTaskname());
+                tasksEntityList.add(tasksEntity);
+                workEntity.setTasks(tasksEntityList);
+                workEntityList.add(workEntity);
+            }
+        }
+        listToWork.setWork(workEntityList);
+        System.out.println(workEntityList);
+        return listToWork;
+    }
+
+    public boolean ProjectIfin(Work work, List<JsonListToWork.WorkEntity> workEntityList) {
+        boolean flag = false;
+        if (workEntityList.size() > 0) {
+            for (JsonListToWork.WorkEntity workEntity : workEntityList) {
+                if (work.getProjectid() == workEntity.getProjectId()) {
+                    JsonListToWork.WorkEntity.TasksEntity tasksEntity = workEntity.new TasksEntity();
+                    tasksEntity.setHour(work.getHour());
+                    tasksEntity.setStamp(work.getStamp());
+                    tasksEntity.setTaskId(work.getTaskid());
+                    tasksEntity.setTaskName(taskDao.selectTaskById(work.getTaskid()).getTaskname());
+                    workEntity.getTasks().add(tasksEntity);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
 }

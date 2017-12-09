@@ -50,6 +50,7 @@ DayApp.prototype.getNextWorkDaysList = function () {
     }
     return this.currentWorkDaysList;
 };
+
 DayApp.prototype.getPreWorkDaysList = function () {
     for (var i = 0; i <= this.currentWorkDaysList.length; i++) {
         if (this.currentWorkDaysList[i] instanceof Date) {

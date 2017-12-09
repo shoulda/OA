@@ -1,6 +1,7 @@
 package com.siemens.oa.controller;
 
 
+import com.google.gson.Gson;
 import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.Work;
 import com.siemens.oa.service.UserService;
@@ -35,13 +36,12 @@ public class WorkController {
     @RequestMapping("/selectWorkByScope")
     public JsonListToWork selectWorkByScope(HttpSession session, String weekId) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
-        System.out.println(weekId);
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekId);
-        System.out.println(works);
         JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
+//        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
         System.out.println(jsonListToWork);
-
         return jsonListToWork;
+
     }
 
     @GetMapping("/selectWork")
