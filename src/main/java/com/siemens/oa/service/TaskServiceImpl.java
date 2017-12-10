@@ -5,6 +5,8 @@ import com.siemens.oa.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * \* Created with IntelliJ IDEA.
  * \* Description:
@@ -62,5 +64,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task selectTaskByTaskName(String taskname) {
         return taskDao.selectTaskByTaskName(taskname);
+    }
+
+    /**
+     * 查询所有的task记录
+     *
+     * @return
+     */
+    @Override
+    public List<Task> selectAllTask() {
+        return taskDao.selectAllTask();
     }
 }

@@ -109,7 +109,7 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> JsonToWork(String JsonStr) {
         JsonListToWork jsonwork = new Gson().fromJson(JsonStr, JsonListToWork.class);
-        System.out.println(jsonwork.getWork().size());
+        System.out.println("总共获得" + jsonwork.getWork().size() + "条work元素");
         ArrayList<Work> works = new ArrayList<>();
         List<JsonListToWork.WorkEntity> work = jsonwork.getWork();
         for (JsonListToWork.WorkEntity workEntity : work) {
@@ -166,9 +166,7 @@ public class WorkServiceImpl implements WorkService {
                 work.getTasks().add(task);
             }
         }
-//        System.out.println(workList.size());
         json.setWork(workList);
-//        System.out.println(json.getWork().get(0).getTasks().get(0).getTaskName());
         return json;
     }
 
@@ -215,7 +213,6 @@ public class WorkServiceImpl implements WorkService {
             }
         }
         listToWork.setWork(workEntityList);
-//        System.out.println(workEntityList);
         return listToWork;
     }
 

@@ -5,6 +5,8 @@ import com.siemens.oa.entity.Task;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface TaskDao {
@@ -42,6 +44,20 @@ public interface TaskDao {
     @Select("select * from Task where taskname = #{taskname}")
     Task selectTaskByTaskName(String taskname);
 
+    /**
+     * 根据taskid查询task记录
+     *
+     * @param taskid
+     * @return
+     */
     @Select("select * from Task where taskid = #{taskid}")
     Task selectTaskById(int taskid);
+
+    /**
+     * 查询所有task记录
+     *
+     * @return
+     */
+    @Select("select * from Task")
+    List<Task> selectAllTask();
 }

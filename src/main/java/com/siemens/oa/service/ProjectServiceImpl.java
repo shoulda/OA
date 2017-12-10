@@ -5,6 +5,8 @@ import com.siemens.oa.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * \* Created with IntelliJ IDEA.
  * \* Description:
@@ -62,5 +64,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project selectProjectByProjectName(String projectname) {
         return projectDao.selectProjectByProjectName(projectname);
+    }
+
+    @Override
+    public Project selectProjectById(int projectid) {
+        return projectDao.selectProjectById(projectid);
+    }
+
+    @Override
+    public List<Project> selectAllProject() {
+        return projectDao.selectAllProject();
     }
 }

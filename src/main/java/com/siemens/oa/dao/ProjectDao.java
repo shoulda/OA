@@ -5,6 +5,8 @@ import com.siemens.oa.entity.Project;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface ProjectDao {
@@ -42,8 +44,20 @@ public interface ProjectDao {
     @Select("select * from Project where projectname = #{projectname}")
     Project selectProjectByProjectName(String projectname);
 
+    /**
+     * 根据id查找project条目
+     *
+     * @param projectid
+     * @return
+     */
     @Select("select * from Project where projectid = #{projectid}")
     Project selectProjectById(int projectid);
 
-
+    /**
+     * 查询所有的project
+     *
+     * @return
+     */
+    @Select("select * from Project")
+    List<Project> selectAllProject();
 }

@@ -68,14 +68,21 @@ function getWeekId(daysList) {
 }
 
 function setUpTable(data) {
-    if (data['work'] != undefined) {
+    if (data['work'].length !== 0) {
         var work = data.work;
+        // for (var j=0;j<work[0]) {
+        //
+        // }
         setUpRowWithData(1, work[0]);
+
         for (var i = 1; i < work.length; i++) {
             addProject();
             var project = work[i];
             setUpRowWithData(i + 1, project);
         }
+    } else {
+        initSelectProject(1);
+        initSelectTask(1, 1);
     }
 }
 
@@ -244,6 +251,8 @@ function addProject() {
 
     $('#row_0').before(newProjectTr);
     $('#row_0').before(addTaskTr);
+    initSelectProject(newProjectIndex);
+    initSelectTask(1, newProjectIndex);
 }
 
 /**
@@ -290,6 +299,7 @@ function addTask(obj) {
     var newTaskTr = getNewTaskTr(taskNum, projectNum);
     $(tastTr).before(newTaskTr);
     modifyRowSpan(projectNum, 1);
+    initSelectTask(taskNum, projectNum);
 }
 
 /**
@@ -403,7 +413,7 @@ function modifyId(obj) {
     }
 }
 
-function editRow(obj) {
+function editRow() {
     $('select').removeAttr('disabled');
     $('.addTask,.removeTask').show();
 }
@@ -413,8 +423,6 @@ function editRow(obj) {
  * @param isSave
  */
 function submit(isSave) {
-    $('select').attr('disabled', 'disabled');
-    // $('.addTask,.removeTask').hide();
     var jsonobj = getInfoToJson();
     console.log(jsonobj);
     if (isSave) {
@@ -426,9 +434,12 @@ function submit(isSave) {
             success: function (e) {
                 console.log(e);
                 if (e.code == 200) {
+                    $('select').attr('disabled', 'disabled');
+                    $('.addTask,.removeTask').hide();
+                    $('td[id ^= action_]').hide();
                     alert("Submit Success!");
                 } else if (e.message) {
-                    alert("Submit Failed!");
+                    alert(e.message);
                 }
             },
             error: function () {
@@ -444,13 +455,15 @@ function submit(isSave) {
             success: function (e) {
                 console.log(e);
                 if (e.code == 200) {
-                    alert("Submit Success!");
+                    $('select').attr('disabled', 'disabled');
+                    $('.addTask,.removeTask').hide();
+                    alert("Save Success!");
                 } else if (e.message) {
-                    alert("Submit Failed!");
+                    alert(e.message);
                 }
             },
             error: function () {
-                alert("Submit Failed!");
+                alert("Save Failed!");
             }
         });
     }
@@ -507,7 +520,7 @@ function getInfoToJson() {
 function getIndexById(id) {
     var obj = document.getElementById(id);
     var index = obj.selectedIndex;
-    return index;
+    return index + 1;
 }
 
 /**
@@ -545,8 +558,38 @@ function cleanData() {
     var addTaskTr = getAddTaskTr(1);
     $('#row_0').before(newProjectTr);
     $('#row_0').before(addTaskTr);
-    // addProject();
-    // removeProjectByProjectNum(1);
+    // // addProject();
+    // // removeProjectByProjectNum(1);
+    // initHoursSelector();
+}
+
+/**
+ * 初始化project选择框
+ * @param project_id
+ */
+function initSelectProject(project_id) {
+    $.getJSON('/project/getProject', function (data) {
+        console.log(data);
+        var selid = document.getElementById("input_project_" + project_id);
+        for (var i = 0; i < data.length; i++) {
+            selid.options.add(new Option(data[i].projectname, data[i].projectid));
+        }
+    });
+}
+
+/**
+ * 初始化task选择框
+ * @param task_id
+ * @param project_id
+ */
+function initSelectTask(task_id, project_id) {
+    $.getJSON('/task/selectAllTask', function (data) {
+        console.log(data);
+        var selid = document.getElementById("input_task_" + task_id + "_" + project_id);
+        for (var i = 0; i < data.length; i++) {
+            selid.options.add(new Option(data[i].taskname, data[i].taskid));
+        }
+    });
 }
 
 $(function () {
