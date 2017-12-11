@@ -422,7 +422,7 @@ function editRow() {
  * 提交数据 一周的数据，目前，不管如何改动，都会把这一周的数据全部提交
  * @param isSave
  */
-function submit(isSave,WeekDaysList) {
+function submit(isSave, WeekDaysList) {
     var jsonobj = getInfoToJson(WeekDaysList);
     console.log(jsonobj);
     if (isSave) {
@@ -557,9 +557,6 @@ function cleanData() {
     var addTaskTr = getAddTaskTr(1);
     $('#row_0').before(newProjectTr);
     $('#row_0').before(addTaskTr);
-    // // addProject();
-    // // removeProjectByProjectNum(1);
-    // initHoursSelector();
 }
 
 /**
@@ -612,9 +609,9 @@ $(function () {
     });
 
     $('#btnSave').click(function () {
-        submit(false,daysList);
+        submit(false, daysList);
     });
     $('#btnSubmit').click(function () {
-        submit(true,daysList);
+        submit(true, daysList);
     });
 });
