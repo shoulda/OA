@@ -37,8 +37,8 @@ public class WorkController {
     public JsonListToWork selectWorkByScope(HttpSession session, String weekId) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekId);
-//        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
-        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
+        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
+//        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
         System.out.println(jsonListToWork);
         return jsonListToWork;
 

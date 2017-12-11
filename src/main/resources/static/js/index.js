@@ -166,7 +166,7 @@ function getProjectTr(newProjectIndex) {
         '<td class="taskColumn"> ' +
         '<div class="input-group"> ' +
         '<select class="taskName" id="input_task_1_' + newProjectIndex + '"></select>' +
-        '<span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
+        '<span  onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
         '</span>' +
         '</div> ' +
         '</td>' +
@@ -422,8 +422,8 @@ function editRow() {
  * 提交数据 一周的数据，目前，不管如何改动，都会把这一周的数据全部提交
  * @param isSave
  */
-function submit(isSave) {
-    var jsonobj = getInfoToJson();
+function submit(isSave,WeekDaysList) {
+    var jsonobj = getInfoToJson(WeekDaysList);
     console.log(jsonobj);
     if (isSave) {
         $.ajax({
@@ -474,10 +474,9 @@ function submit(isSave) {
  * 获取表单数据转换成json
  * @returns {{}}
  */
-function getInfoToJson() {
-    var dayApp = new DayApp();
+function getInfoToJson(WeekDaysList) {
     var projectNum = getProjectsCount();
-    var WeekDaysList = dayApp.getWorkDaysList(new Date());
+    console.log(WeekDaysList);
     var weekId = getWeekId(WeekDaysList);
     var json = {};
     var work = [];
@@ -613,9 +612,9 @@ $(function () {
     });
 
     $('#btnSave').click(function () {
-        submit(false);
+        submit(false,daysList);
     });
     $('#btnSubmit').click(function () {
-        submit(true);
+        submit(true,daysList);
     });
 });

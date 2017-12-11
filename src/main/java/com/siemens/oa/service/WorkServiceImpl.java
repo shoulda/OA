@@ -141,7 +141,7 @@ public class WorkServiceImpl implements WorkService {
         List<JsonListToWork.WorkEntity> workList = new ArrayList<JsonListToWork.WorkEntity>();
         json.setWeekId(weekid);
         for (Work temp_work : works) {
-            if (existPro(workList, temp_work.getProjectid()) == 0) {
+            if (existPro(workList, temp_work.getProjectid()) == -1) {
                 JsonListToWork.WorkEntity work = json.new WorkEntity();
                 List<JsonListToWork.WorkEntity.TasksEntity> taskList = new ArrayList<JsonListToWork.WorkEntity.TasksEntity>();
                 JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
@@ -172,13 +172,13 @@ public class WorkServiceImpl implements WorkService {
 
     private int existPro(List<JsonListToWork.WorkEntity> workList, int projectid) {
         JsonListToWork.WorkEntity workEntity;
-        if (workList == null) return 0;
+        if (workList.size() == 0) return -1;
         else {
             for (int i = 0; i < workList.size(); i++) {
                 workEntity = workList.get(i);
                 if (workEntity.getProjectId() == projectid) return i;
             }
-            return 0;
+            return -1;
         }
     }
 
