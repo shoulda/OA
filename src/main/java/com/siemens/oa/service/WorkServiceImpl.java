@@ -1,10 +1,12 @@
 package com.siemens.oa.service;
 
+import com.siemens.oa.dao.UserDao;
 import com.siemens.oa.entity.JsonListToWork;
 import com.google.gson.Gson;
 import com.siemens.oa.dao.ProjectDao;
 import com.siemens.oa.dao.TaskDao;
 import com.siemens.oa.dao.WorkDao;
+import com.siemens.oa.entity.Series;
 import com.siemens.oa.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +30,14 @@ public class WorkServiceImpl implements WorkService {
     private final WorkDao workDao;
     private final ProjectDao projectDao;
     private final TaskDao taskDao;
+    private final UserDao userDao;
 
     @Autowired
-    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao) {
+    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao, UserDao userDao) {
         this.workDao = workDao;
         this.projectDao = projectDao;
         this.taskDao = taskDao;
+        this.userDao = userDao;
     }
 
     /**
@@ -170,6 +174,7 @@ public class WorkServiceImpl implements WorkService {
         return json;
     }
 
+
     private int existPro(List<JsonListToWork.WorkEntity> workList, int projectid) {
         JsonListToWork.WorkEntity workEntity;
         if (workList.size() == 0) return -1;
@@ -251,5 +256,30 @@ public class WorkServiceImpl implements WorkService {
         map.put("message", message);
         map.put("code", code);
         return map;
+    }
+
+    /**
+     * 根据userID和weekID获取某个人某一周的工作记录
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Override
+    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
+        List<Work> works = workDao.selectWorkByWeekId(userid, weekid);
+        Series series = new Series();
+        series.setType("pie");
+        series.setName(userDao.selectUserById(userid).getUsername() + "第" + weekConut + "周的工作记录");
+        ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
+        for (Work work : works) {
+            Series.DataEntity dataEntity = series.new DataEntity();
+            dataEntity.setName(projectDao.selectProjectById(work.getProjectid()).getProjectname() + "-" + taskDao.selectTaskById(work.getTaskid()).getTaskname());
+            dataEntity.setY(work.getHour());
+            dataEntities.add(dataEntity);
+        }
+        series.setData(dataEntities);
+        System.out.print(series);
+        return series;
     }
 }

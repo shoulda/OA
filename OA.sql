@@ -11,11 +11,33 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 11/12/2017 21:59:15
+ Date: 12/12/2017 16:28:48
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for Permission
+-- ----------------------------
+DROP TABLE IF EXISTS `Permission`;
+CREATE TABLE `Permission` (
+  `UserID` int(10) NOT NULL,
+  `Auth` varchar(20) NOT NULL DEFAULT 'user',
+  KEY `Permission_User_UserID_fk` (`UserID`),
+  CONSTRAINT `Permission_User_UserID_fk` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of Permission
+-- ----------------------------
+BEGIN;
+INSERT INTO `Permission` VALUES (2, 'user');
+INSERT INTO `Permission` VALUES (1, 'admin');
+INSERT INTO `Permission` VALUES (3, 'user');
+INSERT INTO `Permission` VALUES (4, 'user');
+INSERT INTO `Permission` VALUES (5, 'user');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for Project
@@ -113,9 +135,9 @@ INSERT INTO `Work` VALUES (14, 1, 4, 6, '22222', '89757', 1, -1);
 INSERT INTO `Work` VALUES (15, 2, 4, 6, '22222', '66666', 1, 0);
 INSERT INTO `Work` VALUES (16, 8, 2, 6, '22222', '1234', 10, 0);
 INSERT INTO `Work` VALUES (17, 1, 1, 2, '1511712000000', '1511836200000', 2, 1);
-INSERT INTO `Work` VALUES (18, 1, 2, 4, '1511712000000', '1512023400000', 1, 1);
-INSERT INTO `Work` VALUES (19, 1, 3, 6, '1511712000000', '1511836200000', 4, 1);
-INSERT INTO `Work` VALUES (20, 1, 4, 8, '1511712000000', '1512023400000', 3, 1);
+INSERT INTO `Work` VALUES (18, 1, 2, 3, '1511712000000', '1512023400000', 1, 1);
+INSERT INTO `Work` VALUES (19, 1, 3, 1, '1511712000000', '1511836200000', 4, 1);
+INSERT INTO `Work` VALUES (20, 1, 2, 2, '1511712000000', '1512023400000', 3, 1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

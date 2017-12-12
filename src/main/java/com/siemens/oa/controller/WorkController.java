@@ -2,6 +2,7 @@ package com.siemens.oa.controller;
 
 
 import com.siemens.oa.entity.JsonListToWork;
+import com.siemens.oa.entity.Series;
 import com.siemens.oa.entity.Work;
 import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
@@ -31,6 +32,14 @@ public class WorkController {
     @PostMapping("/insertWork")
     public void insertWork(@RequestBody Work work) {
         workService.insertWork(work);
+    }
+
+    @GetMapping("/selectWorkSeries")
+    public Series selectWorkSeries(Integer userid, String weekid, Integer weekConut) {
+        System.out.print(userid + "-----" + weekid + "-----" + weekConut + "\n");
+        Series series = workService.WorkToSeries(userid, weekid, weekConut);
+        System.out.print(series);
+        return series;
     }
 
     @RequestMapping("/selectWorkByScope")

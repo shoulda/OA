@@ -70,9 +70,6 @@ function getWeekId(daysList) {
 function setUpTable(data) {
     if (data['work'].length !== 0) {
         var work = data.work;
-        // for (var j=0;j<work[0]) {
-        //
-        // }
         setUpRowWithData(1, work[0]);
 
         for (var i = 1; i < work.length; i++) {

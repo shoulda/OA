@@ -50,4 +50,6 @@ public interface UserDao {
     @Select("select userid from User where username = #{username}")
     Integer selectUserIdByName(String username);
 
+    @Select("select * from User where userid=#{userid} ")
+    User selectUserById(Integer userid);
 }
