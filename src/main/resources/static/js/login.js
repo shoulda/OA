@@ -10,8 +10,9 @@
 //         return false;
 //     }
 //     return true;
-// }
+// // }
 function login(userName, password) {
+
     $.ajax({
         method: 'POST',
         url: '/login',
@@ -22,36 +23,39 @@ function login(userName, password) {
         success: function (e) {
             console.log(e);
             if (e.code == 200) {
+                alert("Login successfully!"+" Welcome "+userName);
                 window.location.href = 'index';
             } else if (e.message) {
-                $("#myModal").modal('show');
-                $(".modal-body").html(e.message);
+                alert("Account or password error");
             }
         },
         error: function () {
-            $("#myModal").modal('show');
-            $(".modal-body").html(e);
+            alert("Error!");
+            alert(userName);
+            alert(password);
         }
     });
 }
 
 $(function () {
     $("#btnSubmit").click(function () {
-        var userName = $("#userName").val().trim();
-        var password = $("#userPassword").val().trim();
-        if (userName === undefined || userName.length < 1) {
-            $("#myModal").modal('show');
-            $(".modal-body").html('请输入用户名');
-            return;
-        }
-        if (password === undefined || password.length < 1) {
-            $("#myModal").modal('show');
-            $(".modal-body").html('请输入密码');
-            return;
-        }
+         var userName = $("#userName").val().trim();
+         var password = $("#userPassword").val().trim();
+        // if (userName === undefined || userName.length < 1) {
+        //     $("#myModal").modal('show');
+        //     $(".modal-body").html('请输入用户名');
+        //     return;
+        // }
+        // if (password === undefined || password.length < 1) {
+        //     $("#myModal").modal('show');
+        //     $(".modal-body").html('请输入密码');
+        //     return;
+        // }
         // if(emailCheck(userName)){
         // }
         login(userName, password);
 
+
     });
+
 });
