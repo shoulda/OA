@@ -37,6 +37,7 @@ public class LoginController {
     public Map<String, Object> loginPost(String userName, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByName(userName);
+
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 session.setAttribute(WebSecurityConfig.SESSION_KEY, userName);
@@ -44,6 +45,7 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
+                System.out.println(map);
                 return map;
             } else {
                 map.put("success", false);
@@ -51,7 +53,8 @@ public class LoginController {
                 map.put("code", "403");
                 return map;
             }
-        } else {
+        }
+        else {
             map.put("success", false);
             map.put("message", "User not exist!");
             map.put("code", "404");

@@ -464,7 +464,6 @@ function submit(isSave, WeekDaysList) {
             }
         });
     }
-
 }
 
 /**
