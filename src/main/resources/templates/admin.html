@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:with="pic='2.jpg'"
+      th:with="pic='1.png'"
       th:style="'background:url(/images/bg/'+@{${pic}}+');no-repeat; background-size: cover;'">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link rel="shortcut icon" th:href="@{/images/logo.png}"/>
-    <title>用户登录</title>
+    <title>管理员登陆</title>
     <link th:href="@{//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/style.min.css}" rel="stylesheet" type="text/css"/>
@@ -52,9 +52,9 @@
     <!--加了个圆角矩形(？-->
     <div class="panel panel-color panel-danger panel-pages panel-shadow">
         <!--增加背景图片 定位在style.min.css里面-->
-        <div class="panel-heading bg-img">
+        <div class="panel-heading " th:style="'background-color:#333333'">
             <div class="bg-overlay"></div>
-            <h3 class="text-center m-t-10" style="color: white">Login&nbsp;Time&nbsp;Card</h3>
+            <h3 class="text-center m-t-10" style="color: white">Admin&nbsp;Login&nbsp;</h3>
         </div>
         <!--此处把表单元素换成了div-->
         <div class="panel-body">

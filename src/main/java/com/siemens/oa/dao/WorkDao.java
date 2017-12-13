@@ -66,5 +66,6 @@ public interface WorkDao {
     List<Work> selectWorkByWeekId(@Param("userid") Integer userid,
                                   @Param("weekid") String weekid);
 
-
+    @Select("select userid,taskid,sum(Hour) as hour from Work where weekid = #{weekid} and projectid=#{projectid} GROUP BY userid, taskid")
+    List<Work> selectWorkByPW(@Param("projectid") Integer projectid, @Param("weekid") String weekid);
 }

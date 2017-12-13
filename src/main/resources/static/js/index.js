@@ -5,7 +5,7 @@
 
 //测试数据
 // var JsonData = '{"weekId": 1511712000000,"work":[{"projectName": "这是xujin","projectId": 1,"tasks": [{"taskId": 1,"taskName": "这是项目一的任务1","stamp": 1511764230000,"hour": 0.30},{"taskId": 2,"taskName": "这是项目一的任务2","stamp": 1511836200000,"hour": 0.30}]},{"projectName": "这是项目二","projectId": 2,"tasks": [{"taskId": 3,"taskName": "这是项目二的任务，任务Id是3","stamp": 1511940600000,"hour": 0.30},{"taskId": 4,"taskName": "这是项目二的任务，任务Id是4","stamp": 1512023400000,"hour": 1.30}]},{"projectName": "这是项目三","projectId": 3,"tasks": [{"taskId": 5,"stamp": 1511764230000,"taskName": "这是属于项目三的任务，任务id是5","hour": 1.30},{"taskId": 6,"taskName": "这是属于项目三的任务，任务id是6","stamp": 1511836200000,"hour": 1.30}]},{"projectName": "这是项目四","projectId": 4,"tasks": [{"taskId": 7,"stamp": 1511940600000,"taskName": "这是属于项目四的任务，任务Id是7","hour": 2.30},{"taskId": 8,"stamp": 1512023400000,"taskName": "这是属于项目四的任务，任务Id是8","hour": 2.30}]}]}';
-
+//
 /**
  * 初始化表格上面的文字内容
  * @param daysList 最近5个工作日的日期
@@ -89,6 +89,9 @@ function setUpRowWithData(rowIndex, projectData) {
     var projectName = projectData['projectName'];
     var projectId = projectData['projectId'];
     var tasks = projectData['tasks'];
+    // if () {
+    //
+    // }
     $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
     for (var t = 1; t <= tasks.length; t++) {
         if (t > 1) {
@@ -97,12 +100,13 @@ function setUpRowWithData(rowIndex, projectData) {
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
         $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
-        var dateObj = new Date(parseInt(tasks[t - 1]['stamp']));
-        var day = dateObj.getDay();
-        var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
-        var hours = tasks[t - 1]['hour'];
-        console.log(hours);
-        $(dayId).val(hours);
+        for (var m = 1; m <= tasks[t - 1]['days'].length; m++) {
+            dateObj = new Date(parseInt(tasks[t - 1]['days'][m - 1]['stamp']));
+            var day = dateObj.getDay();
+            var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
+            var hours = tasks[t - 1]['days'][m - 1]['hour'];
+            $(dayId).val(hours);
+        }
     }
 }
 
@@ -248,8 +252,7 @@ function addProject() {
 
     $('#row_0').before(newProjectTr);
     $('#row_0').before(addTaskTr);
-    initSelectProject(newProjectIndex);
-    initSelectTask(1, newProjectIndex);
+    return newProjectIndex;
 }
 
 /**
@@ -601,7 +604,9 @@ $(function () {
         init(nextWeekDaysList);
     });
     $('#btnAdd').click(function () {
-        addProject();
+        var index = addProject();
+        initSelectProject(index);
+        initSelectTask(1, index);
     });
 
     $('#btnSave').click(function () {
