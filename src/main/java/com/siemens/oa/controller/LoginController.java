@@ -50,7 +50,7 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
-                System.out.println(map);
+//                System.out.println(map);
                 return map;
             } else {
                 map.put("success", false);
@@ -67,6 +67,12 @@ public class LoginController {
         }
 
     }
+
+    @GetMapping("/testOne")
+    public String testOne() {
+        return "testOne";
+    }
+
 
     @GetMapping("/index")
     public String index() {

@@ -89,6 +89,9 @@ function setUpRowWithData(rowIndex, projectData) {
     var projectName = projectData['projectName'];
     var projectId = projectData['projectId'];
     var tasks = projectData['tasks'];
+    // if () {
+    //
+    // }
     $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
     for (var t = 1; t <= tasks.length; t++) {
         if (t > 1) {
@@ -96,15 +99,14 @@ function setUpRowWithData(rowIndex, projectData) {
         }
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
-
         $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
-        var dateObj = new Date(parseInt(tasks[t - 1]['stamp']));
-        var day = dateObj.getDay();
-        var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
-        var hours = tasks[t - 1]['hour'];
-
-        console.log(hours);
-        $(dayId).val(hours);
+        for (var m = 1; m <= tasks[t - 1]['days'].length; m++) {
+            dateObj = new Date(parseInt(tasks[t - 1]['days'][m - 1]['stamp']));
+            var day = dateObj.getDay();
+            var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
+            var hours = tasks[t - 1]['days'][m - 1]['hour'];
+            $(dayId).val(hours);
+        }
     }
 }
 
@@ -250,8 +252,7 @@ function addProject() {
 
     $('#row_0').before(newProjectTr);
     $('#row_0').before(addTaskTr);
-    initSelectProject(newProjectIndex);
-    initSelectTask(1, newProjectIndex);
+    return newProjectIndex;
 }
 
 /**
@@ -603,7 +604,9 @@ $(function () {
         init(nextWeekDaysList);
     });
     $('#btnAdd').click(function () {
-        addProject();
+        var index = addProject();
+        initSelectProject(index);
+        initSelectTask(1, index);
     });
 
     $('#btnSave').click(function () {

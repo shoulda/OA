@@ -2,6 +2,7 @@ package com.siemens.oa.controller;
 
 
 import com.siemens.oa.entity.JsonListToWork;
+import com.siemens.oa.entity.JsonListToWork2;
 import com.siemens.oa.entity.Series;
 import com.siemens.oa.entity.Work;
 import com.siemens.oa.service.UserService;
@@ -36,18 +37,25 @@ public class WorkController {
 
     @GetMapping("/selectWorkSeries")
     public Series selectWorkSeries(Integer userid, String weekid, Integer weekConut) {
-        System.out.print(userid + "-----" + weekid + "-----" + weekConut + "\n");
+//        System.out.print(userid + "-----" + weekid + "-----" + weekConut + "\n");
         Series series = workService.WorkToSeries(userid, weekid, weekConut);
         System.out.print(series);
         return series;
     }
 
+    @GetMapping("/selectWorkByPW")
+    public Series selectWorkByPW(Integer projectid, String weekid, Integer weekConut) {
+        Series series = workService.ProjectToSeries(projectid, weekid, weekConut);
+        System.out.print(series);
+        return series;
+    }
+
     @RequestMapping("/selectWorkByScope")
-    public JsonListToWork selectWorkByScope(HttpSession session, String weekId) {
+    public JsonListToWork2 selectWorkByScope(HttpSession session, String weekId) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekId);
-        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
-//        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
+//        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
+        JsonListToWork2 jsonListToWork = workService.WorkToJson2(works, weekId);
         System.out.println(jsonListToWork);
         return jsonListToWork;
 
