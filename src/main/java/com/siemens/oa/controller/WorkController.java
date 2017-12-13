@@ -1,8 +1,11 @@
 package com.siemens.oa.controller;
 
 
+import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.JsonListToWork;
+import com.siemens.oa.entity.JsonListToWork2;
 import com.siemens.oa.entity.Work;
+import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +37,18 @@ public class WorkController {
     }
 
     @RequestMapping("/selectWorkByScope")
-    public JsonListToWork selectWorkByScope(HttpSession session, String weekId) {
+    public JsonListToWork2 selectWorkByScope(HttpSession session, String weekId) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekId);
-        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekId);
+        JsonListToWork2 jsonListToWork2 = workService.WorkToJson(works, weekId);
 //        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
-        System.out.println(jsonListToWork);
-        return jsonListToWork;
+        System.out.println(jsonListToWork2);
+        return jsonListToWork2;
 
     }
 
     @GetMapping("/selectWork")
+    @AuthDetec(authorities = Auth.admin)
     public List<Work> selectWork(HttpSession session) {
         int a = userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString());
         System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY) + "-----SESSIONKEY-----" + a);
