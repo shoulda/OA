@@ -41,7 +41,7 @@ public class LoginController {
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 session.setAttribute(WebSecurityConfig.SESSION_KEY, userName);
-                System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
+               // System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");

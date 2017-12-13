@@ -1,6 +1,5 @@
 package com.siemens.oa.service;
 
-import com.siemens.oa.dao.UserDao;
 import com.siemens.oa.entity.JsonListToWork;
 import com.google.gson.Gson;
 import com.siemens.oa.dao.ProjectDao;
@@ -30,14 +29,12 @@ public class WorkServiceImpl implements WorkService {
     private final WorkDao workDao;
     private final ProjectDao projectDao;
     private final TaskDao taskDao;
-    private final UserDao userDao;
 
     @Autowired
-    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao, UserDao userDao) {
+    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao) {
         this.workDao = workDao;
         this.projectDao = projectDao;
         this.taskDao = taskDao;
-        this.userDao = userDao;
     }
 
     /**
@@ -142,12 +139,12 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public JsonListToWork WorkToJson(List<Work> works, String weekid) {
         JsonListToWork json = new JsonListToWork();
-        List<JsonListToWork.WorkEntity> workList = new ArrayList<JsonListToWork.WorkEntity>();
+        List<JsonListToWork.WorkEntity> workList = new ArrayList<>();
         json.setWeekId(weekid);
         for (Work temp_work : works) {
             if (existPro(workList, temp_work.getProjectid()) == -1) {
                 JsonListToWork.WorkEntity work = json.new WorkEntity();
-                List<JsonListToWork.WorkEntity.TasksEntity> taskList = new ArrayList<JsonListToWork.WorkEntity.TasksEntity>();
+                List<JsonListToWork.WorkEntity.TasksEntity> taskList = new ArrayList<>();
                 JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
                 work.setProjectId(temp_work.getProjectid());
                 work.setProjectName(projectDao.selectProjectById(temp_work.getProjectid()).getProjectname());
@@ -174,14 +171,19 @@ public class WorkServiceImpl implements WorkService {
         return json;
     }
 
+    @Override
+    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
+        return null;
+    }
 
     private int existPro(List<JsonListToWork.WorkEntity> workList, int projectid) {
         JsonListToWork.WorkEntity workEntity;
-        if (workList.size() == 0) return -1;
+        if (workList == null) return -1;
         else {
             for (int i = 0; i < workList.size(); i++) {
                 workEntity = workList.get(i);
                 if (workEntity.getProjectId() == projectid) return i;
+
             }
             return -1;
         }
@@ -256,30 +258,5 @@ public class WorkServiceImpl implements WorkService {
         map.put("message", message);
         map.put("code", code);
         return map;
-    }
-
-    /**
-     * 根据userID和weekID获取某个人某一周的工作记录
-     *
-     * @param userid
-     * @param weekid
-     * @return
-     */
-    @Override
-    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
-        List<Work> works = workDao.selectWorkByWeekId(userid, weekid);
-        Series series = new Series();
-        series.setType("pie");
-        series.setName(userDao.selectUserById(userid).getUsername() + "第" + weekConut + "周的工作记录");
-        ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
-        for (Work work : works) {
-            Series.DataEntity dataEntity = series.new DataEntity();
-            dataEntity.setName(projectDao.selectProjectById(work.getProjectid()).getProjectname() + "-" + taskDao.selectTaskById(work.getTaskid()).getTaskname());
-            dataEntity.setY(work.getHour());
-            dataEntities.add(dataEntity);
-        }
-        series.setData(dataEntities);
-        System.out.print(series);
-        return series;
     }
 }
