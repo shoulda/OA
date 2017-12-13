@@ -1,0 +1,58 @@
+{
+  "weekId": "1511712000000",
+  "work": [
+    {
+      "projectName": "oa",
+      "projectId": 1,
+      "tasks": [
+        {
+          "taskName": "modifiy-bug",
+          "taskId": 1,
+          "days": [
+            {
+              "hour": 1,
+              "stamp": "1511712000000",
+              "m_STATUS": 1
+            },
+            {
+              "hour": 2,
+              "stamp": "1511798400000",
+              "m_STATUS": 1
+            },
+            {
+              "hour": 2,
+              "stamp": "1511798400000",
+              "m_STATUS": 1
+            },
+            {
+              "hour": 3,
+              "stamp": "1511884800000",
+              "m_STATUS": 1
+            }
+          ]
+        },
+        {
+          "taskName": "learn",
+          "taskId": 3,
+          "days": [
+            {
+              "hour": 2,
+              "stamp": "1511712000000",
+              "m_STATUS": 1
+            },
+            {
+              "hour": 3,
+              "stamp": "1511798400000",
+              "m_STATUS": 1
+            },
+            {
+              "hour": 4,
+              "stamp": "1511971200000",
+              "m_STATUS": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
