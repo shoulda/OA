@@ -96,11 +96,13 @@ function setUpRowWithData(rowIndex, projectData) {
         }
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
+
         $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
         var dateObj = new Date(parseInt(tasks[t - 1]['stamp']));
         var day = dateObj.getDay();
         var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
         var hours = tasks[t - 1]['hour'];
+
         console.log(hours);
         $(dayId).val(hours);
     }

@@ -59,3 +59,11 @@ $(function () {
     });
 
 });
+
+/**
+ * 产生0-5随机数
+ */
+function render() {
+    var num =  Math.ceil(Math.random()*5);
+    return num;
+}
