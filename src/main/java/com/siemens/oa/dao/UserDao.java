@@ -69,3 +69,4 @@ public interface UserDao {
     @Select("select * from User")
     List<User> selectAllUser();
 }
+//
