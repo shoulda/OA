@@ -431,6 +431,48 @@ function editRow() {
  * @param isSave
  */
 function submit(isSave, WeekDaysList) {
+    var checkHoursFlag = checkHours();
+    switch (checkHoursFlag) {
+        case 0://通过校验
+            break;
+        case -1://某天的工作小时数超过了8
+            alert("Exceed 8 Working Hours Per Day Limit！");
+            return;
+        case -2://这周的工作小时数总和超过了40
+            alert("Exceed 40 Working Hours Per Week Limit！");
+            return;
+    }
+    //下面代码等同于函数内另一块代码
+    /*
+    var jsonobj = getInfoToJson(WeekDaysList);
+    console.log(jsonobj);
+    $.ajax({
+        method: 'POST',
+        url: isSave ? '/work/save' : '/work/submit',
+        contentType: "application/json",
+        data: JSON.stringify(jsonobj),
+        success: function (e) {
+            console.log(e);
+            if (e.code == 200) {
+                $('select').attr('disabled', 'disabled');
+                $('.addTask,.removeTask').hide();
+
+                if (isSave) {
+                    alert("Save Success!");
+                } else {
+                    $('td[id ^= action_]').hide();
+                    alert("Submit Success!");
+                }
+            } else if (e.message) {
+                alert(e.message);
+            }
+        },
+        error: function () {
+            alert(isSave ? "Save Failed!" : "Submit Failed!");
+        }
+    });
+      */
+
     var jsonobj = getInfoToJson(WeekDaysList);
     console.log(jsonobj);
     if (isSave) {

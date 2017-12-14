@@ -1,10 +1,13 @@
 package com.siemens.oa.controller;
 
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.siemens.oa.entity.*;
 import com.siemens.oa.service.ProjectService;
+import com.siemens.oa.annotation.AuthDetec;
+import com.siemens.oa.entity.JsonListToWork;
+import com.siemens.oa.entity.JsonListToWork2;
+import com.siemens.oa.entity.Work;
+import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
 import org.json.simple.JSONObject;
@@ -67,6 +70,7 @@ public class WorkController {
     }
 
     @GetMapping("/selectWork")
+    @AuthDetec(authorities = Auth.admin)
     public List<Work> selectWork(HttpSession session) {
         int a = userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString());
         System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY) + "-----SESSIONKEY-----" + a);
@@ -103,7 +107,6 @@ public class WorkController {
     }
 
     @PostMapping("/save")
-
     public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
         System.out.println("<************Save************>");
         List<Work> work = workService.JsonToWork(object);

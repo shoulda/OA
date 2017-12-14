@@ -141,34 +141,52 @@ public class WorkServiceImpl implements WorkService {
      * @return
      */
     @Override
-    public JsonListToWork WorkToJson(List<Work> works, String weekid) {
-        JsonListToWork json = new JsonListToWork();
-        List<JsonListToWork.WorkEntity> workList = new ArrayList<JsonListToWork.WorkEntity>();
+    public JsonListToWork2 WorkToJson(List<Work> works, String weekid) {
+        JsonListToWork2 json = new JsonListToWork2();
+        List<JsonListToWork2.WorkEntity> workList = new ArrayList<>();
         json.setWeekId(weekid);
+        System.out.println(weekid);
         for (Work temp_work : works) {
             if (existPro(workList, temp_work.getProjectid()) == -1) {
-                JsonListToWork.WorkEntity work = json.new WorkEntity();
-                List<JsonListToWork.WorkEntity.TasksEntity> taskList = new ArrayList<JsonListToWork.WorkEntity.TasksEntity>();
-                JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
+                JsonListToWork2.WorkEntity work = json.new WorkEntity();
+                List<JsonListToWork2.WorkEntity.TasksEntity> taskList = new ArrayList<>();
+                JsonListToWork2.WorkEntity.TasksEntity task = work.new TasksEntity();
+                List<JsonListToWork2.WorkEntity.TasksEntity.DaysEntity> dayList = new ArrayList<>();
+                JsonListToWork2.WorkEntity.TasksEntity.DaysEntity day = task.new DaysEntity();
                 work.setProjectId(temp_work.getProjectid());
                 work.setProjectName(projectDao.selectProjectById(temp_work.getProjectid()).getProjectname());
-                task.setHour(temp_work.getHour());
-                task.setStamp(temp_work.getStamp());
                 task.setTaskId(temp_work.getTaskid());
                 task.setTaskName(taskDao.selectTaskById(temp_work.getTaskid()).getTaskname());
-                task.setHour(temp_work.getHour());
+                day.setHour(temp_work.getHour());
+                day.setStamp(temp_work.getStamp());
+                day.setM_STATUS(temp_work.getM_STATUS());
+                dayList.add(day);
+                task.setDays(dayList);
                 taskList.add(task);
                 work.setTasks(taskList);
                 workList.add(work);
             } else {
-                JsonListToWork.WorkEntity work = workList.get(existPro(workList, temp_work.getProjectid()));
-                JsonListToWork.WorkEntity.TasksEntity task = work.new TasksEntity();
-                task.setHour(temp_work.getHour());
-                task.setStamp(temp_work.getStamp());
-                task.setTaskId(temp_work.getTaskid());
-                task.setTaskName(taskDao.selectTaskById(task.getTaskId()).getTaskname());
-                task.setHour(temp_work.getHour());
-                work.getTasks().add(task);
+                JsonListToWork2.WorkEntity work = workList.get(existPro(workList, temp_work.getProjectid()));
+                if (existTask(work.getTasks(), temp_work.getTaskid()) == -1) {
+                    JsonListToWork2.WorkEntity.TasksEntity task = work.new TasksEntity();
+                    List<JsonListToWork2.WorkEntity.TasksEntity.DaysEntity> dayList = new ArrayList<>();
+                    JsonListToWork2.WorkEntity.TasksEntity.DaysEntity day = task.new DaysEntity();
+                    task.setTaskId(temp_work.getTaskid());
+                    task.setTaskName(taskDao.selectTaskById(temp_work.getTaskid()).getTaskname());
+                    day.setHour(temp_work.getHour());
+                    day.setStamp(temp_work.getStamp());
+                    day.setM_STATUS(temp_work.getM_STATUS());
+                    dayList.add(day);
+                    task.setDays(dayList);
+                } else {
+                    JsonListToWork2.WorkEntity.TasksEntity tasksEntity = work.getTasks().get(existTask(work.getTasks(), temp_work.getTaskid()));
+                    JsonListToWork2.WorkEntity.TasksEntity.DaysEntity day = tasksEntity.new DaysEntity();
+                    day.setHour(temp_work.getHour());
+                    day.setStamp(temp_work.getStamp());
+                    day.setM_STATUS(temp_work.getM_STATUS());
+                    System.out.println(day.getStamp());
+                    tasksEntity.getDays().add(day);
+                }
             }
         }
         json.setWork(workList);
@@ -176,8 +194,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
 
-    private int existPro(List<JsonListToWork.WorkEntity> workList, int projectid) {
-        JsonListToWork.WorkEntity workEntity;
+    private int existPro(List<JsonListToWork2.WorkEntity> workList, int projectid) {
+        JsonListToWork2.WorkEntity workEntity;
         if (workList.size() == 0) return -1;
         else {
             for (int i = 0; i < workList.size(); i++) {
@@ -186,6 +204,18 @@ public class WorkServiceImpl implements WorkService {
             }
             return -1;
         }
+    }
+
+    private int existTask(List<JsonListToWork2.WorkEntity.TasksEntity> taskList, int taskid) {
+        JsonListToWork2.WorkEntity.TasksEntity tasksEntity;
+        if (taskList.size() == 0) return -1;
+        else {
+            for (int i = 0; i < taskList.size(); i++) {
+                tasksEntity = taskList.get(i);
+                if (tasksEntity.getTaskId() == taskid) return i;
+            }
+        }
+        return -1;
     }
 
 

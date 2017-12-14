@@ -1,11 +1,11 @@
 package com.siemens.oa.controller;
 
+import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.Task;
+import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +31,12 @@ public class TaskController {
     @GetMapping("/selectAllTask")
     public List<Task> selectAllTask() {
         return taskService.selectAllTask();
+    }
+
+    @PostMapping("/insertTask")
+    @AuthDetec(authorities = Auth.admin)
+    public void insertTask(Task task){
+        taskService.insertTask(task);
     }
 
 }

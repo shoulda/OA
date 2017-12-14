@@ -1,15 +1,16 @@
 package com.siemens.oa.controller;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 /**
  * Created by gxurn9 on 11/22/2017.
@@ -44,7 +45,6 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
             HttpSession session = request.getSession();
-           // System.out.println(session.getAttribute(SESSION_KEY) + "webSecurity");
             if (session.getAttribute(SESSION_KEY) != null)
                 return true;
 
@@ -55,4 +55,5 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
 
         }
     }
+
 }
