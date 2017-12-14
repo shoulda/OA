@@ -66,6 +66,41 @@ public interface WorkDao {
     List<Work> selectWorkByWeekId(@Param("userid") Integer userid,
                                   @Param("weekid") String weekid);
 
+    /**
+     * 根据userID和weekID查询该用户一周内完成任务的工作记录并按user和task进行分组合并,
+     * 也就是相当于当查询出userID与taskID都相同的多列时会进行合并，他们的hour会相加
+     * 用于构建某人一周的工作耗时饼状图
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Select("select projectid,taskid,sum(Hour) as hour from Work where userid=#{userid} and weekid=#{weekid} GROUP BY projectid,taskid")
+    List<Work> selectWorkByUW(@Param("userid") Integer userid,
+                              @Param("weekid") String weekid);
+
+    /**
+     * 根据projectID和weekID查询该项目的参与者一周内工作记录并按project和task进行分组合并,
+     * 也就是相当于当查询出projectID与taskID都相同的多列时会进行合并，他们的hour会相加
+     * 用于构建某工程一周人员耗时的饼状图
+     *
+     * @param projectid
+     * @param weekid
+     * @return
+     */
     @Select("select userid,taskid,sum(Hour) as hour from Work where weekid = #{weekid} and projectid=#{projectid} GROUP BY userid, taskid")
     List<Work> selectWorkByPW(@Param("projectid") Integer projectid, @Param("weekid") String weekid);
+
+    /**
+     * 根据userID和weekID查询该用户这一周内工作记录并按project进行分组合并(不需要细化到task),
+     * 也就是相当于当查询出projectID与taskID都相同的多列时会进行合并，他们的hour会相加
+     * 用于构建报表
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Select("select userid,projectid,weekid,sum(hour) as hour from Work where userid=#{userid} AND weekid=#{weekid} GROUP BY projectid")
+    List<Work> selectOneWork(@Param("userid") Integer userid,
+                             @Param("weekid") String weekid);
 }

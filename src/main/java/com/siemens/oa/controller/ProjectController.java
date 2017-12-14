@@ -24,6 +24,11 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
+    /**
+     * 从project表获取所有project
+     *
+     * @return
+     */
     @GetMapping("/getProject")
     public List<Project> selectAllProject() {
         return projectService.selectAllProject();

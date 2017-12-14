@@ -23,6 +23,11 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
+    /**
+     * 从task表获取所有task记录
+     *
+     * @return
+     */
     @GetMapping("/selectAllTask")
     public List<Task> selectAllTask() {
         return taskService.selectAllTask();

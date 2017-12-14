@@ -299,6 +299,7 @@ public class WorkServiceImpl implements WorkService {
 
     /**
      * 根据userID和weekID获取某个人某一周的工作记录
+     * 饼状图使用
      *
      * @param userid
      * @param weekid
@@ -306,22 +307,31 @@ public class WorkServiceImpl implements WorkService {
      */
     @Override
     public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
-        List<Work> works = workDao.selectWorkByWeekId(userid, weekid);
+        List<Work> works = workDao.selectWorkByUW(userid, weekid);
         Series series = new Series();
         series.setType("pie");
         series.setName(userDao.selectUserById(userid).getUsername() + "第" + weekConut + "周的工作记录");
-        ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
+        ArrayList<Series.DataEntity> dataEntityArrayList = new ArrayList<>();
         for (Work work : works) {
             Series.DataEntity dataEntity = series.new DataEntity();
-            dataEntity.setName(projectDao.selectProjectById(work.getProjectid()).getProjectname() + "-" + taskDao.selectTaskById(work.getTaskid()).getTaskname());
+            dataEntity.setName(projectDao.selectProjectById(work.getProjectid()).getProjectname().toUpperCase() + " [" + taskDao.selectTaskById(work.getTaskid()).getTaskname() + "]");
             dataEntity.setY(work.getHour());
-            dataEntities.add(dataEntity);
+            dataEntityArrayList.add(dataEntity);
         }
-        series.setData(dataEntities);
+        series.setData(dataEntityArrayList);
         System.out.print(series);
         return series;
     }
 
+    /**
+     * 根据projectID和weekID查询某工程一周参与人员的耗时数据
+     * 饼状图使用
+     *
+     * @param projectid
+     * @param weekid
+     * @param weekConut
+     * @return
+     */
     @Override
     public Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut) {
         List<Work> works = workDao.selectWorkByPW(projectid, weekid);
@@ -331,12 +341,25 @@ public class WorkServiceImpl implements WorkService {
         ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
         for (Work work : works) {
             Series.DataEntity dataEntity = series.new DataEntity();
-            dataEntity.setName(userDao.selectUserById(work.getUserid()).getUsername() + "-" + taskDao.selectTaskById(work.getTaskid()).getTaskname());
+            dataEntity.setName(userDao.selectUserById(work.getUserid()).getUsername().toUpperCase() + " [" + taskDao.selectTaskById(work.getTaskid()).getTaskname() + "]");
             dataEntity.setY(work.getHour());
             dataEntities.add(dataEntity);
         }
         series.setData(dataEntities);
         System.out.print(series);
         return series;
+    }
+
+    /**
+     * 查询某个人一周所参与的工程和时间
+     * 用于报表数据
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Override
+    public List<Work> selectOneWork(Integer userid, String weekid) {
+        return workDao.selectOneWork(userid, weekid);
     }
 }

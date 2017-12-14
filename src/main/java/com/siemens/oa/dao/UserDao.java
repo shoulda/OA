@@ -4,6 +4,8 @@ import com.siemens.oa.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface UserDao {
@@ -50,6 +52,20 @@ public interface UserDao {
     @Select("select userid from User where username = #{username}")
     Integer selectUserIdByName(String username);
 
+    /**
+     * 根据userID查询user信息
+     *
+     * @param userid
+     * @return
+     */
     @Select("select * from User where userid=#{userid} ")
     User selectUserById(Integer userid);
+
+    /**
+     * 查询所有user
+     *
+     * @return
+     */
+    @Select("select * from User")
+    List<User> selectAllUser();
 }

@@ -28,7 +28,7 @@ public class LoginController {
     }
 
     @GetMapping("admin")
-    public String adminLogin(){
+    public String adminLogin() {
         return "admin";
     }
 
@@ -58,8 +58,7 @@ public class LoginController {
                 map.put("code", "403");
                 return map;
             }
-        }
-        else {
+        } else {
             map.put("success", false);
             map.put("message", "User not exist!");
             map.put("code", "404");
@@ -68,11 +67,35 @@ public class LoginController {
 
     }
 
+    /**
+     * 测试查询一个人一周工作情况饼图
+     *
+     * @return
+     */
     @GetMapping("/testOne")
     public String testOne() {
         return "testOne";
     }
 
+    /**
+     * 测试查询一个项目一周情况饼图
+     *
+     * @return
+     */
+    @GetMapping("/testProject")
+    public String testProject() {
+        return "testProject";
+    }
+
+    /**
+     * 测试表格
+     *
+     * @return
+     */
+    @GetMapping("/testTimeSheetTable")
+    public String testTimeSheetTable() {
+        return "TimeSheetTable";
+    }
 
     @GetMapping("/index")
     public String index() {
