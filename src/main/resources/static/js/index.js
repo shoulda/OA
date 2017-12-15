@@ -89,9 +89,11 @@ function setUpRowWithData(rowIndex, projectData) {
     var projectName = projectData['projectName'];
     var projectId = projectData['projectId'];
     var tasks = projectData['tasks'];
-
-    // $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
-    initSelectProject(rowIndex, projectId);
+    if (ifModifyProject(tasks) == false) {
+        $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
+    } else {
+        initSelectProject(rowIndex, projectId);
+    }
     for (var t = 1; t <= tasks.length; t++) {
 
         if (t > 1) {
@@ -102,17 +104,54 @@ function setUpRowWithData(rowIndex, projectData) {
         }
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
-        // $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
-        initSelectTask(t, rowIndex, taskId);
+        if (ifModifyTask(tasks[t - 1]) == false) {
+            $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
+        } else {
+            initSelectTask(t, rowIndex, taskId);
+        }
         for (var m = 1; m <= tasks[t - 1]['days'].length; m++) {
             dateObj = new Date(parseInt(tasks[t - 1]['days'][m - 1]['stamp']));
             var day = dateObj.getDay();
             var dayId = "#input_day_" + day + "_" + t + "_" + rowIndex;
             var hours = tasks[t - 1]['days'][m - 1]['hour'];
             $(dayId).val(hours);
-            $(dayId).attr("readonly", true);
+            if (tasks[t - 1]['days'][m - 1]['m_STATUS'] == 0) {
+                $(dayId).attr("readonly", true);
+            }
         }
     }
+}
+
+function ifModifyProject(tasks) {
+    var ModifyProjectflag = true;
+    for (var k in tasks) {
+        console.log("task:" + k);
+        for (var i in tasks[k]['days']) {
+            console.log("day:" + i);
+            if (tasks[k]['days'][i]['m_STATUS'] == 0) {
+                ModifyProjectflag = false;
+                break;
+            } else {
+
+            }
+        }
+        if (ModifyProjectflag == false) {
+            break;
+        }
+    }
+    return ModifyProjectflag;
+}
+
+function ifModifyTask(task) {
+    var ModifyTaskflag = true;
+    for (var i in task['days']) {
+        console.log("day:" + i);
+        if (task['days'][i]['m_STATUS'] == 0) {
+            ModifyTaskflag = false;
+            break;
+        }
+    }
+    return ModifyTaskflag;
 }
 
 /**
@@ -618,8 +657,6 @@ function initSelectProject(project_id, id) {
             selid.options.add(new Option(data[i].projectname, data[i].projectid));
         }
         $("#input_project_" + project_id).val(id);
-        // $("#input_project_1").val(2);
-        // $("#input_project_1").get(0).selectedIndex = 3;
     });
 }
 
