@@ -120,7 +120,6 @@ function cleanTable() {
     thead.innerHTML = "";
     tbody.innerHTML = "";
     tfoot.innerHTML = "";
-
 }
 
 /**

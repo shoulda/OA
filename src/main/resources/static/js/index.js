@@ -19,6 +19,7 @@ function initTitle(daysList) {
     }
 }
 
+
 /**
  * 用时间Date对象，构造表格前面的字符串
  * @param date
@@ -69,8 +70,6 @@ function getWeekId(daysList) {
 
 function setUpTable(data) {
     if (data['work'].length !== 0) {
-        // initSelectProject(1);
-        // initSelectTask(1, 1);
         var work = data.work;
         setUpRowWithData(1, work[0]);
         for (var i = 1; i < work.length; i++) {
@@ -79,10 +78,8 @@ function setUpTable(data) {
             setUpRowWithData(i + 1, project);
         }
     } else {
-        initSelectProject(1);
-        initSelectTask(1, 1);
-        console.log("-------------");
-        // $("#input_project_1").val(2);
+        initSelectProject(1, 1);
+        initSelectTask(1, 1, 1);
     }
 }
 
@@ -92,11 +89,11 @@ function setUpRowWithData(rowIndex, projectData) {
     var projectName = projectData['projectName'];
     var projectId = projectData['projectId'];
     var tasks = projectData['tasks'];
-    // if () {
-    //
-    // }
-    $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
+
+    // $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
+    initSelectProject(rowIndex, projectId);
     for (var t = 1; t <= tasks.length; t++) {
+
         if (t > 1) {
             // addTask($("#addTask_" + rowIndex));
             var newTaskTr = getNewTaskTr(t, rowIndex);
@@ -105,7 +102,8 @@ function setUpRowWithData(rowIndex, projectData) {
         }
         var taskName = tasks[t - 1]['taskName'];
         var taskId = tasks[t - 1]['taskId'];
-        $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
+        // $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
+        initSelectTask(t, rowIndex, taskId);
         for (var m = 1; m <= tasks[t - 1]['days'].length; m++) {
             dateObj = new Date(parseInt(tasks[t - 1]['days'][m - 1]['stamp']));
             var day = dateObj.getDay();
@@ -123,7 +121,7 @@ function setUpRowWithData(rowIndex, projectData) {
  * 这里的weekid与后台接收参数weekid必须一致
  */
 function initDaysFromWebData(weekid) {
-    $.getJSON('/work/selectWorkByScope', {weekId: weekid}, function (data) {
+    $.getJSON('/work/selectWorkByScope', {weekid: weekid}, function (data) {
         console.log(data);
         setUpTable(data);
     });
@@ -612,14 +610,15 @@ function cleanData() {
  * 初始化project选择框
  * @param project_id
  */
-function initSelectProject(project_id) {
+function initSelectProject(project_id, id) {
     $.getJSON('/project/getProject', function (data) {
         console.log(data);
         var selid = document.getElementById("input_project_" + project_id);
         for (var i = 0; i < data.length; i++) {
             selid.options.add(new Option(data[i].projectname, data[i].projectid));
         }
-        $("#input_project_1").val(1);
+        $("#input_project_" + project_id).val(id);
+        // $("#input_project_1").val(2);
         // $("#input_project_1").get(0).selectedIndex = 3;
     });
 }
@@ -629,13 +628,14 @@ function initSelectProject(project_id) {
  * @param task_id
  * @param project_id
  */
-function initSelectTask(task_id, project_id) {
+function initSelectTask(task_id, project_id, id) {
     $.getJSON('/task/selectAllTask', function (data) {
         console.log(data);
         var selid = document.getElementById("input_task_" + task_id + "_" + project_id);
         for (var i = 0; i < data.length; i++) {
             selid.options.add(new Option(data[i].taskname, data[i].taskid));
         }
+        $("#input_task_" + task_id + "_" + project_id).val(id);
     });
 }
 
@@ -658,8 +658,8 @@ $(function () {
     });
     $('#btnAdd').click(function () {
         var index = addProject();
-        initSelectProject(index);
-        initSelectTask(1, index);
+        initSelectProject(index, 1);
+        initSelectTask(1, index, 1);
     });
 
     $('#btnSave').click(function () {
