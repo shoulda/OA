@@ -1,6 +1,8 @@
 package com.siemens.oa.controller;
 
 
+import com.siemens.oa.entity.*;
+import com.siemens.oa.service.ProjectService;
 import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.JsonListToWork2;
@@ -8,11 +10,13 @@ import com.siemens.oa.entity.Work;
 import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,19 +36,37 @@ public class WorkController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProjectService projectService;
+
     @PostMapping("/insertWork")
     public void insertWork(@RequestBody Work work) {
         workService.insertWork(work);
     }
 
+    @GetMapping("/selectWorkSeries")
+    public Series selectWorkSeries(Integer userid, String weekid, Integer weekConut) {
+        System.out.print(userid + "-----" + weekid + "-----" + weekConut + "\n");
+        Series series = workService.WorkToSeries(userid, weekid, weekConut);
+        System.out.print(series);
+        return series;
+    }
+
+    @GetMapping("/selectWorkByPW")
+    public Series selectWorkByPW(Integer projectid, String weekid, Integer weekConut) {
+        Series series = workService.ProjectToSeries(projectid, weekid, weekConut);
+        System.out.print(series);
+        return series;
+    }
+
     @RequestMapping("/selectWorkByScope")
-    public JsonListToWork2 selectWorkByScope(HttpSession session, String weekId) {
+    public JsonListToWork2 selectWorkByScope(HttpSession session, String weekid) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
-        List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekId);
-        JsonListToWork2 jsonListToWork2 = workService.WorkToJson(works, weekId);
-//        JsonListToWork jsonListToWork = workService.WorkToJson2(works, weekId);
-        System.out.println(jsonListToWork2);
-        return jsonListToWork2;
+        List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekid);
+//        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekid);
+        JsonListToWork2 jsonListToWork = workService.WorkToJson2(works, weekid);
+        System.out.println(jsonListToWork);
+        return jsonListToWork;
 
     }
 
@@ -56,6 +78,34 @@ public class WorkController {
         return workService.selectWork();
     }
 
+    /**
+     * 根据weekid获取表格体数据
+     *
+     * @param weekid
+     * @return
+     */
+    @GetMapping("/getTableData")
+    public List getTableData(String weekid) {
+        ArrayList<Object> tableData = new ArrayList<>();
+        JSONObject userJsonAll = new JSONObject();
+        List<User> userList = userService.selectAllUser();
+        for (User user : userList) {
+            List<Work> works = workService.selectOneWork(user.getUserid(), weekid);
+            List<Project> projectList = projectService.selectAllProject();
+            JSONObject userJson = new JSONObject();
+            userJson.put("name", user.getUsername());
+            userJsonAll.put("name", "总和");
+            //初始化一个userjson
+            for (Project project : projectList) {
+                userJson.put(project.getProjectname(), 0);
+            }
+            for (Work work : works) {
+                userJson.replace(projectService.selectProjectById(work.getProjectid()).getProjectname(), work.getHour());
+            }
+            tableData.add(userJson);
+        }
+        return tableData;
+    }
 
     @PostMapping("/save")
     public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
@@ -123,3 +173,4 @@ public class WorkController {
     }
 
 }
+//

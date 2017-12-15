@@ -1,5 +1,6 @@
 package com.siemens.oa.service;
 
+import com.siemens.oa.dao.UserDao;
 import com.siemens.oa.entity.JsonListToWork;
 import com.google.gson.Gson;
 import com.siemens.oa.dao.ProjectDao;
@@ -30,12 +31,14 @@ public class WorkServiceImpl implements WorkService {
     private final WorkDao workDao;
     private final ProjectDao projectDao;
     private final TaskDao taskDao;
+    private final UserDao userDao;
 
     @Autowired
-    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao) {
+    public WorkServiceImpl(WorkDao workDao, ProjectDao projectDao, TaskDao taskDao, UserDao userDao) {
         this.workDao = workDao;
         this.projectDao = projectDao;
         this.taskDao = taskDao;
+        this.userDao = userDao;
     }
 
     /**
@@ -190,10 +193,6 @@ public class WorkServiceImpl implements WorkService {
         return json;
     }
 
-    @Override
-    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
-        return null;
-    }
 
     private int existPro(List<JsonListToWork2.WorkEntity> workList, int projectid) {
         JsonListToWork2.WorkEntity workEntity;
@@ -202,7 +201,6 @@ public class WorkServiceImpl implements WorkService {
             for (int i = 0; i < workList.size(); i++) {
                 workEntity = workList.get(i);
                 if (workEntity.getProjectId() == projectid) return i;
-
             }
             return -1;
         }
@@ -222,6 +220,96 @@ public class WorkServiceImpl implements WorkService {
 
 
     /**
+     * xujin : WorkToJson2
+     *
+     * @param works
+     * @param weekid
+     * @return
+     */
+    @Override
+    public JsonListToWork2 WorkToJson2(List<Work> works, String weekid) {
+        JsonListToWork2 listToWork = new JsonListToWork2();
+        List<JsonListToWork2.WorkEntity> workEntityList = new ArrayList<>();
+        listToWork.setWeekId(weekid);
+        for (Work work : works) {
+            if (!ProjectIfin(work, workEntityList)) {
+                JsonListToWork2.WorkEntity workEntity = listToWork.new WorkEntity();
+                workEntity.setProjectId(work.getProjectid());
+                workEntity.setProjectName(projectDao.selectProjectById(work.getProjectid()).getProjectname());
+
+                List<JsonListToWork2.WorkEntity.TasksEntity> tasksEntityList = new ArrayList<>();
+                JsonListToWork2.WorkEntity.TasksEntity tasksEntity = workEntity.new TasksEntity();
+                tasksEntity.setTaskId(work.getTaskid());
+                tasksEntity.setTaskName(taskDao.selectTaskById(work.getTaskid()).getTaskname());
+
+                List<JsonListToWork2.WorkEntity.TasksEntity.DaysEntity> daysEntityList = new ArrayList<>();
+                JsonListToWork2.WorkEntity.TasksEntity.DaysEntity daysEntity = tasksEntity.new DaysEntity();
+
+                daysEntity.setHour(work.getHour());
+                daysEntity.setStamp(work.getStamp());
+                daysEntity.setM_STATUS(work.getM_STATUS());
+                daysEntityList.add(daysEntity);
+
+                tasksEntity.setDays(daysEntityList);
+                tasksEntityList.add(tasksEntity);
+
+                workEntity.setTasks(tasksEntityList);
+                workEntityList.add(workEntity);
+            }
+        }
+        listToWork.setWork(workEntityList);
+        return listToWork;
+    }
+
+
+    public boolean ProjectIfin(Work work, List<JsonListToWork2.WorkEntity> workEntityList) {
+        boolean flag = false;
+        if (workEntityList.size() > 0) {
+            for (JsonListToWork2.WorkEntity workEntity : workEntityList) {
+                if (work.getProjectid() == workEntity.getProjectId()) {
+                    if (!TaskIfin(work, workEntity.getTasks())) {
+
+                        JsonListToWork2.WorkEntity.TasksEntity tasksEntity = workEntity.new TasksEntity();
+                        tasksEntity.setTaskId(work.getTaskid());
+                        tasksEntity.setTaskName(taskDao.selectTaskById(work.getTaskid()).getTaskname());
+
+                        List<JsonListToWork2.WorkEntity.TasksEntity.DaysEntity> daysEntityList = new ArrayList<>();
+                        JsonListToWork2.WorkEntity.TasksEntity.DaysEntity daysEntity = tasksEntity.new DaysEntity();
+                        daysEntity.setHour(work.getHour());
+                        daysEntity.setStamp(work.getStamp());
+                        daysEntity.setM_STATUS(work.getM_STATUS());
+                        daysEntityList.add(daysEntity);
+
+                        tasksEntity.setDays(daysEntityList);
+                        workEntity.getTasks().add(tasksEntity);
+                    }
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public boolean TaskIfin(Work work, List<JsonListToWork2.WorkEntity.TasksEntity> tasksEntityList) {
+        boolean flag = false;
+        if (tasksEntityList.size() > 0) {
+            for (JsonListToWork2.WorkEntity.TasksEntity tasksEntity : tasksEntityList) {
+                if (work.getTaskid() == tasksEntity.getTaskId()) {
+                    JsonListToWork2.WorkEntity.TasksEntity.DaysEntity daysEntity = tasksEntity.new DaysEntity();
+                    daysEntity.setHour(work.getHour());
+                    daysEntity.setStamp(work.getStamp());
+                    daysEntity.setM_STATUS(work.getM_STATUS());
+                    tasksEntity.getDays().add(daysEntity);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    /**
      * 提交状态函数
      *
      * @param success
@@ -237,4 +325,72 @@ public class WorkServiceImpl implements WorkService {
         map.put("code", code);
         return map;
     }
+
+
+    /**
+     * 根据userID和weekID获取某个人某一周的工作记录
+     * 饼状图使用
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Override
+    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
+        List<Work> works = workDao.selectWorkByUW(userid, weekid);
+        Series series = new Series();
+        series.setType("pie");
+        series.setName(userDao.selectUserById(userid).getUsername() + "第" + weekConut + "周的工作记录");
+        ArrayList<Series.DataEntity> dataEntityArrayList = new ArrayList<>();
+        for (Work work : works) {
+            Series.DataEntity dataEntity = series.new DataEntity();
+            dataEntity.setName(projectDao.selectProjectById(work.getProjectid()).getProjectname().toUpperCase() + " [" + taskDao.selectTaskById(work.getTaskid()).getTaskname() + "]");
+            dataEntity.setY(work.getHour());
+            dataEntityArrayList.add(dataEntity);
+        }
+        series.setData(dataEntityArrayList);
+        System.out.print(series);
+        return series;
+    }
+
+    /**
+     * 根据projectID和weekID查询某工程一周参与人员的耗时数据
+     * 饼状图使用
+     *
+     * @param projectid
+     * @param weekid
+     * @param weekConut
+     * @return
+     */
+    @Override
+    public Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut) {
+        List<Work> works = workDao.selectWorkByPW(projectid, weekid);
+        Series series = new Series();
+        series.setType("pie");
+        series.setName(projectDao.selectProjectById(projectid).getProjectname() + "第" + weekConut + "周的工作记录");
+        ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
+        for (Work work : works) {
+            Series.DataEntity dataEntity = series.new DataEntity();
+            dataEntity.setName(userDao.selectUserById(work.getUserid()).getUsername().toUpperCase() + " [" + taskDao.selectTaskById(work.getTaskid()).getTaskname() + "]");
+            dataEntity.setY(work.getHour());
+            dataEntities.add(dataEntity);
+        }
+        series.setData(dataEntities);
+        System.out.print(series);
+        return series;
+    }
+
+    /**
+     * 查询某个人一周所参与的工程和时间
+     * 用于报表数据
+     *
+     * @param userid
+     * @param weekid
+     * @return
+     */
+    @Override
+    public List<Work> selectOneWork(Integer userid, String weekid) {
+        return workDao.selectOneWork(userid, weekid);
+    }
 }
+//

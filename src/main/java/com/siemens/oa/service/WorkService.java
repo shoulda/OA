@@ -29,7 +29,13 @@ public interface WorkService {
 
     JsonListToWork2 WorkToJson(List<Work> works, String weekid);
 
-    Series WorkToSeries(Integer userid, String weekid, Integer weekConut);
+    JsonListToWork2 WorkToJson2(List<Work> works, String weekid);
 
     Map<String, Object> SubStatus(boolean success, Integer code, String message);
+
+    Series WorkToSeries(Integer userid, String weekid, Integer weekConut);
+
+    Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut);
+
+    List<Work> selectOneWork(Integer userid, String weekid);
 }

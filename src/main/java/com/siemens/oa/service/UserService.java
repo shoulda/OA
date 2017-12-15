@@ -2,6 +2,8 @@ package com.siemens.oa.service;
 
 import com.siemens.oa.entity.User;
 
+import java.util.List;
+
 public interface UserService {
     void insertUser(User user);
 
@@ -14,4 +16,7 @@ public interface UserService {
     Integer selectUserIdByName(String username);
 
     User selectUserById(Integer userid);
+
+    List<User> selectAllUser();
+
 }

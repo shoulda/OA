@@ -1,11 +1,23 @@
-$(function () {
-    $.getJSON('/work/selectWorkSeries', {
-        userid: userid,
-        weekId: weekId,
-        weekConut: weekConut
-    }, function (data) {
+/**
+ * 获取饼状图数据
+ * @param projectid
+ * @param weekid
+ * @param weekConut
+ * @constructor
+ */
+function GetData(projectid, weekid, weekConut) {
+    $.getJSON('/work/selectWorkByPW', {projectid: projectid, weekid: weekid, weekConut: weekConut}, function (data) {
+        console.log(projectid + "+++++++++" + weekid + "+++++++++" + weekConut);
         console.log(data);
+        testOne(data);
     })
+}
+
+/**
+ * 饼状图框架
+ * @param data
+ */
+function testOne(data) {
     $('#container').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -13,7 +25,7 @@ $(function () {
             plotShadow: false
         },
         title: {
-            text: '工作时间饼图'
+            text: 'Project Time Of Members Work Chart'
         },
         tooltip: {
             headerFormat: '{series.name}<br>',
@@ -54,6 +66,22 @@ $(function () {
                 }
             }
         },
-        series: [JSON.parse(data)]
+        series: [data]
     });
+}
+
+/**
+ * 点击触发事件
+ */
+$(function () {
+    $("#btnGetPro").click(function () {
+        var projectid = $("#projectid").val().trim();
+        var weekid = $("#weekid").val().trim();
+        var weekConut = $("#weekConut").val().trim();
+        console.log(projectid + "----------" + weekid + "----------" + weekConut);
+        GetData(projectid, weekid, weekConut);
+    });
+
 });
+
+//

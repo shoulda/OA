@@ -5,6 +5,8 @@ import com.siemens.oa.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * \* Created with IntelliJ IDEA.
  * \* Description: userService接口的实现类
@@ -76,8 +78,24 @@ public class UserServiceImpl implements UserService {
         return userDao.selectUserIdByName(username);
     }
 
+    /**
+     * 根据userID查询user
+     *
+     * @param userid
+     * @return
+     */
     @Override
     public User selectUserById(Integer userid) {
         return userDao.selectUserById(userid);
+    }
+
+    /**
+     * 查询所有user
+     *
+     * @return
+     */
+    @Override
+    public List<User> selectAllUser() {
+        return userDao.selectAllUser();
     }
 }
