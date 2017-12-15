@@ -10,6 +10,7 @@ import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -58,20 +59,25 @@ public class WorkController {
 
     @PostMapping("/save")
     public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
-        System.out.println("<************Save************>");
+        //System.out.println("<************Save************>");
         List<Work> work = workService.JsonToWork(object);
         System.out.println("----------收到" + work.size() + "前端work记录---------");
+
+        List<Work> deleteWorks = workService.selectWorkByWeekId(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()), work.get(0).getWeekid());
+        if (deleteWorks.size() > 0) {
+            for (Work deleteWork : deleteWorks) {
+                if (deleteWork.getM_STATUS().equals(1)) {
+                    workService.deleteWork(deleteWork);
+                    System.out.println("delete success");
+                }
+            }
+        }
         if (work.size() != 0) {
             for (Work work1 : work) {
                 work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
                 Work workTran = workService.selectWorkByUTPS(work1);
                 System.out.println("对比数据库结果：" + workTran);
-                if (workTran != null && workTran.getM_STATUS().equals(1)) {
-                    work1.setWorkid(workTran.getWorkid());
-                    work1.setM_STATUS(1);
-                    workService.updateWork(work1);
-                    System.out.println("<*****>此条数据已更新,projectId:" + work1.getProjectid() + ", taskId:" + work1.getTaskid());
-                } else if (workTran == null) {
+                if (workTran == null) {
                     work1.setM_STATUS(1);
                     workService.insertWork(work1);
                     System.out.println("<*****>此条数据已插入,projectId:" + work1.getProjectid() + ", taskId:" + work1.getTaskid());
@@ -89,18 +95,21 @@ public class WorkController {
         System.out.println("<************Submit************>");
         List<Work> work = workService.JsonToWork(object);
         System.out.println("----------收到" + work.size() + "前端work记录---------");
+
+        List<Work> deleteWorks = workService.selectWorkByWeekId(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()), work.get(0).getWeekid());
+        if (deleteWorks.size() > 0) {
+            for (Work deleteWork : deleteWorks) {
+                if (deleteWork.getM_STATUS().equals(1))
+                    workService.deleteWork(deleteWork);
+            }
+        }
         if (work.size() != 0) {
             for (Work work1 : work) {
                 System.out.println(work1);
                 work1.setUserid(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
                 Work workTran = workService.selectWorkByUTPS(work1);
                 System.out.println("对比数据库结果：" + workTran);
-                if (workTran != null && workTran.getM_STATUS().equals(1)) {
-                    work1.setM_STATUS(0);
-                    work1.setWorkid(workTran.getWorkid());
-                    workService.updateWork(work1);
-                    System.out.println("<*****>此条数据已更新,projectId:" + work1.getProjectid() + ", taskId:" + work1.getTaskid());
-                } else if (workTran == null) {
+                if (workTran == null) {
                     work1.setM_STATUS(0);
                     workService.insertWork(work1);
                     System.out.println("<*****>此条数据已插入,projectId:" + work1.getProjectid() + ", taskId:" + work1.getTaskid());

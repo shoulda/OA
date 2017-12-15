@@ -44,7 +44,7 @@ public class AuthDetecConfig extends WebMvcConfigurerAdapter {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // 从方法处理器中获取出要调用的方法
             Method method = handlerMethod.getMethod();
-            // 获取出方法上的Access注解
+            // 获取出方法上的AuthDetec注解
             AuthDetec authDetec = method.getAnnotation(AuthDetec.class);
             if (authDetec == null) {
                 // 如果注解为null, 说明不需要拦截, 直接放过
