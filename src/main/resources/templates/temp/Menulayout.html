@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/manage/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/manage/ManuLayout.css">
+    <title>Document</title>
+</head>
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href="#"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2355413080,530022912&fm=27&gp=0.jpg" alt="Klorofil Logo" class="img-responsive logo"style="height: 30px"></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="glyphicon glyphicon-arrow-left"></i></button>
+            </div>
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" value="" class="form-control" placeholder="Search dashboard...这里弄成搜索,或者可以添加日历">
+                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                </div>
+            </form>
+
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-bell"></i>
+                            <span class="badge bg-danger">320</span>
+                        </a>
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>00000</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>项目一</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>项目一</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>
+                            <li><a href="#" class="more">更多</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-flag"></i> <span>Help</span> <i class="icon-submenu glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Basic Use</a></li>
+                            <li><a href="#">Working With Data</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://avatars2.githubusercontent.com/u/18484395?s=460&v=4" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span>My Profile</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> <span>Message</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-wrench"></i> <span>Settings</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-off"></i> <span>Logout</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+
+
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="Menulayout.html" class=""><i class="glyphicon glyphicon-home"></i> <span>HOME</span></a></li>
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-scale"></i> <span>batch</span></a></li>
+                    <li><a href="#" class="active"><i class="glyphicon glyphicon-user"></i> <span>Edit Admin</span></a></li>
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-pencil"></i> <span>Edit&Publish </span></a></li>
+
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Project&Task</span></a></li>
+
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="glyphicon glyphicon-list"></i> <span>ProjectName</span> <i class="icon-submenu glyphicon glyphicon-chevron-left"></i></a>
+                        <div id="subPages" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName1</span></a></li>
+                                <li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName2</span></a></li>
+                                <li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName3</span></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-th-list"></i> <span>EXPORT EXCEL</span></a></li>
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-dashboard"></i> <span>Typography</span></a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <h3 class="page-title">Charts</h3>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <!--<div class="clearfix"></div>-->
+    <footer>
+        <div class="container-fluid" >
+            <p class="copyright">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.siemens.com.cn">SIEMENS;</a></p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+<script type="text/javascript" src="../../static/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../static/js/manage/MenuLayout.js"></script>
+</body>
+</html>
