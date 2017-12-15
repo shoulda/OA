@@ -1,37 +1,44 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/manage/font-awesome.min.css">
-
-    <link rel="stylesheet" type="text/css" href="../../static/css/manage/ManuLayout.css">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="shortcut icon" th:href="@{/images/logo.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/manage/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/manage/ManuLayout.css}"/>
     <title>Document</title>
 </head>
 <body>
 <!-- WRAPPER -->
 <div id="wrapper">
-    <!-- NAVBAR -->
+    <!-- 最上面的导航栏 -->
     <nav class="navbar navbar-default navbar-fixed-top">
+        <!--西门子logo-->
         <div class="brand">
-            <a href="#"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2355413080,530022912&fm=27&gp=0.jpg" alt="Klorofil Logo" class="img-responsive logo"style="height: 30px"></a>
+            <a href="#">
+            <img th:src="@{/images/simensLogo.jpg}" alt="Klorofil Logo" class="img-responsive logo" style="height: 30px"/>
+            </a>
         </div>
+
         <div class="container-fluid">
+            <!--伸缩垂直导航栏箭头-->
             <div class="navbar-btn">
                 <button type="button" class="btn-toggle-fullwidth"><i class="glyphicon glyphicon-arrow-left"></i></button>
             </div>
-            <form class="navbar-form navbar-left">
-                <div class="input-group">
-                    <input type="text" value="" class="form-control" placeholder="Search dashboard...这里弄成搜索,或者可以添加日历">
-                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
-                </div>
-            </form>
+            <!--不使用搜索表单-->
+            <!--<form class="navbar-form navbar-left">-->
+                <!--<div class="input-group">-->
+                    <!--<input type="text" value="" class="form-control" placeholder="Search dashboard...这里弄成搜索,或者可以添加日历"/>-->
+                    <!--<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>-->
+                <!--</div>-->
+            <!--</form>-->
 
             <div id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right">
+                    <!--铃铛-->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-bell"></i>
@@ -46,6 +53,7 @@
                             <li><a href="#" class="more">更多</a></li>
                         </ul>
                     </li>
+                    <!--Help-->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-flag"></i> <span>Help</span> <i class="icon-submenu glyphicon glyphicon-chevron-down"></i></a>
                         <ul class="dropdown-menu">
@@ -55,8 +63,9 @@
                             <li><a href="#">Troubleshooting</a></li>
                         </ul>
                     </li>
+                    <!--个人信息-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://avatars2.githubusercontent.com/u/18484395?s=460&v=4" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://avatars2.githubusercontent.com/u/18484395?s=460&amp;v=4" class="img-circle" alt="Avatar"/> <span>Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span>My Profile</span></a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> <span>Message</span></a></li>
@@ -72,17 +81,17 @@
 
 
 
-    <!-- LEFT SIDEBAR -->
+    <!-- 侧边栏 -->
     <div id="sidebar-nav" class="sidebar">
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
                     <li><a href="Menulayout.html" class=""><i class="glyphicon glyphicon-home"></i> <span>HOME</span></a></li>
-                    <li><a href="#" class=""><i class="glyphicon glyphicon-scale"></i> <span>batch</span></a></li>
+                    <!--<li><a href="#" class=""><i class="glyphicon glyphicon-scale"></i> <span>batch</span></a></li>-->
                     <li><a href="#" class="active"><i class="glyphicon glyphicon-user"></i> <span>Edit Admin</span></a></li>
-                    <li><a href="#" class=""><i class="glyphicon glyphicon-pencil"></i> <span>Edit&Publish </span></a></li>
+                    <!--<li><a href="#" class=""><i class="glyphicon glyphicon-pencil"></i> <span>Edit&amp;Publish</span></a></li>-->
 
-                    <li><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Project&Task</span></a></li>
+                    <li><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Project&amp;Task</span></a></li>
 
                     <li>
                         <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="glyphicon glyphicon-list"></i> <span>ProjectName</span> <i class="icon-submenu glyphicon glyphicon-chevron-left"></i></a>
@@ -95,25 +104,37 @@
                         </div>
                     </li>
                     <li><a href="#" class=""><i class="glyphicon glyphicon-th-list"></i> <span>EXPORT EXCEL</span></a></li>
-                    <li><a href="#" class=""><i class="glyphicon glyphicon-dashboard"></i> <span>Typography</span></a></li>
-
+                    <li>
+                        <a href="#" class="">
+                            <i class="glyphicon glyphicon-dashboard">
+                            </i>
+                            <span>Typography</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
     </div>
     <!-- END LEFT SIDEBAR -->
+
     <!-- MAIN -->
-    <div class="main">
+    <div  >
         <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <div class="container-fluid">
-                <h3 class="page-title">Charts</h3>
+        <div style="height: 600px;width: 1080px;margin: 2% auto;background-color: rgba(0,0,0,0.4)" class="main-content">
+            <div style="margin-top: 100px">
+                <div style="height: 400px;width:400px;background-color: rgba(0,0,0,0.2)">
+                    <div th:replace="TimeSheetTable::TimeSheetTable"></div>
+                </div>
             </div>
         </div>
+
         <!-- END MAIN CONTENT -->
     </div>
+
     <!-- END MAIN -->
     <!--<div class="clearfix"></div>-->
+
+
     <footer>
         <div class="container-fluid" >
             <p class="copyright">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.siemens.com.cn">SIEMENS;</a></p>
@@ -121,8 +142,8 @@
     </footer>
 </div>
 <!-- END WRAPPER -->
-<script type="text/javascript" src="../../static/js/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../static/js/manage/MenuLayout.js"></script>
+<script type="text/javascript" th:src="@{js/jquery-3.2.0.min.js}"></script>
+<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{js/manage/MenuLayout.js}"></script>
 </body>
 </html>

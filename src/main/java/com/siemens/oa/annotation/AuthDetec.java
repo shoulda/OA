@@ -1,6 +1,5 @@
 package com.siemens.oa.annotation;
 
-import com.siemens.oa.enums.Auth;
 
 import java.lang.annotation.*;
 
@@ -12,5 +11,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface AuthDetec {
-    Auth[] authorities() default{};
+    String[] authorities() default{};
 }

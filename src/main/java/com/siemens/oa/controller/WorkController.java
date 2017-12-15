@@ -4,17 +4,13 @@ package com.siemens.oa.controller;
 import com.siemens.oa.entity.*;
 import com.siemens.oa.service.ProjectService;
 import com.siemens.oa.annotation.AuthDetec;
-import com.siemens.oa.entity.JsonListToWork;
 import com.siemens.oa.entity.JsonListToWork2;
 import com.siemens.oa.entity.Work;
-import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.UserService;
 import com.siemens.oa.service.WorkService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +67,7 @@ public class WorkController {
     }
 
     @GetMapping("/selectWork")
-    @AuthDetec(authorities = Auth.admin)
+    @AuthDetec(authorities = "admin")
     public List<Work> selectWork(HttpSession session) {
         int a = userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString());
         System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY) + "-----SESSIONKEY-----" + a);

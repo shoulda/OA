@@ -2,7 +2,6 @@ package com.siemens.oa.controller;
 
 import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.Project;
-import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +37,8 @@ public class ProjectController {
     }
 
     @PostMapping("/insertProject")
-    @AuthDetec(authorities = Auth.admin)
+    @AuthDetec(authorities = "admin")
     public void insertProject(Project project){
         projectService.insertProject(project);
     }
 }
-//

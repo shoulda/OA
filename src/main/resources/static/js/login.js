@@ -22,10 +22,15 @@ function login(userName, password) {
         },
         success: function (e) {
             console.log(e);
-            if (e.code == 200) {
-                alert("Login successfully!"+" Welcome "+userName);
+            console.log(e.auth);
+            if (e.code == 200 && e.auth == "user") {
+                alert("Login successfully!" + " Welcome " + userName);
                 window.location.href = 'index';
-            } else if (e.message) {
+            } else if (e.code == 200 && e.auth == "admin") {
+                alert("Login successfully!" + " Welcome admin " + userName);
+                window.location.href = 'admin';
+            }
+            else if (e.message) {
                 alert("Account or password error");
             }
         },
@@ -39,8 +44,8 @@ function login(userName, password) {
 
 $(function () {
     $("#btnSubmit").click(function () {
-         var userName = $("#userName").val().trim();
-         var password = $("#userPassword").val().trim();
+        var userName = $("#userName").val().trim();
+        var password = $("#userPassword").val().trim();
         // if (userName === undefined || userName.length < 1) {
         //     $("#myModal").modal('show');
         //     $(".modal-body").html('请输入用户名');
@@ -64,6 +69,6 @@ $(function () {
  * 产生0-5随机数
  */
 function render() {
-    var num =  Math.ceil(Math.random()*5);
+    var num = Math.ceil(Math.random() * 5);
     return num;
 }
