@@ -48,12 +48,12 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
-                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
-                    map.put("auth", "admin");
-                    return map;
-                }
-                map.put("auth", "user");
-                System.out.println(map);
+//                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
+//                    map.put("auth", "admin");
+//                    return map;
+//                }
+//                map.put("auth", "user");
+//                System.out.println(map);
                 return map;
             } else {
                 map.put("success", false);
@@ -78,9 +78,9 @@ public class LoginController {
     }
 
     @GetMapping("/admin")
-    @AuthDetec(authorities = "admin")
+//    @AuthDetec(authorities = "admin")
     public String admin() {
-        return "temp/Menulayout";
+        return "Menulayout";
     }
 
     @GetMapping("/logout")
