@@ -59,7 +59,6 @@ public class WorkController {
     public JsonListToWork2 selectWorkByScope(HttpSession session, String weekid) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekid);
-//        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekid);
         JsonListToWork2 jsonListToWork = workService.WorkToJson2(works, weekid);
         System.out.println(jsonListToWork);
         return jsonListToWork;
@@ -105,7 +104,6 @@ public class WorkController {
 
     @PostMapping("/save")
     public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
-        //System.out.println("<************Save************>");
         List<Work> work = workService.JsonToWork(object);
         System.out.println("----------收到" + work.size() + "前端work记录---------");
 

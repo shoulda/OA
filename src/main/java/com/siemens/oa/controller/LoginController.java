@@ -31,11 +31,6 @@ public class LoginController {
         return "login";
     }
 
-//    @GetMapping("admin")
-//    public String adminLogin() {
-//        return "admin";
-//    }
-
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -50,7 +45,6 @@ public class LoginController {
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 session.setAttribute(WebSecurityConfig.SESSION_KEY, userName);
-                // System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
@@ -76,35 +70,7 @@ public class LoginController {
 
     }
 
-    /**
-     * 测试查询一个人一周工作情况饼图
-     *
-     * @return
-     */
-    @GetMapping("/testOne")
-    public String testOne() {
-        return "testOne";
-    }
 
-    /**
-     * 测试查询一个项目一周情况饼图
-     *
-     * @return
-     */
-    @GetMapping("/testProject")
-    public String testProject() {
-        return "testProject";
-    }
-
-    /**
-     * 测试表格
-     *
-     * @return
-     */
-    @GetMapping("/testTimeSheetTable")
-    public String testTimeSheetTable() {
-        return "TimeSheetTable";
-    }
 
     @GetMapping("/index")
     public String index() {
