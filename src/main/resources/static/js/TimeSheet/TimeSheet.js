@@ -54,6 +54,7 @@ function InitSelect() {
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
+        console.log("&&&&&"+data+"&&&&&");
         $("#weekid").val(data[i - 2]);
     })
 }

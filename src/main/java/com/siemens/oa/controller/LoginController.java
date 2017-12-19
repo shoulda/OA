@@ -1,15 +1,21 @@
 package com.siemens.oa.controller;
 
 import com.siemens.oa.annotation.AuthDetec;
+import com.siemens.oa.entity.Project;
+import com.siemens.oa.entity.Task;
 import com.siemens.oa.entity.User;
 import com.siemens.oa.service.PermissionService;
+import com.siemens.oa.service.ProjectService;
+import com.siemens.oa.service.TaskService;
 import com.siemens.oa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -99,14 +105,49 @@ public class LoginController {
         return "TimeSheetTable";
     }
 
+    /**
+     * 测试添加project&task
+     * @return
+     */
+    @Autowired
+    ProjectService projectService;
+    @Autowired
+    TaskService taskService;
+    @GetMapping("/ad")
+    public String testEditProject(Model model){
+        List<Project> projects = projectService.selectAllProject();
+        List<Task> tasks = taskService.selectAllTask();
+        model.addAttribute("projects",projects);
+        System.out.println("已经存入project数据");
+        System.out.println(projects);
+        return "editProject";
+    }
+
+
+
     @GetMapping("/index")
     public String index() {
         return "index";
     }
 
+    /**
+     * 测试admin管理页面
+     * @param model
+     * @return
+     */
     @GetMapping("/admin")
 //    @AuthDetec(authorities = "admin")
-    public String admin() {
+    public String admin(Model model) {
+        List<Project> projects = projectService.selectAllProject();
+        model.addAttribute("projects",projects);
+        System.out.println("已经存入project数据");
+        System.out.println(projects);
+
+        List<Task> tasks = taskService.selectAllTask();
+        model.addAttribute("tasks",tasks);
+        System.out.println("已经存入task数据");
+        System.out.println(tasks);
+
         return "Menulayout";
     }
 
@@ -115,5 +156,7 @@ public class LoginController {
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "redirect:/login";
     }
+
+
 }
 //
