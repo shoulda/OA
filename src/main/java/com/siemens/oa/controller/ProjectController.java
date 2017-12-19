@@ -31,7 +31,7 @@ public class ProjectController {
      *
      * @return
      */
-    @GetMapping("/getProject")
+    @GetMapping("/getAllProject")
     public List<Project> selectAllProject() {
         return projectService.selectAllProject();
     }

@@ -7,8 +7,6 @@
  */
 function GetData(userid, weekid, weekConut) {
     $.getJSON('/work/selectWorkSeries', {userid: userid, weekid: weekid, weekConut: weekConut}, function (data) {
-        console.log(userid + "+++++++++" + weekid + "+++++++++" + weekConut);
-        console.log(data);
         testOne(data);
     })
 }
@@ -70,17 +68,37 @@ function testOne(data) {
     });
 }
 
+function InitWeekSelect() {
+    $.getJSON("work/selectAllWeekID", function (data) {
+        var select = document.getElementById("weekid");
+        for (var i = 1; i <= data.length; i++) {
+            select.options.add(new Option("第" + i + "周", data[i - 1]));
+        }
+        $("#weekid").val(data[i - 2]);
+    })
+}
+
+function InitUserSelect() {
+    $.getJSON("user/getAllUser", function (data) {
+        var select = document.getElementById("userid");
+        for (var i = 1; i <= data.length; i++) {
+            select.options.add(new Option(i + "." + data[i - 1]["displayname"], data[i - 1]["userid"]));
+        }
+    })
+}
+
 /**
  * 点击触发事件
  */
 $(function () {
+    InitUserSelect();
+    InitWeekSelect();
     $("#btnGet").click(function () {
-        var userid = $("#userid").val().trim();
-        var weekid = $("#weekid").val().trim();
-        var weekConut = $("#weekConut").val().trim();
-        console.log(userid + "----------" + weekid + "----------" + weekConut);
-        GetData(userid, weekid, weekConut);
+        var userobj = document.getElementById("userid");
+        var userid = userobj.options[userobj.selectedIndex].value;
+        var weekobj = document.getElementById("weekid");
+        var weekid = weekobj.options[weekobj.selectedIndex].value;
+        var weekCount = weekobj.options[weekobj.selectedIndex].text;
+        GetData(userid, weekid, weekCount);
     });
-
 });
-//

@@ -33,9 +33,9 @@ public interface WorkService {
 
     Map<String, Object> SubStatus(boolean success, Integer code, String message);
 
-    Series WorkToSeries(Integer userid, String weekid, Integer weekConut);
+    Series WorkToSeries(Integer userid, String weekid, String weekConut);
 
-    Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut);
+    Series ProjectToSeries(Integer projectid, String weekid, String weekConut);
 
     List<Work> selectOneWork(Integer userid, String weekid);
 

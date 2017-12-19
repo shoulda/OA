@@ -7,8 +7,6 @@
  */
 function GetData(projectid, weekid, weekConut) {
     $.getJSON('/work/selectWorkByPW', {projectid: projectid, weekid: weekid, weekConut: weekConut}, function (data) {
-        console.log(projectid + "+++++++++" + weekid + "+++++++++" + weekConut);
-        console.log(data);
         testOne(data);
     })
 }
@@ -70,16 +68,38 @@ function testOne(data) {
     });
 }
 
+function InitWeekSelect() {
+    $.getJSON("work/selectAllWeekID", function (data) {
+        var select = document.getElementById("weekid");
+        for (var i = 1; i <= data.length; i++) {
+            select.options.add(new Option("第" + i + "周", data[i - 1]));
+        }
+        $("#weekid").val(data[i - 2]);
+    })
+}
+
+function InitProjectSelect() {
+    $.getJSON("project/getAllProject", function (data) {
+        var select = document.getElementById("projectid");
+        for (var i = 1; i <= data.length; i++) {
+            select.options.add(new Option(i + "." + data[i - 1]["projectname"], data[i - 1]["projectid"]));
+        }
+    })
+}
+
 /**
  * 点击触发事件
  */
 $(function () {
+    InitProjectSelect();
+    InitWeekSelect();
     $("#btnGetPro").click(function () {
-        var projectid = $("#projectid").val().trim();
-        var weekid = $("#weekid").val().trim();
-        var weekConut = $("#weekConut").val().trim();
-        console.log(projectid + "----------" + weekid + "----------" + weekConut);
-        GetData(projectid, weekid, weekConut);
+        var projectobj = document.getElementById("projectid");
+        var projectid = projectobj.options[projectobj.selectedIndex].value;
+        var obj = document.getElementById("weekid");
+        var weekid = obj.options[obj.selectedIndex].value;
+        var weekCount = obj.options[obj.selectedIndex].text;
+        GetData(projectid, weekid, weekCount);
     });
 
 });

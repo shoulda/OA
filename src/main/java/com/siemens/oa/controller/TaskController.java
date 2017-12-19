@@ -31,7 +31,7 @@ public class TaskController {
      *
      * @return
      */
-    @GetMapping("/selectAllTask")
+    @GetMapping("/getAllTask")
     public List<Task> selectAllTask() {
         return taskService.selectAllTask();
     }

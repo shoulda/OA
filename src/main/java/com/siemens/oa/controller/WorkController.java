@@ -41,15 +41,14 @@ public class WorkController {
     }
 
     @GetMapping("/selectWorkSeries")
-    public Series selectWorkSeries(Integer userid, String weekid, Integer weekConut) {
-        System.out.print(userid + "-----" + weekid + "-----" + weekConut + "\n");
+    public Series selectWorkSeries(Integer userid, String weekid, String weekConut) {
         Series series = workService.WorkToSeries(userid, weekid, weekConut);
         System.out.print(series);
         return series;
     }
 
     @GetMapping("/selectWorkByPW")
-    public Series selectWorkByPW(Integer projectid, String weekid, Integer weekConut) {
+    public Series selectWorkByPW(Integer projectid, String weekid, String weekConut) {
         Series series = workService.ProjectToSeries(projectid, weekid, weekConut);
         System.out.print(series);
         return series;

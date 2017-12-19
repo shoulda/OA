@@ -658,7 +658,7 @@ function cleanData() {
  * @param project_id
  */
 function initSelectProject(project_id, id) {
-    $.getJSON('/project/getProject', function (data) {
+    $.getJSON('/project/getAllProject', function (data) {
         console.log(data);
         var selid = document.getElementById("input_project_" + project_id);
         for (var i = 0; i < data.length; i++) {
@@ -674,7 +674,7 @@ function initSelectProject(project_id, id) {
  * @param project_id
  */
 function initSelectTask(task_id, project_id, id) {
-    $.getJSON('/task/selectAllTask', function (data) {
+    $.getJSON('/task/getAllTask', function (data) {
         console.log(data);
         var selid = document.getElementById("input_task_" + task_id + "_" + project_id);
         for (var i = 0; i < data.length; i++) {

@@ -170,8 +170,6 @@ $(function () {
     $("#GetTable").click(function () {
         var obj = document.getElementById("weekid");
         var weekid = obj.options[obj.selectedIndex].value;
-        // return text;
-        // var weekid = $("#weekid").val().trim();
         FeedTable(weekid);
     });
 

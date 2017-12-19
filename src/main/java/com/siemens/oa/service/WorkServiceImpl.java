@@ -336,11 +336,11 @@ public class WorkServiceImpl implements WorkService {
      * @return
      */
     @Override
-    public Series WorkToSeries(Integer userid, String weekid, Integer weekConut) {
+    public Series WorkToSeries(Integer userid, String weekid, String weekConut) {
         List<Work> works = workDao.selectWorkByUW(userid, weekid);
         Series series = new Series();
         series.setType("pie");
-        series.setName(userDao.selectUserById(userid).getUsername() + "第" + weekConut + "周的工作记录");
+        series.setName(userDao.selectUserById(userid).getUsername() + weekConut + "的工作记录");
         ArrayList<Series.DataEntity> dataEntityArrayList = new ArrayList<>();
         for (Work work : works) {
             Series.DataEntity dataEntity = series.new DataEntity();
@@ -363,11 +363,11 @@ public class WorkServiceImpl implements WorkService {
      * @return
      */
     @Override
-    public Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut) {
+    public Series ProjectToSeries(Integer projectid, String weekid, String weekConut) {
         List<Work> works = workDao.selectWorkByPW(projectid, weekid);
         Series series = new Series();
         series.setType("pie");
-        series.setName(projectDao.selectProjectById(projectid).getProjectname() + "第" + weekConut + "周的工作记录");
+        series.setName(projectDao.selectProjectById(projectid).getProjectname() + weekConut + "的工作记录");
         ArrayList<Series.DataEntity> dataEntities = new ArrayList<>();
         for (Work work : works) {
             Series.DataEntity dataEntity = series.new DataEntity();
