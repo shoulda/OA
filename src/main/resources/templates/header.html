@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+<head>
+    <link th:href="@{//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/admin/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/admin/css/header.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+
+<ul style="margin-top: 20px;" class="panel-shadow">
+    <li><a href="#home" style="font-size:30px;">主页</a></li>
+    <li><a href="http://www.baidu.com" target="new">百度</a></li>
+    <li><a href="http://www.uestc.edu.cn" target="new">电子科技大学</a></li>
+    <li><a href="http://www.runoob.com" target="new">菜鸟教程</a></li>
+    <li><a href="https://tieba.baidu.com/p/5448507757" target="new">点这个的人都是大傻逼</a></li>
+    <li style="float:right;margin-left: 10px;margin-right: 10px"><a class="active" th:href="@{/logout}">登出</a></li>
+    <li style="float:right"><a onclick="sb()" >关于</a></li>
+</ul>
+<script>
+    function sb() {
+        alert("你是傻逼吗？")
+    }
+</script>
+
+</body>
+</html>

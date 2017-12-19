@@ -1,6 +1,8 @@
 package com.siemens.oa.controller;
 
+import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.User;
+import com.siemens.oa.service.PermissionService;
 import com.siemens.oa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,12 @@ import java.util.Map;
 @Controller
 public class LoginController {
     private final UserService userService;
+    private final PermissionService permissionService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, PermissionService permissionService) {
         this.userService = userService;
+        this.permissionService = permissionService;
     }
 
     @GetMapping("/")
@@ -27,7 +31,7 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String adminLogin() {
         return "admin";
     }
@@ -42,14 +46,18 @@ public class LoginController {
     public Map<String, Object> loginPost(String userName, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByName(userName);
+
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 session.setAttribute(WebSecurityConfig.SESSION_KEY, userName);
-                // System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
-//                System.out.println(map);
+//                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
+//                    map.put("auth", "admin");
+//                    return map;
+//                }
+//                map.put("auth", "user");
                 return map;
             } else {
                 map.put("success", false);
@@ -101,9 +109,16 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/admin")
+//    @AuthDetec(authorities = "admin")
+    public String admin() {
+        return "Menulayout";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "redirect:/login";
     }
 }
+//

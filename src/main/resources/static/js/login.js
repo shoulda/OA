@@ -12,6 +12,7 @@
 //     return true;
 // // }
 function login(userName, password) {
+
     $.ajax({
         method: 'POST',
         url: '/login',
@@ -20,10 +21,8 @@ function login(userName, password) {
             'password': password
         },
         success: function (e) {
-            // console.log(e + "hhhahahahah");
-            console.log("code" + e.code);
             if (e.code == 200) {
-                alert("Login successfully!" + " Welcome " + userName);
+                alert("Login successfully!"+" Welcome "+userName);
                 window.location.href = 'index';
             } else if (e.message) {
                 alert("Account or password error");
@@ -39,10 +38,8 @@ function login(userName, password) {
 
 $(function () {
     $("#btnSubmit").click(function () {
-        console.log("已触发点击事件");
-        var userName = $("#userName").val().trim();
-        var password = $("#userPassword").val().trim();
-        console.log(userName + "输入的信息" + password);
+         var userName = $("#userName").val().trim();
+         var password = $("#userPassword").val().trim();
         // if (userName === undefined || userName.length < 1) {
         //     $("#myModal").modal('show');
         //     $(".modal-body").html('请输入用户名');
@@ -53,7 +50,7 @@ $(function () {
         //     $(".modal-body").html('请输入密码');
         //     return;
         // }
-        // if (emailCheck(userName)) {
+        // if(emailCheck(userName)){
         // }
         login(userName, $.md5(password));
     });
@@ -64,6 +61,6 @@ $(function () {
  * 产生0-5随机数
  */
 function render() {
-    var num = Math.ceil(Math.random() * 5);
+    var num =  Math.ceil(Math.random()*5);
     return num;
 }

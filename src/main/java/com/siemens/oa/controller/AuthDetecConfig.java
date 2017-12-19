@@ -1,6 +1,5 @@
 package com.siemens.oa.controller;
 
-import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.PermissionService;
 import com.siemens.oa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.siemens.oa.annotation.AuthDetec;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,15 +53,18 @@ public class AuthDetecConfig extends WebMvcConfigurerAdapter {
 
             if (authDetec.authorities().length > 0) {
                 // 如果权限配置不为空, 则取出配置值
-                Auth[] authorities = authDetec.authorities();
-                Set<Auth> authSet = new HashSet<>();
-                for (Auth authority : authorities) {
-                    authSet.add(authority);
+                String[] authorities = authDetec.authorities();
+                Set<String> authSet =new HashSet<>();
+                for (String temp_auth:authorities)
+                    authSet.add(temp_auth);
+                String auth = permissionService.selectAuthById(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
+
+                if (authSet.contains(auth)) {
+                    System.out.println(auth);
+                    return true;
                 }
-                String Auth = permissionService.selectAuthById(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
-                System.out.println(Auth);
-                if (authSet.contains(Auth)) return true;
             }
+
             return false;
         }
     }

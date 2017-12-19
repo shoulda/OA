@@ -2,7 +2,6 @@ package com.siemens.oa.controller;
 
 import com.siemens.oa.annotation.AuthDetec;
 import com.siemens.oa.entity.Task;
-import com.siemens.oa.enums.Auth;
 import com.siemens.oa.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,11 @@ import java.util.List;
 @RequestMapping("/task")
 public class TaskController {
     @Autowired
-    TaskService taskService;
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     /**
      * 从task表获取所有task记录
@@ -34,7 +37,7 @@ public class TaskController {
     }
 
     @PostMapping("/insertTask")
-    @AuthDetec(authorities = Auth.admin)
+    @AuthDetec(authorities = "admin")
     public void insertTask(Task task){
         taskService.insertTask(task);
     }
