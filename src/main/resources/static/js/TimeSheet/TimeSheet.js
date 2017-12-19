@@ -182,6 +182,11 @@ $(function () {
  * 以上两种方法原理是一样的，都是当点击时间发生后，通过查询input的id来获取input的值，然后执行函数
  * 不同的就是语法不同
  */
-
+function download() {
+    $('#OATable').tableExport({
+        type: 'excel',
+        excelstyles: ['border-bottom', 'border-top', 'border-left', 'border-right', 'font-size:20px']
+    });
+}
 
 
