@@ -13,7 +13,7 @@ body {
     color: #676a6d; }
 
 a {
-    color: #3287B2; }
+    color: #ffffff; }
 a:hover, a:focus {
     color: #3b98c8;
     text-decoration: none; }
@@ -114,6 +114,8 @@ footer {
         display: none; } }
 
 .main-content {
+    height: 800px;
+    width: 1440px;
     padding: 28px 10px; }
 
 .navbar + .main-content {

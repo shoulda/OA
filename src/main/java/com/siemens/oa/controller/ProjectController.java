@@ -37,8 +37,15 @@ public class ProjectController {
     }
 
     @PostMapping("/insertProject")
-    @AuthDetec(authorities = "admin")
+//    @AuthDetec(authorities = "admin")
+//    public void insertProject(String projectname){
+//        Project project = new Project();
+//        project.setProjectname(projectname);
+//        System.out.println(project);
+//        projectService.insertProject(project);
+//    }
     public void insertProject(Project project){
+        System.out.println(project);
         projectService.insertProject(project);
     }
 }

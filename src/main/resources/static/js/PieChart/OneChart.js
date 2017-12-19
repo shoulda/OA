@@ -76,11 +76,10 @@ function testOne(data) {
 $(function () {
     $("#btnGet").click(function () {
         var userid = $("#userid").val().trim();
-        var weekid = $("#weekid").val().trim();
+        var weekid = $("#wekid").val().trim();
         var weekConut = $("#weekConut").val().trim();
         console.log(userid + "----------" + weekid + "----------" + weekConut);
         GetData(userid, weekid, weekConut);
     });
-
 });
 //

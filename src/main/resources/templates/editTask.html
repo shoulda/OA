@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" th:fragment="editTask">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/manage/admin.css}"/>
+    <script type="text/javascript" th:src="@{js/jquery-3.2.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+    <title>editTask</title>
+    <style>
+    .panel-shadow {
+        /*background-color: #000000;*/
+        color: white;
+       -moz-box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+       -webkit-box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+       box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 400px;
+        height: auto;
+    }
+    .panel-li{
+        float: left;
+    }
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <!--显示部分-->
+    <div class="panel" style="float: left;margin-right: 20px">
+        <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light">Tasks Name</h1>
+        <div class="post-lists">
+            <div class="post-lists-body">
+                <li style="list-style-type: none">
+                    <a style="width: 40px;float: right" onclick=""> </a>
+                    <a style="width: 40px" >id</a>
+                    <a style="width: 320px">Tasks Name</a>
+                </li>
+                <ul class="panel-shadow" th:each="tasks: ${tasks}">
+                    <li class="panel-li">
+                        <a style="font-size: 40px;width: 40px;float: right" onclick="">-</a>
+                        <a style="width: 40px" th:text="${tasks.taskid}">projectid</a>
+                        <a style="width: 320px" th:text="${tasks.taskname}">projectname</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--添加部分-->
+    <div style="float: right">
+        <div class="panel-frame">
+            <input id="taskname" type="text" required="" placeholder="Tasks Name:"/>
+            <div style="margin-top: 20px">
+                <button id="addTas" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
+                        style="box-shadow: 0px 0px 4px #868282;float: left">Add&nbsp;Task
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{js/edit/task.js}"></script>
+
+</body>
+</html>
+<!---->
