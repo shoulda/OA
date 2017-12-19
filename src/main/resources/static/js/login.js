@@ -21,10 +21,14 @@ function login(userName, password) {
             'password': password
         },
         success: function (e) {
-            if (e.code == 200) {
+            if (e.code == 200 &&e.auth =="user") {
                 alert("Login successfully!"+" Welcome "+userName);
-                window.location.href = 'index';
-            } else if (e.message) {
+                window.location.href = '/index';
+            }else if (e.code == 200&&e.auth =="admin"){
+                alert("Login successfully!"+" Welcome admin"+userName);
+                window.location.href = '/Menulayout';
+            }
+            else if (e.message) {
                 console.log(password);
                 alert("Account or password error");
             }

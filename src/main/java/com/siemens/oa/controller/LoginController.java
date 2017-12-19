@@ -41,7 +41,7 @@ public class LoginController {
     public String login() {
         return "login";
     }
-
+    
     @ResponseBody
     @PostMapping("/login")
     public Map<String, Object> loginPost(String userName, String password, HttpSession session) {
@@ -54,11 +54,11 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
-//                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
-//                    map.put("auth", "admin");
-//                    return map;
-//                }
-//                map.put("auth", "user");
+                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
+                    map.put("auth", "admin");
+                    return map;
+                }
+                map.put("auth", "user");
                 return map;
             } else {
                 map.put("success", false);
@@ -113,6 +113,7 @@ public class LoginController {
     ProjectService projectService;
     @Autowired
     TaskService taskService;
+
     @GetMapping("/ad")
     public String testEditProject(Model model){
         List<Project> projects = projectService.selectAllProject();
@@ -122,8 +123,6 @@ public class LoginController {
         System.out.println(projects);
         return "editProject";
     }
-
-
 
     @GetMapping("/index")
     public String index() {
@@ -135,14 +134,15 @@ public class LoginController {
      * @param model
      * @return
      */
-    @GetMapping("/admin")
-//    @AuthDetec(authorities = "admin")
+    @GetMapping("/Menulayout")
+    @AuthDetec(authorities = "admin")
     public String admin(Model model) {
+
+
         List<Project> projects = projectService.selectAllProject();
         model.addAttribute("projects",projects);
         System.out.println("已经存入project数据");
         System.out.println(projects);
-
         List<Task> tasks = taskService.selectAllTask();
         model.addAttribute("tasks",tasks);
         System.out.println("已经存入task数据");
@@ -151,10 +151,42 @@ public class LoginController {
         return "Menulayout";
     }
 
+
+
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "redirect:/login";
+    }
+
+    private Map<String, Object> LoginPost(HttpSession session,User user,String password){
+        Map<String, Object> map = new HashMap<>();
+
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                session.setAttribute(WebSecurityConfig.SESSION_KEY, user.getUsername());
+                map.put("success", true);
+                map.put("message", "login in successful");
+                map.put("code", "200");
+                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
+                    map.put("auth", "admin");
+                    return map;
+                }
+                map.put("auth", "user");
+                return map;
+            } else {
+                map.put("success", false);
+                map.put("message", "Username or password false");
+                map.put("code", "403");
+                return map;
+            }
+        } else {
+            map.put("success", false);
+            map.put("message", "User not exist!");
+            map.put("code", "404");
+            return map;
+        }
     }
 
 

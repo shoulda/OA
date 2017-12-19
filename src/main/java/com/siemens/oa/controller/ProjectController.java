@@ -45,7 +45,6 @@ public class ProjectController {
 //        projectService.insertProject(project);
 //    }
     public void insertProject(Project project){
-        System.out.println(project);
         projectService.insertProject(project);
     }
 }

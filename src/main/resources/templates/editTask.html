@@ -29,19 +29,19 @@
 <div style="text-align: center">
     <!--显示部分-->
     <div class="panel" style="float: left;margin-right: 20px">
-        <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light">Tasks Name</h1>
+        <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light">Tasks Table</h1>
         <div class="post-lists">
-            <div class="post-lists-body">
+            <!--refreshT 为了定位刷新div 在task.js里-->
+            <div class="refreshT post-lists-body">
                 <li style="list-style-type: none">
                     <a style="width: 40px;float: right" onclick=""> </a>
-                    <a style="width: 40px" >id</a>
                     <a style="width: 320px">Tasks Name</a>
                 </li>
                 <ul class="panel-shadow" th:each="tasks: ${tasks}">
                     <li class="panel-li">
-                        <a style="font-size: 40px;width: 40px;float: right" onclick="">-</a>
-                        <a style="width: 40px" th:text="${tasks.taskid}">projectid</a>
-                        <a style="width: 320px" th:text="${tasks.taskname}">projectname</a>
+                        <a style="font-size: 40px;width: 60px;float: right" onclick="">-</a>
+                        <a class="hide" style="width: 40px" th:text="${tasks.taskid}">taskid</a>
+                        <a style="width: 340px" th:text="${tasks.taskname}">taskname</a>
                     </li>
                 </ul>
             </div>

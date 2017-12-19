@@ -43,38 +43,38 @@
             <div id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right">
                     <!--铃铛-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-bell"></i>
-                            <span class="badge bg-danger">320</span>
-                        </a>
-                        <ul class="dropdown-menu notifications">
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>00000</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>项目一</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>项目一</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>
-                            <li><a href="#" class="more">更多</a></li>
-                        </ul>
-                    </li>
+                    <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">-->
+                            <!--<i class="glyphicon glyphicon-bell"></i>-->
+                            <!--<span class="badge bg-danger">320</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu notifications">-->
+                            <!--<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>00000</a></li>-->
+                            <!--<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>项目一</a></li>-->
+                            <!--<li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>-->
+                            <!--<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>项目一</a></li>-->
+                            <!--<li><a href="#" class="notification-item"><span class="dot bg-success"></span>项目一</a></li>-->
+                            <!--<li><a href="#" class="more">更多</a></li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <!--Help-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-flag"></i> <span>Help</span> <i class="icon-submenu glyphicon glyphicon-chevron-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Basic Use</a></li>
-                            <li><a href="#">Working With Data</a></li>
-                            <li><a href="#">Security</a></li>
-                            <li><a href="#">Troubleshooting</a></li>
-                        </ul>
-                    </li>
+                    <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-flag"></i> <span>Help</span> <i class="icon-submenu glyphicon glyphicon-chevron-down"></i></a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li><a href="#">Basic Use</a></li>-->
+                            <!--<li><a href="#">Working With Data</a></li>-->
+                            <!--<li><a href="#">Security</a></li>-->
+                            <!--<li><a href="#">Troubleshooting</a></li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <!--个人信息-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://avatars2.githubusercontent.com/u/18484395?s=460&amp;v=4" class="img-circle" alt="Avatar"/> <span>Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span th:text="">Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span>My Profile</span></a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> <span>Message</span></a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-wrench"></i> <span>Settings</span></a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-off"></i> <span>Logout</span></a></li>
+                            <li onclick=""><a href="#"><i class="glyphicon glyphicon-off"></i> <span>Logout</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -90,20 +90,20 @@
                 <ul class="nav">
                     <li onclick="hideAll()"><a href="#" class=""><i class="glyphicon glyphicon-home"></i> <span>HOME</span></a></li>
                     <li onclick="showOne()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Show One</span></a></li>
+                    <li onclick="showOne()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Show One</span></a></li>
                     <!--<li ><a href="#" class=""><i class="glyphicon glyphicon-user"></i> <span>Edit Admin</span></a></li>-->
                     <li onclick="po()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Project</span></a></li>
                     <li onclick="to()"><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Task</span></a></li>
-
                     <!--<li class="off">-->
-                        <!--<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="glyphicon glyphicon-list"></i> <span>ProjectName</span> <i class="icon-submenu glyphicon glyphicon-chevron-left"></i></a>-->
+                        <!--<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="glyphicon glyphicon-list"></i> <span>Show Pie</span> <i class="icon-submenu glyphicon glyphicon-chevron-left"></i></a>-->
                         <!--<div id="subPages" class="collapse ">-->
                             <!--<ul class="nav">-->
                                 <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName1</span></a></li>-->
-                                <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName2</span></a></li>-->
-                                <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName3</span></a></li>-->
+                                <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName1</span></a></li>-->
                             <!--</ul>-->
                         <!--</div>-->
                     <!--</li>-->
+
                     <li onclick="tbo()"><a href="#" class=""><i class="glyphicon glyphicon-th-list"></i> <span>EXPORT EXCEL</span></a></li>
                 </ul>
             </nav>

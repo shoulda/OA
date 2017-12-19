@@ -1,12 +1,23 @@
-
+/**
+ * 触发增加函数
+ */
 $(function () {
     $("#addPrj").click(function () {
         var projectname = $("#projectname").val().trim();
-        console.log(projectname);
-        addPrj(projectname);
+        console.log("=========="+projectname+"==========");
+        if(projectname!=""){
+            addPrj(projectname);
+        }else {
+            alert("projectname不能为空!");
+        }
+
     });
 });
 
+/**
+ * 通过projectname添加
+ * @param projectname
+ */
 function addPrj(projectname) {
     $.ajax({
         method: 'POST',
@@ -16,7 +27,9 @@ function addPrj(projectname) {
         },
         success: function (e) {
             console.log(e);
-            alert("插入成功！")
+            alert("插入成功！");
+            $(".refresh").load(location.href + " .refresh");
+
         },
         error: function (e) {
             console.log(e);
@@ -25,7 +38,10 @@ function addPrj(projectname) {
     });
 }
 
-
+/**
+ * 通过projectname删除
+ * @param projectname
+ */
 function delPrj() {
 
 }

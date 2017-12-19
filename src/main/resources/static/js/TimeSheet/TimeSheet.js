@@ -50,7 +50,7 @@
  */
 function InitSelect() {
     $.getJSON("work/selectAllWeekID", function (data) {
-        var select = document.getElementById("weekid");
+        var select = document.getElementById("Tweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
@@ -144,7 +144,7 @@ function cleanTable() {
  */
 function FeedTable(weekid) {
     cleanTable();
-    $.getJSON("/project/getProject", function (data) {
+    $.getJSON("/project/getAllProject", function (data) {
         FeedTableHead(data);
         $.getJSON("/work/getTableData", {weekid: weekid}, function (data) {
             console.log(data)
@@ -169,7 +169,7 @@ function FeedTable(weekid) {
 $(function () {
     InitSelect();
     $("#GetTable").click(function () {
-        var obj = document.getElementById("weekid");
+        var obj = document.getElementById("Tweekid");
         var weekid = obj.options[obj.selectedIndex].value;
         FeedTable(weekid);
     });

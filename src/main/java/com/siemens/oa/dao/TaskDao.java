@@ -16,7 +16,7 @@ public interface TaskDao {
      *
      * @param task
      */
-    @Insert("insert into Task(taskid,taskname) values(#{taskid},#{taskname})")
+    @Insert("insert into Task(taskname) values(#{taskname})")
     void insertTask(Task task);
 
     /**

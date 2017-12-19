@@ -72,3 +72,4 @@ public class AuthDetecConfig extends WebMvcConfigurerAdapter {
 
 }
 
+

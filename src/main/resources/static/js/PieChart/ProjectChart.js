@@ -70,7 +70,7 @@ function testOne(data) {
 
 function InitWeekSelect() {
     $.getJSON("work/selectAllWeekID", function (data) {
-        var select = document.getElementById("weekid");
+        var select = document.getElementById("Pweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
@@ -96,7 +96,7 @@ $(function () {
     $("#btnGetPro").click(function () {
         var projectobj = document.getElementById("projectid");
         var projectid = projectobj.options[projectobj.selectedIndex].value;
-        var obj = document.getElementById("weekid");
+        var obj = document.getElementById("Pweekid");
         var weekid = obj.options[obj.selectedIndex].value;
         var weekCount = obj.options[obj.selectedIndex].text;
         GetData(projectid, weekid, weekCount);
