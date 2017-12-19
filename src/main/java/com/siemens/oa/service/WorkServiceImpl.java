@@ -392,5 +392,10 @@ public class WorkServiceImpl implements WorkService {
     public List<Work> selectOneWork(Integer userid, String weekid) {
         return workDao.selectOneWork(userid, weekid);
     }
+
+    @Override
+    public List<String> selectAllWeekID() {
+        return workDao.selectAllWeekID();
+    }
 }
 //

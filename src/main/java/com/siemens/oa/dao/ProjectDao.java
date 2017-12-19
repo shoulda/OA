@@ -16,7 +16,7 @@ public interface ProjectDao {
      *
      * @param project
      */
-    @Insert("insert into Project(projectid,projectname) values(#{projectid},#{projectname})")
+    @Insert("insert into Project(projectname) values(#{projectname})")
     void insertProject(Project project);
 
     /**

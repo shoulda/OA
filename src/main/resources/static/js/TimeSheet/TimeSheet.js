@@ -45,6 +45,20 @@
 //     }
 // ];
 /**
+ * 初始化weekid选择框
+ * @constructor
+ */
+function InitSelect() {
+    $.getJSON("work/selectAllWeekID", function (data) {
+        var select = document.getElementById("weekid");
+        for (var i = 1; i <= data.length; i++) {
+            select.options.add(new Option("第" + i + "周", data[i - 1]));
+        }
+        $("#weekid").val(data[i - 2]);
+    })
+}
+
+/**
  * 填充表头
  * @param data
  * @constructor
@@ -143,17 +157,21 @@ function FeedTable(weekid) {
  * js的提交input值的方式
  * @constructor
  */
-function GetTable() {
-    var weekid = document.getElementById("weekid").value;
-    FeedTable(weekid);
-}
+// function GetTable() {
+//     var weekid = document.getElementById("weekid").value;
+//     FeedTable(weekid);
+// }
 
 /**
  * jquary的提交input值的方式
  */
 $(function () {
+    InitSelect();
     $("#GetTable").click(function () {
-        var weekid = $("#weekid").val().trim();
+        var obj = document.getElementById("weekid");
+        var weekid = obj.options[obj.selectedIndex].value;
+        // return text;
+        // var weekid = $("#weekid").val().trim();
         FeedTable(weekid);
     });
 
@@ -164,6 +182,6 @@ $(function () {
  * 以上两种方法原理是一样的，都是当点击时间发生后，通过查询input的id来获取input的值，然后执行函数
  * 不同的就是语法不同
  */
-//
+
 
 

@@ -63,11 +63,15 @@ public class WorkController {
     public JsonListToWork2 selectWorkByScope(HttpSession session, String weekid) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekid);
-//        JsonListToWork jsonListToWork = workService.WorkToJson(works, weekid);
         JsonListToWork2 jsonListToWork = workService.WorkToJson2(works, weekid);
         System.out.println(jsonListToWork);
         return jsonListToWork;
 
+    }
+
+    @GetMapping("/selectAllWeekID")
+    public List<String> selectAllWeekID() {
+        return workService.selectAllWeekID();
     }
 
     @GetMapping("/selectWork")

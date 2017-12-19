@@ -91,6 +91,8 @@ function setUpRowWithData(rowIndex, projectData) {
     var tasks = projectData['tasks'];
     if (ifModifyProject(tasks) == false) {
         $("#input_project_" + rowIndex).append('<option value="' + projectId + '">' + projectName + '</option>');
+        $('#action_' + rowIndex).hide();
+        // $('td[id = "action_'+rowIndex+'"]').hide();
     } else {
         initSelectProject(rowIndex, projectId);
     }
@@ -106,6 +108,7 @@ function setUpRowWithData(rowIndex, projectData) {
         var taskId = tasks[t - 1]['taskId'];
         if (ifModifyTask(tasks[t - 1]) == false) {
             $('#input_task_' + t + '_' + rowIndex).append('<option value="' + taskId + '">' + taskName + '</option>');
+            $('#removetask_' + t + '_' + rowIndex).hide();
         } else {
             initSelectTask(t, rowIndex, taskId);
         }
@@ -212,7 +215,7 @@ function getProjectTr(newProjectIndex) {
         '<td class="taskColumn"> ' +
         '<div class="input-group"> ' +
         '<select class="taskName" id="input_task_1_' + newProjectIndex + '"></select>' +
-        '<span  onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
+        '<span  id="removetask_1_' + newProjectIndex + '" onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
         '</span>' +
         '</div> ' +
         '</td>' +
@@ -227,11 +230,12 @@ function getProjectTr(newProjectIndex) {
         '<td>' +
         '<input class="day form-control" id="input_day_5_1_' + newProjectIndex + '" type="text" placeholder="hours"></td> ' +
         '<td id="action_' + newProjectIndex + '" colspan="2" rowspan="2" class="actionColumn"> ' +
-        '<button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button> ' +
-        '<button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-right">Delete</button> ' +
+        // '<button onclick="editRow(this)" class="btn btn-sm btn-warning pull-left">Edit</button> ' +
+        '<button onclick="removeProject(this)" class="btn btn-sm btn-danger pull-center">Delete</button> ' +
         '</td>' +
         '</tr>';
     return projectTr;
+
 
 }
 
@@ -249,7 +253,7 @@ function getNewTaskTr(newTaskNum, projectNum) {
         '<td class="taskColumn"> ' +
         '<div class="input-group"> ' +
         '<select class="taskName" id="input_task_' + newTaskNum + '_' + projectNum + '"></select>' +
-        '<span onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
+        '<span id="removetask_' + newTaskNum + '_' + projectNum + '" onclick="removeTask(this)" class="removeTask glyphicon glyphicon-remove-circle">' +
         '</span>' +
         '</div></td>' +
         '<td>' +
@@ -344,7 +348,7 @@ function addTask(obj) {
     var newTaskTr = getNewTaskTr(taskNum, projectNum);
     $(tastTr).before(newTaskTr);
     modifyRowSpan(projectNum, 1);
-    initSelectTask(taskNum, projectNum);
+    initSelectTask(taskNum, projectNum, 1);
 }
 
 /**
@@ -458,10 +462,13 @@ function modifyId(obj) {
     }
 }
 
-function editRow() {
-    $('select').removeAttr('disabled');
-    $('.addTask,.removeTask').show();
-}
+// function editRow() {
+//     $('select').removeAttr('disabled');
+//     $('.addTask,.removeTask').show();
+//     // var id = this.parentElement.id;
+//     // console.log(id + "看这里------------");
+//     // $('#removetask_' + /.*/ + '_' + projectIndex).show();
+// }
 
 /**
  * 提交数据 一周的数据，目前，不管如何改动，都会把这一周的数据全部提交
@@ -522,7 +529,8 @@ function submit(isSave, WeekDaysList) {
                 console.log(e);
                 if (e.code == 200) {
                     $('select').attr('disabled', 'disabled');
-                    $('.addTask,.removeTask').hide();
+                    $('.removeTask').hide();
+                    // $('.addTask,.removeTask').hide();
                     $('td[id ^= action_]').hide();
                     alert("Submit Success!");
                 } else if (e.message) {
@@ -542,8 +550,8 @@ function submit(isSave, WeekDaysList) {
             success: function (e) {
                 console.log(e);
                 if (e.code == 200) {
-                    $('select').attr('disabled', 'disabled');
-                    $('.addTask,.removeTask').hide();
+                    // $('select').attr('disabled', 'disabled');
+                    // $('.addTask,.removeTask').hide();
                     alert("Save Success!");
                 } else if (e.message) {
                     alert(e.message);

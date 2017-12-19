@@ -38,4 +38,7 @@ public interface WorkService {
     Series ProjectToSeries(Integer projectid, String weekid, Integer weekConut);
 
     List<Work> selectOneWork(Integer userid, String weekid);
+
+    List<String> selectAllWeekID();
+
 }

@@ -27,7 +27,7 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("admin")
+    @GetMapping("/admin")
     public String adminLogin() {
         return "admin";
     }
@@ -42,11 +42,10 @@ public class LoginController {
     public Map<String, Object> loginPost(String userName, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByName(userName);
-
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 session.setAttribute(WebSecurityConfig.SESSION_KEY, userName);
-               // System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
+                // System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
@@ -102,11 +101,9 @@ public class LoginController {
         return "index";
     }
 
-
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "redirect:/login";
     }
 }
-//
