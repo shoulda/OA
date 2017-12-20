@@ -33,15 +33,22 @@ public class UserController {
     }
 
     @PostMapping("/modifyPassword")
-    public Map<String, Object> modifyPassword(HttpSession session, String oldPassword, String newPassword) {
+    public Map<String, Object> modifyPassword(HttpSession session, String oldPassword, String newPassword1, String newPassword2) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString());
+
+        if (!newPassword1.equals(newPassword2)) {
+            map.put("code", 403);
+            map.put("message", "two new password is not same!");
+            map.put("success", false);
+            return map;
+        }
 
         if (oldPassword.equals(user.getPassword())) {
             map.put("code", 200);
             map.put("message", "modify password successful!");
             map.put("success", true);
-            user.setPassword(newPassword);
+            user.setPassword(newPassword1);
             userService.updateUser(user);
             return map;
         } else {
