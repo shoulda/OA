@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:with="tab='TimeSheetTable'" xmlns:align="http://www.w3.org/1999/xhtml">
+      th:with="tab='TimeSheetTable'">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
@@ -12,22 +12,6 @@
     <script type="text/javascript" th:src="@{js/jquery-3.2.0.min.js}"></script>
     <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
     <title>Document</title>
-    <style>
-        /*两个显示饼图页面的select样式*/
-        .select-show{
-            position:relative;
-            width:200px;
-            height:25px;
-            background:white;
-            padding: 0 5%;
-            border-radius: 5px;
-            box-shadow:1px 1px 5px #000000;
-            display:inline-block;
-            text-decoration: none;
-            text-align: center;
-            margin-bottom: 10%;
-        }
-    </style>
 
 
 </head>
@@ -56,7 +40,7 @@
                 <!--</div>-->
             <!--</form>-->
 
-            <div id="navbar-menu" style="margin-right: 100px">
+            <div id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right">
                     <!--铃铛-->
                     <!--<li class="dropdown">-->
@@ -85,9 +69,12 @@
                     <!--</li>-->
                     <!--个人信息-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span style="font-size: 20px" th:text="${nickName}">Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span th:text="">Samuel</span> <i class="icon-submenu glyphicon glyphicon-hand-up"></i></a>
                         <ul class="dropdown-menu">
-                            <li id="logout"><a href="#"><i class="glyphicon glyphicon-off"></i> <span>Logout</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> <span>My Profile</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> <span>Message</span></a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-wrench"></i> <span>Settings</span></a></li>
+                            <li onclick=""><a href="#"><i class="glyphicon glyphicon-off"></i> <span>Logout</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,9 +90,20 @@
                 <ul class="nav">
                     <li onclick="hideAll()"><a href="#" class=""><i class="glyphicon glyphicon-home"></i> <span>HOME</span></a></li>
                     <li onclick="showOne()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Show One</span></a></li>
-                    <li onclick="showTwo()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Show All</span></a></li>
+                    <li onclick="showOne()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Show One</span></a></li>
+                    <!--<li ><a href="#" class=""><i class="glyphicon glyphicon-user"></i> <span>Edit Admin</span></a></li>-->
                     <li onclick="po()" ><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Project</span></a></li>
                     <li onclick="to()"><a href="#" class=""><i class="glyphicon glyphicon-edit"></i> <span>Edit Task</span></a></li>
+                    <!--<li class="off">-->
+                        <!--<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="glyphicon glyphicon-list"></i> <span>Show Pie</span> <i class="icon-submenu glyphicon glyphicon-chevron-left"></i></a>-->
+                        <!--<div id="subPages" class="collapse ">-->
+                            <!--<ul class="nav">-->
+                                <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName1</span></a></li>-->
+                                <!--<li><a href="#" class=""><i class="glyphicon glyphicon-tasks"></i><span>ProjectName1</span></a></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</li>-->
+
                     <li onclick="tbo()"><a href="#" class=""><i class="glyphicon glyphicon-th-list"></i> <span>EXPORT EXCEL</span></a></li>
                 </ul>
             </nav>
@@ -118,10 +116,9 @@
         <!-- MAIN CONTENT -->
         <div  class="main-content">
             <div style="margin-top: 100px">
-                <div  style="overflow: auto;margin-left: 650px">
-                    <div id="table" class="hide" th:align="center"><div th:replace="TimeSheetTable::TimeSheetTable"></div></div>
+                <div  style="overflow: auto">
+                    <div id="table" class="hide" style="position:absolute;"><div th:replace="TimeSheetTable::TimeSheetTable"></div></div>
                     <div id="showOne" class="hide" style="position:absolute;"><div th:replace="testOne::testOne"></div></div>
-                    <div id="showTwo" class="hide" style="position:absolute;"><div th:replace="testProject::testProject"></div></div>
                     <div id="project" class="hide" style="position:absolute;"><div th:replace="editProject::editProject"></div></div>
                     <div id="task" class="hide" style="position:absolute;"><div th:replace="editTask::editTask"></div></div>
                 </div>
@@ -136,7 +133,7 @@
 
     <footer>
         <div class="container-fluid" >
-            <p class="copyright">Copyright &copy; 2017.Siemens All rights reserved.<a target="_blank" href="http://www.siemens.com.cn">SIEMENS;</a></p>
+            <p class="copyright">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.siemens.com.cn">SIEMENS;</a></p>
         </div>
     </footer>
 </div>
@@ -147,22 +144,7 @@
 <script type="text/javascript" th:src="@{js/TimeSheet/FileSaver.min.js}"></script>
 <script type="text/javascript" th:src="@{js/TimeSheet/tableExport.min.js}"></script>
 <script type="text/javascript" th:src="@{js/PieChart/highcharts.js}"></script>
-<script>
-    $(function () {
-        $("#logout").click(function () {
-            console.log("正在退出。。。。");
-            $.ajax({
-                method: 'GET',
-                url: '/logout',
-                success: function () {
-                    window.location.href = 'login';
-                },
-                error: function () {
-                    alert("Error!");
-                }
-            });
-        });
-    });
-</script>
+<!--<script type="text/javascript" th:src="@{js/PieChart/OneChart.js}"></script>-->
+
 </body>
 </html>

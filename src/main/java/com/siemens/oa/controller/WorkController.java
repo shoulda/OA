@@ -41,6 +41,7 @@ public class WorkController {
     }
 
     @GetMapping("/selectWorkSeries")
+    @AuthDetec(authorities = "admin")
     public Series selectWorkSeries(Integer userid, String weekid, String weekConut) {
         Series series = workService.WorkToSeries(userid, weekid, weekConut);
         System.out.print(series);
@@ -48,6 +49,7 @@ public class WorkController {
     }
 
     @GetMapping("/selectWorkByPW")
+    @AuthDetec(authorities = "admin")
     public Series selectWorkByPW(Integer projectid, String weekid, String weekConut) {
         Series series = workService.ProjectToSeries(projectid, weekid, weekConut);
         System.out.print(series);
@@ -66,6 +68,7 @@ public class WorkController {
 
 
     @GetMapping("/selectAllWeekID")
+    @AuthDetec(authorities = "admin")
     public List<String> selectAllWeekID() {
         return workService.selectAllWeekID();
     }
@@ -85,6 +88,7 @@ public class WorkController {
      * @return
      */
     @GetMapping("/getTableData")
+    @AuthDetec(authorities = "admin")
     public List getTableData(String weekid) {
         ArrayList<Object> tableData = new ArrayList<>();
         JSONObject userJsonAll = new JSONObject();
