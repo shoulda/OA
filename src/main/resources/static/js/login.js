@@ -22,10 +22,10 @@ function login(userName, password) {
         },
         success: function (e) {
             if (e.code == 200 &&e.auth =="user") {
-                alert("Login successfully!"+" Welcome "+userName);
+                alert("Login successfully!"+" Welcome "+e.displayname);
                 window.location.href = '/index';
             }else if (e.code == 200&&e.auth =="admin"){
-                alert("Login successfully!"+" Welcome admin"+userName);
+                alert("Login successfully!"+" Welcome admin "+e.displayname);
                 window.location.href = '/Menulayout';
             }
             else if (e.message) {

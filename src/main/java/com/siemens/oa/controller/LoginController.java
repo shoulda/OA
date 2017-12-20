@@ -59,6 +59,7 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
+                map.put("displayname",user.getDisplayname());
                 if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
                     map.put("auth", "admin");
                     return map;
