@@ -5,9 +5,9 @@
  * @param weekConut
  * @constructor
  */
-function GetData(projectid, weekid, weekConut) {
+function GetProjData(projectid, weekid, weekConut) {
     $.getJSON('/work/selectWorkByPW', {projectid: projectid, weekid: weekid, weekConut: weekConut}, function (data) {
-        testOne(data);
+        testPro(data);
     })
 }
 
@@ -15,7 +15,7 @@ function GetData(projectid, weekid, weekConut) {
  * 饼状图框架
  * @param data
  */
-function testOne(data) {
+function testPro(data) {
     $('#container').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -68,13 +68,13 @@ function testOne(data) {
     });
 }
 
-function InitWeekSelect() {
+function InitPWeekSelect() {
     $.getJSON("work/selectAllWeekID", function (data) {
         var select = document.getElementById("Pweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
-        $("#weekid").val(data[i - 2]);
+        $("#Pweekid").val(data[i - 2]);
     })
 }
 
@@ -92,14 +92,14 @@ function InitProjectSelect() {
  */
 $(function () {
     InitProjectSelect();
-    InitWeekSelect();
+    InitPWeekSelect();
     $("#btnGetPro").click(function () {
         var projectobj = document.getElementById("projectid");
         var projectid = projectobj.options[projectobj.selectedIndex].value;
         var obj = document.getElementById("Pweekid");
         var weekid = obj.options[obj.selectedIndex].value;
         var weekCount = obj.options[obj.selectedIndex].text;
-        GetData(projectid, weekid, weekCount);
+        GetProjData(projectid, weekid, weekCount);
     });
 
 });

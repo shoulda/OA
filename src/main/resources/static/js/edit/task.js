@@ -42,3 +42,12 @@ function addTask(taskname) {
 function delPrj() {
 
 }
+
+/**
+ * 刷新
+ */
+$(function () {
+    $("#updTas").click(function () {
+        $(".refreshT").load(location.href + " .refreshT");
+    });
+});

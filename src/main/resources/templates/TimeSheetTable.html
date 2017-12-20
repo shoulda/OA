@@ -9,31 +9,32 @@
     <script type="text/javascript" th:src="@{js/TimeSheet/TimeSheet.js}"></script>
     <link th:href="@{css/TimeSheet/TimeSheet.css}" rel="stylesheet" type="text/css"/>
 </head>
-<body>
-    <div align="center" class="form-group">
-        <select id="Tweekid">
+<body th:align="center">
+    <div align="center" class="form-group" style="margin-bottom: -30px">
+        <select class="select-show" id="Tweekid">
         </select>
     </div>
 
-    <div align="center">
-        <button id="GetTable" class="btn">GetTable</button>
-    </div>
+   <div align="center">
+       <button style="margin-bottom: 30px" id="GetTable" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light ">Get&nbsp;Table</button>
 
-    <button onclick="download()">
-        Export Excel
-    </button>
-    <table id="OATable" class="oa" border="1" cellpadding="5" cellspacing="0" frame="box">
-        <caption>OA</caption>
-        <thead>
-        <tr id="head" align="center"></tr>
-        </thead>
-        <tbody id="body">
+       <button style="margin-bottom: 30px" onclick="download()" class="btn-danger ">
+           Export&nbsp;Excel
+       </button>
+   </div>
+   <div style="margin-top: 30px;max-height: 480px;overflow:auto">
+       <table id="OATable" class="oa" border="1" cellpadding="5" cellspacing="0" frame="box">
+           <thead>
+           <tr id="head" align="center"></tr>
+           </thead>
+           <tbody id="body">
+           </tbody>
+           <tfoot>
+           <tr id="foot" align="center"></tr>
+           </tfoot>
+       </table>
+   </div>
 
-        </tbody>
-        <tfoot>
-        <tr id="foot" align="center"></tr>
-        </tfoot>
-    </table>
 </body>
 
 </html>

@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="testProject">
 <head>
     <meta charset="UTF-8"/>
     <title>testProject</title>
-    <script th:src="@{js/jquery-3.2.0.min.js}"></script>
-    <script th:src="@{js/PieChart/highcharts.js}"></script>
 </head>
 <body>
+<div style="float: left">
     <div class="form-group">
         <div class="col-xs-12">
-            <select id="projectid">
+            <select class="select-show" id="projectid">
 
             </select>
         </div>
     </div>
     <div class="form-group">
         <div class="col-xs-12">
-            <select id="Pweekid">
+            <select class="select-show" id="Pweekid">
 
             </select>
         </div>
@@ -28,7 +27,9 @@
             </button>
         </div>
     </div>
-    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+</div>
+
+    <div class="panel panel-color panel-danger panel-pages panel-shadow" id="Pcontainer" style="min-width: 800px; height: 650px; margin-left: 100px; float: right"></div>
     <script th:src="@{js/PieChart/ProjectChart.js}"></script>
 </body>
 </html>

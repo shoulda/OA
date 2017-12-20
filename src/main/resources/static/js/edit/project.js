@@ -45,3 +45,13 @@ function addPrj(projectname) {
 function delPrj() {
 
 }
+
+
+/**
+ * 刷新
+ */
+$(function () {
+    $("#updPrj").click(function () {
+        $(".refresh").load(location.href + " .refresh");
+    });
+});

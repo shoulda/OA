@@ -68,13 +68,13 @@ function testOne(data) {
     });
 }
 
-function InitWeekSelect() {
+function InitUWeekSelect() {
     $.getJSON("work/selectAllWeekID", function (data) {
         var select = document.getElementById("Uweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
-        $("#weekid").val(data[i - 2]);
+        $("#Uweekid").val(data[i - 2]);
     })
 }
 
@@ -92,7 +92,7 @@ function InitUserSelect() {
  */
 $(function () {
     InitUserSelect();
-    InitWeekSelect();
+    InitUWeekSelect();
     $("#btnGet").click(function () {
         var userobj = document.getElementById("userid");
         var userid = userobj.options[userobj.selectedIndex].value;

@@ -28,20 +28,20 @@
 <body>
 <div style="text-align: center">
     <!--显示部分-->
-    <div class="panel" style="float: left;margin-right: 20px">
+    <div class="panel" style="float: left;margin-right: 50px">
         <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light">Tasks Table</h1>
         <div class="post-lists">
             <!--refreshT 为了定位刷新div 在task.js里-->
-            <div class="refreshT post-lists-body">
+            <div class="refreshT post-lists-body" style="max-height: 550px;overflow: auto">
                 <li style="list-style-type: none">
-                    <a style="width: 40px;float: right" onclick=""> </a>
+                    <a style="width: 80px;float: right" onclick="">Delete</a>
                     <a style="width: 320px">Tasks Name</a>
                 </li>
                 <ul class="panel-shadow" th:each="tasks: ${tasks}">
                     <li class="panel-li">
-                        <a style="font-size: 40px;width: 60px;float: right" onclick="">-</a>
+                        <a style="font-size: 30px;width: 80px;float: right" onclick="">-</a>
                         <a class="hide" style="width: 40px" th:text="${tasks.taskid}">taskid</a>
-                        <a style="width: 340px" th:text="${tasks.taskname}">taskname</a>
+                        <a style="width: 320px" th:text="${tasks.taskname}">taskname</a>
                     </li>
                 </ul>
             </div>
@@ -54,6 +54,12 @@
             <div style="margin-top: 20px">
                 <button id="addTas" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
                         style="box-shadow: 0px 0px 4px #868282;float: left">Add&nbsp;Task
+                </button>
+            </div>
+            <div >
+                <button id="updTas" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
+                        style="box-shadow: 0px 0px 4px #868282;float: left;margin-top: 20px">
+                    Update
                 </button>
             </div>
         </div>

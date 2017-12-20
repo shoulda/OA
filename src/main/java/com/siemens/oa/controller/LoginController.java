@@ -25,11 +25,16 @@ import java.util.Map;
 public class LoginController {
     private final UserService userService;
     private final PermissionService permissionService;
+    private final ProjectService projectService;
+    private final TaskService taskService;
+
 
     @Autowired
-    public LoginController(UserService userService, PermissionService permissionService) {
+    public LoginController(UserService userService, PermissionService permissionService,ProjectService projectService,TaskService taskService) {
         this.userService = userService;
         this.permissionService = permissionService;
+        this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/")
@@ -41,7 +46,7 @@ public class LoginController {
     public String login() {
         return "login";
     }
-    
+
     @ResponseBody
     @PostMapping("/login")
     public Map<String, Object> loginPost(String userName, String password, HttpSession session) {
@@ -109,10 +114,7 @@ public class LoginController {
      * 测试添加project&task
      * @return
      */
-    @Autowired
-    ProjectService projectService;
-    @Autowired
-    TaskService taskService;
+
 
     @GetMapping("/ad")
     public String testEditProject(Model model){
@@ -136,17 +138,15 @@ public class LoginController {
      */
     @GetMapping("/Menulayout")
     @AuthDetec(authorities = "admin")
-    public String admin(Model model) {
-
+    public String admin(Model model,HttpSession session) {
 
         List<Project> projects = projectService.selectAllProject();
-        model.addAttribute("projects",projects);
-        System.out.println("已经存入project数据");
-        System.out.println(projects);
         List<Task> tasks = taskService.selectAllTask();
+        String nickName = "Welcome admin "+session.getAttribute(WebSecurityConfig.SESSION_KEY.toString());
+
+        model.addAttribute("nickName",nickName);
+        model.addAttribute("projects",projects);
         model.addAttribute("tasks",tasks);
-        System.out.println("已经存入task数据");
-        System.out.println(tasks);
 
         return "Menulayout";
     }

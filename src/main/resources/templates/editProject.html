@@ -28,19 +28,19 @@
 <body>
 <div style="text-align: center">
     <!--显示部分-->
-    <div class="panel" style="float: left;margin-right: 20px">
-        <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light">Projects Table</h1>
+    <div class="panel" style="float: left;margin-right: 50px">
+        <h1 class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light" style="margin-bottom: 20px">Projects Table</h1>
         <div class="post-lists">
-            <div class="refresh post-lists-body">
+            <div class="refresh post-lists-body" style="max-height: 550px;overflow: auto">
                 <li style="list-style-type: none">
-                    <a style="width: 60px;float: right" onclick="">Delete</a>
-                    <a style="width: 340px">Projects Name</a>
+                    <a style="width: 80px;float: right" onclick="">Delete</a>
+                    <a style="width: 320px">Projects Name</a>
                 </li>
                 <ul class="panel-shadow" th:each="projects: ${projects}">
                     <li class="panel-li">
-                        <a style="font-size: 30px;width: 60px;float: right" onclick="">-</a>
+                        <a style="font-size: 30px;width: 80px;float: right" onclick="">-</a>
                         <a class="hide" style="width: 40px" th:text="${projects.projectid}">projectid</a>
-                        <a style="width: 340px" th:text="${projects.projectname}">projectname</a>
+                        <a style="width: 320px" th:text="${projects.projectname}">projectname</a>
                     </li>
                 </ul>
             </div>
@@ -53,6 +53,12 @@
             <div style="margin-top: 20px">
                 <button id="addPrj" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
                         style="box-shadow: 0px 0px 4px #868282;float: left">Add&nbsp;Project
+                </button>
+            </div>
+            <div >
+                <button id="updPrj" class="btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light"
+                        style="box-shadow: 0px 0px 4px #868282;float: left;margin-top: 20px">
+                    Update
                 </button>
             </div>
         </div>
