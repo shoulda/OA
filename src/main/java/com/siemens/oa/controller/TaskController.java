@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @PostMapping("/insertTask")
-//    @AuthDetec(authorities = "admin")
+    @AuthDetec(authorities = "admin")
     public void insertTask(Task task){
         taskService.insertTask(task);
     }
