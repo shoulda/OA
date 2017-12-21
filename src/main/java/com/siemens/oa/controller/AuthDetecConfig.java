@@ -50,13 +50,13 @@ public class AuthDetecConfig extends WebMvcConfigurerAdapter {
                 // 如果注解为null, 说明不需要拦截, 直接放过
                 return true;
             }
-
             if (authDetec.authorities().length > 0) {
                 // 如果权限配置不为空, 则取出配置值
                 String[] authorities = authDetec.authorities();
-                Set<String> authSet =new HashSet<>();
-                for (String temp_auth:authorities)
+                Set<String> authSet = new HashSet<>();
+                for (String temp_auth : authorities) {
                     authSet.add(temp_auth);
+                }
                 String auth = permissionService.selectAuthById(userService.selectUserIdByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString()));
 
                 if (authSet.contains(auth)) {

@@ -101,7 +101,7 @@ input:focus {
     0 2px 7px 0 rgba(0, 0, 0, .2);
 }
 
-button {
+.btn1 {
     cursor: pointer;
     width: 230px;
     height: 44px;

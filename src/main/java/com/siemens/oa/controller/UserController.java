@@ -2,12 +2,14 @@ package com.siemens.oa.controller;
 
 import com.siemens.oa.entity.User;
 import com.siemens.oa.service.UserService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -33,10 +35,10 @@ public class UserController {
     }
 
     @PostMapping("/modifyPassword")
-    public Map<String, Object> modifyPassword(HttpSession session, String oldPassword, String newPassword1, String newPassword2) {
+    public Map<String, Object> modifyPassword(String oldPassword, String newPassword1, String newPassword2, HttpSession session) {
+        System.out.println(oldPassword + "---------" + newPassword1 + "---------" + newPassword2);
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectUserByName(session.getAttribute(WebSecurityConfig.SESSION_KEY).toString());
-
         if (!newPassword1.equals(newPassword2)) {
             map.put("code", 403);
             map.put("message", "two new password is not same!");

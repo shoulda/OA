@@ -6,7 +6,7 @@
  * @constructor
  */
 function GetData(userid, weekid, weekConut) {
-    $.getJSON('/work/selectWorkSeries', {userid: userid, weekid: weekid, weekConut: weekConut}, function (data) {
+    $.getJSON('/admin/selectWorkSeries', {userid: userid, weekid: weekid, weekConut: weekConut}, function (data) {
         testOne(data);
     })
 }
@@ -69,7 +69,7 @@ function testOne(data) {
 }
 
 function InitUWeekSelect() {
-    $.getJSON("work/selectAllWeekID", function (data) {
+    $.getJSON("/admin/selectAllWeekID", function (data) {
         var select = document.getElementById("Uweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));

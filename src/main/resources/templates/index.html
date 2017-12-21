@@ -4,10 +4,11 @@
     <meta name="robots" content="noindex, nofollow"/>
     <meta name="googlebot" content="noindex, nofollow"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script th:src="@{js/jquery-3.2.0.min.js}"></script>
-    <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
-    <link rel="shortcut icon" th:href="@{/images/logo.png}"/>
-    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{js/common/bootstrap.min.js}"></script>
+    <link th:href="@{images/logo/logo.png}" rel="shortcut icon"/>
+    <link th:href="@{css/common/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{css/modifyPassword/common.css}"/>
+
     <title>Time Sheet</title>
     <style type="text/css">
         body {
@@ -70,8 +71,52 @@
 <body>
     <div class="container">
         <div align="center">
-            <button id="logout" style="float: right;background: #0efcff">Logout
-            </button>
+            <ul>
+                <li>
+                    <button id="logout" style="float: right;background: #0efcff">Logout
+                    </button>
+                </li>
+                <li>
+                    <button id="pop" class="bounceIn" style="float: right;background: #0efcff" autofocus="autofocus">
+                        Modify Password
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div id="demo">
+            <div id="dialogBg"></div>
+            <div id="dialog" class="animated">
+                <img class="dialogIco" width="50" height="50" src="images/logo/logo.png" alt=""/>
+                <div class="dialogTop">
+                    <a href="javascript:;" class="close">关闭</a>
+                </div>
+                <div id="editForm">
+                    <ul class="editInfos">
+                        <li><input type="password" id="oldPassword" autofocus="autofocus" required="" name="oldPassword"
+                                   value=""
+                                   class="ipt"
+                                   placeholder="old password:"/>
+                        </li>
+                        <li><input type="password" id="newPassword1" autofocus="autofocus" required=""
+                                   name="newPassword1"
+                                   value=""
+                                   class="ipt"
+                                   placeholder="new password:"/>
+                        </li>
+                        <li><input type="password" id="newPassword2" autofocus="autofocus" required=""
+                                   name="newPassword2"
+                                   value=""
+                                   class="ipt"
+                                   placeholder="confirm password:"/>
+                        </li>
+                        <li>
+                            <button class="btnSubmit" autofocus="autofocus"
+                                    onkeydown="if(event.keyCode==13){btnSubmit.click()}">确认提交
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <table id="workTable" class="table table-responsive table-bordered">
             <caption>
@@ -158,10 +203,13 @@
     </div>
 
 
-    <script th:src="@{js/DayApp.js}"></script>
-    <script th:src="@{js/AjaxWrapper.js}"></script>
-    <script th:src="@{js/index.js}"></script>
-    <script th:src="@{js/hourchecker.js}"></script>
-    <script th:src="@{js/logout.js}"></script>
+    <script th:src="@{js/index/DayApp.js}"></script>
+    <!--<script th:src="@{js/AjaxWrapper.js}"></script>-->
+    <script th:src="@{js/common/index.js}"></script>
+    <script th:src="@{js/index/hourchecker.js}"></script>
+    <script th:src="@{js/common/jquery-3.2.0.min.js}"></script>
+    <script th:src="@{js/logout/logout.js}"></script>
+    <script th:src="@{js/common/md5.js}"></script>
+    <script th:src="@{js/modifyPassword/modifyPassword.js}"></script>
 </body>
 </html>

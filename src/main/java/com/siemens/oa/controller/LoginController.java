@@ -30,7 +30,7 @@ public class LoginController {
 
 
     @Autowired
-    public LoginController(UserService userService, PermissionService permissionService,ProjectService projectService,TaskService taskService) {
+    public LoginController(UserService userService, PermissionService permissionService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.permissionService = permissionService;
         this.projectService = projectService;
@@ -59,7 +59,7 @@ public class LoginController {
                 map.put("success", true);
                 map.put("message", "login in successful");
                 map.put("code", "200");
-                map.put("displayname",user.getDisplayname());
+                map.put("displayname", user.getDisplayname());
                 if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
                     map.put("auth", "admin");
                     return map;
@@ -88,18 +88,9 @@ public class LoginController {
      */
     @GetMapping("/testOne")
     public String testOne() {
-        return "testOne";
+        return "PieChart";
     }
 
-    /**
-     * 测试查询一个项目一周情况饼图
-     *
-     * @return
-     */
-    @GetMapping("/testProject")
-    public String testProject() {
-        return "testProject";
-    }
 
     /**
      * 测试表格
@@ -113,17 +104,17 @@ public class LoginController {
 
     /**
      * 测试添加project&task
+     *
      * @return
      */
 
 
     @GetMapping("/ad")
-    public String testEditProject(Model model){
+    public String testEditProject(Model model) {
         List<Project> projects = projectService.selectAllProject();
         List<Task> tasks = taskService.selectAllTask();
-        model.addAttribute("projects",projects);
-        System.out.println("已经存入project数据");
-        System.out.println(projects);
+        model.addAttribute("projects", projects);
+        model.addAttribute("tasks", tasks);
         return "editProject";
     }
 
@@ -134,25 +125,22 @@ public class LoginController {
 
     /**
      * 测试admin管理页面
+     *
      * @param model
      * @return
      */
     @GetMapping("/Menulayout")
     @AuthDetec(authorities = "admin")
-    public String admin(Model model,HttpSession session) {
-
+    public String admin(Model model, HttpSession session) {
         List<Project> projects = projectService.selectAllProject();
         List<Task> tasks = taskService.selectAllTask();
-        String nickName = "Welcome admin "+session.getAttribute(WebSecurityConfig.SESSION_KEY.toString());
-
-        model.addAttribute("nickName",nickName);
-        model.addAttribute("projects",projects);
-        model.addAttribute("tasks",tasks);
-
+        User user = userService.selectUserByName(session.getAttribute(WebSecurityConfig.SESSION_KEY.toString()).toString());
+        String nickName = "Welcome admin " + user.getDisplayname();
+        model.addAttribute("nickName", nickName);
+        model.addAttribute("projects", projects);
+        model.addAttribute("tasks", tasks);
         return "Menulayout";
     }
-
-
 
 
     @GetMapping("/logout")
@@ -160,36 +148,4 @@ public class LoginController {
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "redirect:/login";
     }
-
-    private Map<String, Object> LoginPost(HttpSession session,User user,String password){
-        Map<String, Object> map = new HashMap<>();
-
-        if (user != null) {
-            if (password.equals(user.getPassword())) {
-                session.setAttribute(WebSecurityConfig.SESSION_KEY, user.getUsername());
-                map.put("success", true);
-                map.put("message", "login in successful");
-                map.put("code", "200");
-                if (permissionService.selectAuthById(user.getUserid()).equals("admin")) {
-                    map.put("auth", "admin");
-                    return map;
-                }
-                map.put("auth", "user");
-                return map;
-            } else {
-                map.put("success", false);
-                map.put("message", "Username or password false");
-                map.put("code", "403");
-                return map;
-            }
-        } else {
-            map.put("success", false);
-            map.put("message", "User not exist!");
-            map.put("code", "404");
-            return map;
-        }
-    }
-
-
 }
-//

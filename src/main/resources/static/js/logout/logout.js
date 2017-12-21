@@ -5,7 +5,7 @@ $(function () {
             method: 'GET',
             url: '/logout',
             success: function () {
-                window.location.href = 'login';
+                window.location.href = '../login';
             },
             error: function () {
                 alert("Error!");

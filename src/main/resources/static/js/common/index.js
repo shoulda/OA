@@ -642,8 +642,6 @@ function getDayId(daysList, i) {
  */
 function cleanData() {
     var projectNum = getProjectsCount();
-    console.log("------");
-    console.log(projectNum);
     for (var i = 1; i <= projectNum; i++) {
         removeProjectByProjectNum(i);
     }
@@ -688,17 +686,25 @@ $(function () {
     console.log("我来了---------");
     var dayApp = new DayApp();
     var daysList = dayApp.getWorkDaysList(new Date());
+    $("#btnNextWeek").hide();
+    var startWeekid = getWeekId(daysList);
     init(daysList);
 
     $("#btnPreWeek").click(function () {
         var preWeekDaysList = dayApp.getPreWorkDaysList();
         cleanData();
+        $("#btnNextWeek").show();
         init(preWeekDaysList);
     });
 
     $("#btnNextWeek").click(function () {
         var nextWeekDaysList = dayApp.getNextWorkDaysList();
         cleanData();
+        if (getWeekId(nextWeekDaysList) == startWeekid) {
+            $("#btnNextWeek").hide();
+        } else {
+            $("#btnNextWeek").show();
+        }
         init(nextWeekDaysList);
     });
     $('#btnAdd').click(function () {

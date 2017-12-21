@@ -29,14 +29,11 @@ function login(userName, password) {
                 window.location.href = '/Menulayout';
             }
             else if (e.message) {
-                console.log(password);
                 alert("Account or password error");
             }
         },
         error: function () {
             alert("Error!");
-            alert(userName);
-            alert(password);
         }
     });
 }

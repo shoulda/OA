@@ -49,12 +49,11 @@
  * @constructor
  */
 function InitSelect() {
-    $.getJSON("work/selectAllWeekID", function (data) {
+    $.getJSON("/admin/selectAllWeekID", function (data) {
         var select = document.getElementById("Tweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
         }
-        console.log("&&&&&"+data+"&&&&&");
         $("#weekid").val(data[i - 2]);
     })
 }
@@ -97,7 +96,6 @@ function FeedTableContent(data) {
         for (var text in data[i]) {
             var td = tr.insertCell(tr.cells.length);
             var index = trr.childNodes[j].innerHTML;
-            console.log(index);
             td.innerHTML = data[i][index];
             count[index] += parseInt(data[i][index]);
             j = j + 1;
@@ -119,7 +117,6 @@ function FeedTableFoot(data) {
     for (var text in data) {
         var td = tfoot.insertCell(tfoot.cells.length);
         var index = trr.childNodes[j].innerHTML;
-        console.log(index);
         td.innerHTML = data[index];
         j = j + 1;
     }
@@ -146,8 +143,7 @@ function FeedTable(weekid) {
     cleanTable();
     $.getJSON("/project/getAllProject", function (data) {
         FeedTableHead(data);
-        $.getJSON("/work/getTableData", {weekid: weekid}, function (data) {
-            console.log(data)
+        $.getJSON("/admin/getTableData", {weekid: weekid}, function (data) {
             var count = FeedTableContent(data);
             FeedTableFoot(count);
         });

@@ -6,7 +6,7 @@
  * @constructor
  */
 function GetProjData(projectid, weekid, weekConut) {
-    $.getJSON('/work/selectWorkByPW', {projectid: projectid, weekid: weekid, weekConut: weekConut}, function (data) {
+    $.getJSON('/admin/selectWorkByPW', {projectid: projectid, weekid: weekid, weekConut: weekConut}, function (data) {
         testPro(data);
     })
 }
@@ -69,7 +69,7 @@ function testPro(data) {
 }
 
 function InitPWeekSelect() {
-    $.getJSON("work/selectAllWeekID", function (data) {
+    $.getJSON("/admin/selectAllWeekID", function (data) {
         var select = document.getElementById("Pweekid");
         for (var i = 1; i <= data.length; i++) {
             select.options.add(new Option("第" + i + "周", data[i - 1]));
