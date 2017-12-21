@@ -15,7 +15,7 @@
     <style>
         .select-show{
             position:relative;
-            width:200px;
+            width:50%;
             height:25px;
             background:white;
             border-radius: 5px;
@@ -30,6 +30,15 @@
             margin-bottom: 350px;
             border-radius: 5px;
             box-shadow:1px 1px 5px #000000;
+            width: 120%;
+        }
+        .btn-show{
+            color: #fff;
+            background-color: #d9534f;
+            border-radius: 2px;
+            box-shadow: 0px 0px 4px #868282;
+            border: 1px solid transparent;
+            width: 100%;
         }
 
     </style>
@@ -132,11 +141,11 @@
         <!-- MAIN CONTENT -->
         <div  class="main-content">
             <div style="margin-top: 100px">
-                <div  style="overflow: auto;margin-left: 400px">
-                    <div id="table" class="hide" style=""><div th:replace="TimeSheetTable::TimeSheetTable"></div></div>
+                <div  style="overflow: auto;margin-left: 25%">
                     <div id="showOne" class="show" style="position:absolute;"><div th:replace="testOne::testOne"></div></div>
                     <div id="project" class="hide" style="position:absolute;"><div th:replace="editProject::editProject"></div></div>
                     <div id="task" class="hide" style="position:absolute;"><div th:replace="editTask::editTask"></div></div>
+                    <div id="table" class="hide" style=""><div th:replace="TimeSheetTable::TimeSheetTable"></div></div>
                 </div>
             </div>
         </div>
