@@ -2,7 +2,6 @@ package com.siemens.oa.controller;
 
 import com.siemens.oa.entity.User;
 import com.siemens.oa.service.UserService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description:
+ * \* Description: UserController
  * \* User: xujin
  * \* Date: 2017/12/19
  * \* Time: 15:48
@@ -29,11 +27,25 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    /**
+     * 获取所有User
+     *
+     * @return
+     */
     @GetMapping("/getAllUser")
     public List<User> getAllUser() {
         return userService.selectAllUser();
     }
 
+    /**
+     * 修改密码
+     *
+     * @param oldPassword
+     * @param newPassword1
+     * @param newPassword2
+     * @param session
+     * @return
+     */
     @PostMapping("/modifyPassword")
     public Map<String, Object> modifyPassword(String oldPassword, String newPassword1, String newPassword2, HttpSession session) {
         System.out.println(oldPassword + "---------" + newPassword1 + "---------" + newPassword2);

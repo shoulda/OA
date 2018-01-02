@@ -16,11 +16,6 @@ public class PermissionServiceImpl implements PermissionService {
         this.permissionDao = permissionDao;
     }
 
-    /**
-     *
-     * @param userid
-     * @return
-     */
     @Override
     public String selectAuthById(Integer userid) {
         return permissionDao.selectAuthById(userid);
@@ -28,6 +23,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void updateAuthById(Integer userid, String auth) {
-        permissionDao.updateAuthById(userid,auth);
+        permissionDao.updateAuthById(userid, auth);
     }
 }

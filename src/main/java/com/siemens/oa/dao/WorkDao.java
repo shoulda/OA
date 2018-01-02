@@ -104,6 +104,11 @@ public interface WorkDao {
     List<Work> selectOneWork(@Param("userid") Integer userid,
                              @Param("weekid") String weekid);
 
+    /**
+     * 查询数据库中所有weeid并增序排列
+     *
+     * @return
+     */
     @Select("select weekid from Work group by weekid ASC")
     List<String> selectAllWeekID();
 }

@@ -2,7 +2,7 @@ package com.siemens.oa.entity;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description:
+ * \* Description: Task实体类
  * \* User: xujin
  * \* Date: 2017/11/22
  * \* Time: 14:48

@@ -393,6 +393,11 @@ public class WorkServiceImpl implements WorkService {
         return workDao.selectOneWork(userid, weekid);
     }
 
+    /**
+     * 查询数据库中所有weekid
+     *
+     * @return
+     */
     @Override
     public List<String> selectAllWeekID() {
         return workDao.selectAllWeekID();

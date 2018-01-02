@@ -3,7 +3,7 @@ package com.siemens.oa.entity;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description: user实体类
+ * \* Description: User实体类
  * \* USER: xujin
  * \* Date: 2017/11/22
  * \* Time: 10:38

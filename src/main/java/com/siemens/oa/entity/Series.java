@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description:
+ * \* Description: 饼状图实体类
  * \* User: xujin
  * \* Date: 2017/12/12
  * \* Time: 14:38

@@ -66,11 +66,22 @@ public class ProjectServiceImpl implements ProjectService {
         return projectDao.selectProjectByProjectName(projectname);
     }
 
+    /**
+     * 根据工程ID查询工程
+     *
+     * @param projectid
+     * @return
+     */
     @Override
     public Project selectProjectById(int projectid) {
         return projectDao.selectProjectById(projectid);
     }
 
+    /**
+     * 查询所有工程
+     *
+     * @return
+     */
     @Override
     public List<Project> selectAllProject() {
         return projectDao.selectAllProject();

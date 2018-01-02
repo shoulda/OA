@@ -82,27 +82,6 @@ public class LoginController {
     }
 
     /**
-     * 测试查询一个人一周工作情况饼图
-     *
-     * @return
-     */
-    @GetMapping("/testOne")
-    public String testOne() {
-        return "PieChart";
-    }
-
-
-    /**
-     * 测试表格
-     *
-     * @return
-     */
-    @GetMapping("/testTimeSheetTable")
-    public String testTimeSheetTable() {
-        return "TimeSheetTable";
-    }
-
-    /**
      * 测试添加project&task
      *
      * @return

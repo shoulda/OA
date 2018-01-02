@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description: Json所对应实体
+ * \* Description: Json所对应实体（后端传至前端的json数据格式）
  * \* User: xujin
  * \* Date: 2017/12/7
  * \* Time: 21:01

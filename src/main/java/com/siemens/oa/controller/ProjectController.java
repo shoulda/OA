@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description: projectController
+ * \* Description: ProjectController
  * \* User: xujin
  * \* Date: 2017/12/10
  * \* Time: 11:10
@@ -36,6 +36,11 @@ public class ProjectController {
         return projectService.selectAllProject();
     }
 
+    /**
+     * 增加project
+     *
+     * @param project
+     */
     @PostMapping("/insertProject")
     @AuthDetec(authorities = "admin")
 //    public void insertProject(String projectname){
@@ -44,7 +49,7 @@ public class ProjectController {
 //        System.out.println(project);
 //        projectService.insertProject(project);
 //    }
-    public void insertProject(Project project){
+    public void insertProject(Project project) {
         projectService.insertProject(project);
     }
 }

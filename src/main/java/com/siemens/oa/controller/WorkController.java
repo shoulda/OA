@@ -23,29 +23,48 @@ import java.util.Map;
 @RestController
 @RequestMapping("/work")
 public class WorkController {
+    /**
+     * 自动装配（注入）
+     */
     @Autowired
     private WorkService workService;
     @Autowired
     private UserService userService;
 
-
+    /**
+     * 插入work记录
+     *
+     * @param work
+     */
     @PostMapping("/insertWork")
     public void insertWork(@RequestBody Work work) {
         workService.insertWork(work);
     }
 
-
+    /**
+     * 查询某人某周的工作记录
+     *
+     * @param session
+     * @param weekid
+     * @return
+     */
     @RequestMapping("/selectWorkByScope")
     public JsonListToWork2 selectWorkByScope(HttpSession session, String weekid) {
         String username = session.getAttribute(WebSecurityConfig.SESSION_KEY).toString();
         List<Work> works = workService.selectWorkByWeekId(userService.selectUserIdByName(username), weekid);
         JsonListToWork2 jsonListToWork = workService.WorkToJson2(works, weekid);
-        System.out.println(jsonListToWork);
+//        System.out.println(jsonListToWork);
         return jsonListToWork;
 
     }
 
-
+    /**
+     * 保存数据
+     *
+     * @param object
+     * @param session
+     * @return
+     */
     @PostMapping("/save")
     public Map<String, Object> modifyWork(@RequestBody String object, HttpSession session) {
         List<Work> work = workService.JsonToWork(object);
@@ -78,6 +97,13 @@ public class WorkController {
 
     }
 
+    /**
+     * 提交数据
+     *
+     * @param object
+     * @param session
+     * @return
+     */
     @PostMapping("/submit")
     public Map<String, Object> subWork(@RequestBody String object, HttpSession session) {
         System.out.println("<************Submit************>");

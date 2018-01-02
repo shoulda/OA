@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * \* Created with IntelliJ IDEA.
- * \* Description:
+ * \* Description: TaskController
  * \* User: xujin
  * \* Date: 2017/12/10
  * \* Time: 11:10
@@ -36,9 +36,14 @@ public class TaskController {
         return taskService.selectAllTask();
     }
 
+    /**
+     * 增加task
+     *
+     * @param task
+     */
     @PostMapping("/insertTask")
     @AuthDetec(authorities = "admin")
-    public void insertTask(Task task){
+    public void insertTask(Task task) {
         taskService.insertTask(task);
     }
 
