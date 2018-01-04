@@ -68,6 +68,10 @@ function getWeekId(daysList) {
     return weekId;
 }
 
+/**
+ * 初始化表格
+ * @param data 从后台获取的数据
+ */
 function setUpTable(data) {
     if (data['work'].length !== 0) {
         var work = data.work;
@@ -83,7 +87,11 @@ function setUpTable(data) {
     }
 }
 
-
+/**
+ * 初始化表格的 一个项目
+ * @param rowIndex 项目行
+ * @param projectData 项目数据
+ */
 function setUpRowWithData(rowIndex, projectData) {
 
     var projectName = projectData['projectName'];
@@ -438,14 +446,25 @@ function removeProject(obj) {
     }
 }
 
-
+/**
+ * 这里 需要注意，任务行tr id中的taskNum，是从2开始自增的，因为taskNum＝1 已经在项目行中使用了
+ * @param projectNum
+ */
 function removeProjectByProjectNum(projectNum) {
     // 删除所有 跟该项目有关的任务，按钮等
     var tail = '[id$=' + '_' + projectNum + "]";
     $("tr" + tail).remove();
 }
 
-
+/**
+ * 递归修改id算法
+ * 1、删除某行后，其后的各行的id要相应修改
+ * 2、修正id，修改一个元素下的所有子元素的id（如果有的话），使得id减少1
+ *
+ * 3、注意，这里的id，必须是使用'_数字'结尾，也就是说'***_数字'的格式，'数字'就是行号，行号减1，这就是目的
+ *
+ * @param obj 该元素
+ */
 function modifyId(obj) {
     var childNodes = $(obj).children();
     for (var i = 0; i < childNodes.length; i++) {

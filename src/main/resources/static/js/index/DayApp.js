@@ -1,4 +1,5 @@
 /**
+ * 获取时间
  * Created by Johnny on 17/11/19.
  */
 var DayApp = function () {
@@ -38,6 +39,10 @@ DayApp.prototype.getWorkDaysList = function (date) {
     }
     return this.currentWorkDaysList;
 };
+/**
+ *
+ * @returns {Array}
+ */
 DayApp.prototype.getNextWorkDaysList = function () {
     for (var i = 0; i <= this.currentWorkDaysList.length; i++) {
         if (this.currentWorkDaysList[i] instanceof Date) {
@@ -50,7 +55,10 @@ DayApp.prototype.getNextWorkDaysList = function () {
     }
     return this.currentWorkDaysList;
 };
-
+/**
+ * 设置
+ * @returns {Array}
+ */
 DayApp.prototype.getPreWorkDaysList = function () {
     for (var i = 0; i <= this.currentWorkDaysList.length; i++) {
         if (this.currentWorkDaysList[i] instanceof Date) {
